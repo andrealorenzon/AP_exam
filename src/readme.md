@@ -47,30 +47,30 @@ Assignments
 
 You have to solve the following tasks in C++11 (C++14 and 17 are welcomed as well).
 
-* implement a template binary search tree
-* it must be templated on the type of the key and the type of the value associated with it.
-* optional you can add a third template on the operation used to compare two different keys.
-* implement proper iterators for your tree (i.e., iterator and const_iterator)
-* the tree must have at least the following public member function
-* insert, used to insert a new pair key-value.
-* clear(), clear the content of the tree.
-* begin(), return an iterator to the first node (which likely will not be the root node)
-* end(), return a proper iterator
-* cbegin(), return a const_iterator to the first node
-* cend(), return a proper const_iterator
-* balance(), balance the tree.
-* find, find a given key and return an iterator to that node. If the key is not found returns end();
-* optional implement the value_type& operator[](`const key_type& k`) function int the const and non-const versions). This functions, should return a reference to the value associated to the key k. If the key is not present, a new node with key k is allocated having the value value_type{}.
-* implement copy and move semantics for the tree.
-* override the operator put to << in order to print (in order) key: value of all the nodes in the tree.
+- [ ] implement a template binary search tree
+- [ ] it must be templated on the type of the key and the type of the value associated with it.
+- [ ] optional you can add a third template on the operation used to compare two different keys.
+- [ ] implement proper iterators for your tree (i.e., iterator and const_iterator)
+- [ ] the tree must have at least the following public member function
+- [ ] insert, used to insert a new pair key-value.
+- [ ] clear(), clear the content of the tree.
+- [ ] begin(), return an iterator to the first node (which likely will not be the root node)
+- [ ] end(), return a proper iterator
+- [ ] cbegin(), return a const_iterator to the first node
+- [ ] cend(), return a proper const_iterator
+- [ ] balance(), balance the tree.
+- [ ] find, find a given key and return an iterator to that node. If the key is not found returns end();
+- [ ] optional implement the value_type& operator[](`const key_type& k`) function int the const and non-const versions). This functions, should return a reference to the value associated to the key k. If the key is not present, a new node with key k is allocated having the value value_type{}.
+- [ ] implement copy and move semantics for the tree.
+- [ ] override the operator put to << in order to print (in order) key: value of all the nodes in the tree.
 
 * Test the performance of the lookups (using the function find) before and after the tree is re-balanced. Use proper numbers (and types) of nodes and look-ups. Does lookup behaves as O(log N)? How your tree compares with std::map? make plots
 
-* optional document the code with Doxygen
+- [x] optional document the code with Doxygen
 
-* write a short report
+- [ ] write a short report
 
-* test everything
+- [ ] test everything
 
 ## Hints
 

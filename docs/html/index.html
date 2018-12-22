@@ -91,26 +91,26 @@ $(function() {
 <p>node 1 is the first node, and node 14 is the last one. Assignments</p>
 <p>You have to solve the following tasks in C++11 (C++14 and 17 are welcomed as well).</p>
 <ul>
-<li>implement a template binary search tree</li>
-<li>it must be templated on the type of the key and the type of the value associated with it.</li>
-<li>optional you can add a third template on the operation used to compare two different keys.</li>
-<li>implement proper iterators for your tree (i.e., iterator and const_iterator)</li>
-<li>the tree must have at least the following public member function</li>
-<li>insert, used to insert a new pair key-value.</li>
-<li>clear(), clear the content of the tree.</li>
-<li>begin(), return an iterator to the first node (which likely will not be the root node)</li>
-<li>end(), return a proper iterator</li>
-<li>cbegin(), return a const_iterator to the first node</li>
-<li>cend(), return a proper const_iterator</li>
-<li>balance(), balance the tree.</li>
-<li>find, find a given key and return an iterator to that node. If the key is not found returns end();</li>
-<li>optional implement the value_type&amp; operator[](<code>const key_type&amp; k</code>) function int the const and non-const versions). This functions, should return a reference to the value associated to the key k. If the key is not present, a new node with key k is allocated having the value value_type{}.</li>
-<li>implement copy and move semantics for the tree.</li>
-<li>override the operator put to &lt;&lt; in order to print (in order) key: value of all the nodes in the tree.</li>
+<li>[ ] implement a template binary search tree</li>
+<li>[ ] it must be templated on the type of the key and the type of the value associated with it.</li>
+<li>[ ] optional you can add a third template on the operation used to compare two different keys.</li>
+<li>[ ] implement proper iterators for your tree (i.e., iterator and const_iterator)</li>
+<li>[ ] the tree must have at least the following public member function</li>
+<li>[ ] insert, used to insert a new pair key-value.</li>
+<li>[ ] clear(), clear the content of the tree.</li>
+<li>[ ] begin(), return an iterator to the first node (which likely will not be the root node)</li>
+<li>[ ] end(), return a proper iterator</li>
+<li>[ ] cbegin(), return a const_iterator to the first node</li>
+<li>[ ] cend(), return a proper const_iterator</li>
+<li>[ ] balance(), balance the tree.</li>
+<li>[ ] find, find a given key and return an iterator to that node. If the key is not found returns end();</li>
+<li>[ ] optional implement the value_type&amp; operator[](<code>const key_type&amp; k</code>) function int the const and non-const versions). This functions, should return a reference to the value associated to the key k. If the key is not present, a new node with key k is allocated having the value value_type{}.</li>
+<li>[ ] implement copy and move semantics for the tree.</li>
+<li>[ ] override the operator put to &lt;&lt; in order to print (in order) key: value of all the nodes in the tree.</li>
 <li>Test the performance of the lookups (using the function find) before and after the tree is re-balanced. Use proper numbers (and types) of nodes and look-ups. Does lookup behaves as O(log N)? How your tree compares with std::map? make plots</li>
-<li>optional document the code with Doxygen</li>
-<li>write a short report</li>
-<li>test everything</li>
+<li>[x] optional document the code with Doxygen</li>
+<li>[ ] write a short report</li>
+<li>[ ] test everything</li>
 </ul>
 <h2>Hints</h2>
 <ul>
@@ -125,7 +125,7 @@ $(function() {
 <h1>Design Choices</h1>
 <p>Binary tree nodes are defined by three attributes: the data they contain, and two pointers to left and right child nodes.</p>
 <p>The project will define a <code>Node</code> Class, with these attributes, and the required methods.</p>
-<p>A <code>BLT</code> class will be needed too, pointing to the first Node (root node), and including for all the properties that a BLT has, but a Node doesn't.</p>
+<p>A <code><a class="el" href="class_b_l_t.html">BLT</a></code> class will be needed too, pointing to the first Node (root node), and including for all the properties that a <a class="el" href="class_b_l_t.html">BLT</a> has, but a Node doesn't.</p>
 <p>Pointers can often be problematic elements: in particular, we have to take care about potential problems during node deletion: if our code is not totally safe, we will leave behind orphan nodes, rising memory leaks and dangling references.</p>
 <p>Luckily with C++11, smart pointers are available, included in the <code>&lt;memory&gt;</code> header.</p>
 <p>Smart pointers are special RAII modeled Classes that behave like raw pointers, but also <em>manage</em> objects created with <code>new</code> , allowing us not to worry about when or wheter we delete them, while providing a similar interface ( *, -&gt; ). Smart pointers contains a built-in raw pointers, and are defined as template class, whose type is the one of the object they point to. Over this, smart pointers add the concept of "owning" an object. We took into consideration two different types of smart pointers, unique and shared. Moreover, they guarantee that there will be no multiple deletions of the same pointer. Lastly, by not allowing null-pointer dereference, they will keep us safe from accidental dereferencing of missing child nodes.</p>
