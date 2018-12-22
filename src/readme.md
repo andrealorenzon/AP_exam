@@ -110,3 +110,6 @@ The `shared_ptr<>` template instead can be owned by more than one owner, and wil
 
 Given the possibility of using move semantics, the decision fell on unique pointers, in a first instance. If copy semantics will be needed we should be able to quickly switch to shared pointers.
 
+In the requirements, both the key and the value of each node must be templated: we will be using `template <class K>` for the keys and `template <class T>` for the values.
+
+  
