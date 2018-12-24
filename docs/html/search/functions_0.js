@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['balance',['balance',['../class_b_l_t.html#a4af237c0a81d2469f2ef6d88094d2909',1,'BLT']]],
-  ['breath_5ffirst',['breath_first',['../class_b_l_t.html#aa1b847d28f5a16748eae1cb29e156694',1,'BLT']]]
+  ['balance',['balance',['../class_tree.html#a8cda13603e50c62686e1104fabfb0dcb',1,'Tree']]],
+  ['begin',['begin',['../class_tree.html#a3fbca9466ee2279fbe906e2f7c7cce7e',1,'Tree']]]
 ];

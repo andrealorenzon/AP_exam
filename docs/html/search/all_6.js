@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['tree',['Tree',['../class_b_l_t.html#adb3e7c760ed21050e6682cce312a388a',1,'BLT']]]
+  ['traversal_5fiterator',['traversal_iterator',['../class_tree.html#a000e25994418a4a9f9c1211bd7f11d56',1,'Tree']]],
+  ['tree',['Tree',['../class_tree.html',1,'Tree&lt; K, T &gt;'],['../class_tree.html#af74569c1958a02871bd55d47697d06f0',1,'Tree::Tree()']]]
 ];

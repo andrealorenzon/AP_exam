@@ -8,7 +8,7 @@
 * @date 12/22/2018
 */
 
-#include <memory>
+#include <memory>   // shared_ptr<>
 
 template <Class K, Class T>
 class Tree {
@@ -24,6 +24,7 @@ class Tree {
 	};
 	
 	shared_ptr<Node> root; 			/*!< pointer to tree root node*/
+	shared_ptr<Node> parent; 		/*|< pointer to parent node, for quicker searching*/
 
 	shared_ptr<Node> _find(T val);
 
@@ -62,10 +63,22 @@ public:
 
 	std::ostream& operator<< (std::ostream& stream, const Tree::Tree& tree);  /*!<  << operator overload: should print the contents of every K,V pair in ostream */
 
-	void breath_first(); 			/*!< breath first search*/
+	/**
+	* In-order (LNR) traversal
+	* In-order: A, B, C, D, E, F, G, H, I.
+	* Check if the current node is empty or null.
+	* Traverse the left subtree by recursively calling the in-order function.
+    * Display the data part of the root (or current node).
+    * Traverse the right subtree by recursively calling the in-order function.
+    *
+    * In a binary search tree, in-order traversal retrieves data in sorted order.
+	*
+	* Here'a void placeholder, we should write a separate iterator class to include, IMHO
+	*
+	*/
+
+	void traversal_iterator();
+
 	
-	size_t height(){ 				/*!< returns tree height*/
-		return height(root);
-	};
 
 };
