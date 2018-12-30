@@ -19,13 +19,15 @@ class Tree {
 		T value; 					/*!< Node value, templated on T */
 		shared_ptr<Node> left; 		/*!< shared pointer to the left node */
 		shared_ptr<Node> right; 	/*!< shared pointer to the right node*/
+		shared_ptr<Node> parent;    /*|< pointer to parent node, for quicker searching*/
+
 		Node(): key(), value(), left(), right(){}; 			/*!< node constructor*/
 		Node(T val): key(), value(val), left(), right(){}; 	/*!< node constructor by declared value*/
+
 	};
 	
 	shared_ptr<Node> root; 			/*!< pointer to tree root node*/
-	shared_ptr<Node> parent; 		/*|< pointer to parent node, for quicker searching*/
-
+	
 	shared_ptr<Node> _find(T val);
 
 public:
