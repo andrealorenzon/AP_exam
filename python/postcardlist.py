@@ -147,11 +147,11 @@ class PostcardList:
   
   def updateLists(self, *args): 
     '''as read but appending to self._postcards'''
-    return len(self._postcards)
+    
   
   def getNumberOfPostcards(self): 
     '''returns length of self._postcards'''
-   pass
+   return len(self._postcards)
   
   def getPostcardsByDateRange(self,date_range): 
     '''returns the postcards within a date_range, date_rage is a tuple of 2 date types
