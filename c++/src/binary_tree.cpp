@@ -52,24 +52,46 @@ public:
 		//make_shared : Constructs an object of type T and wraps it in a std::shared_ptr 
 		//using args as the parameter list for the constructor of T. 
 		//std::shared_ptr<Node> newnode = std::make_shared<Node>(key, value);
+		
+		/* @brief
+  		 *
+  		 * input: K key, T value. Must match tree K and T types.
+  		 * output: shared_pointer to new node
+  		 * actions: if root is nullptr, set the new node as root.
+  		 * otherwise, recursively compares keys.
+  		 * if equal, overwrites value.
+  		 * if less or greater, recursively calls itself respectively on left or right child
+  		 *
+  		 *
+  		 */
+
+
+
 		if (!root) {
-			//
 			root = std::make_shared<Node>(key, value);
 			current = root;
+			std::cout << "root settato a : " << root << std::endl;
 			return root;
 		}
 
 		
 		
 		if (current->key == key) {
+			std::cout << "current = " << current << "\nstessa chiave: setto current->value a " << value << std::endl;
 			current->value = value;
-			std::shared_ptr<Node> returnNode = current;
+			std::cout << "creo il returnNode : " << std::endl;
+			std::shared_ptr<Node> returnNode;
+			std::cout << "creato : returnNode =  " << returnNode << "\n ora setto il returnNode a current"<< std::endl;
+			returnNode = current;
+			std::cout << "Fatto. ora setto current a root:  " << root << std::endl;
 			current = root;
+			std::cout << "fatto. returno."<< std::endl;
 			return returnNode;
 		
 		}
 		else if (key <  current->key) {
 			if (current->left) {
+				
 				current = current->left;
 				addNode(key,value);
 			}
@@ -82,16 +104,25 @@ public:
 			}
 		}
 		else  {
+			std::cout << "chiave maggiore! \n "  << std::endl;
 			if (current->right) {
+				std::cout << "c'è già un right child "<< current->right << std::endl;
+				std::cout << "setto current a current->right " << std::endl;
 				current = current->right;
+				std::cout << "richiamo addNode " << std::endl;
 				addNode(key,value);
 			}
 			else {
+				std::cout << "non c'è ancora un right child! creo un newnode. "  << std::endl;
 				std::shared_ptr<Node> newnode = std::make_shared<Node>(key, value);
+				std::cout << "assegno a newnode->parent il valore di current : " << current << std::endl;
 				newnode->parent = current;
+				std::cout << "assegno a current->right il valore di newnode : " << newnode << std::endl;
 				current->right = newnode;
+				std::cout << "riporto current a root " << root << std::endl;
 				current = root;
-				return newnode;
+				std::cout << "provo a returnare newnode: "<< newnode <<" ed esplodo" << std::endl;
+				return nullptr;				
 			}
 
 		}
@@ -148,6 +179,10 @@ int main()
 {
 	Tree<int,int> test;
 	test.addNode(1,1);
+	test.addNode(1,2);
+	test.addNode(1,1);
+	test.addNode(3,2);
+	test.addNode(4,3);
 	
 	return 0;
 }
