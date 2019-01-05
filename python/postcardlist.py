@@ -144,13 +144,10 @@ class PostcardList:
       for message in self._postcards:
         #"date:$(DATE); from:$(SENDER); to:$(RECEIVER);"
         file.write(formatted(message))
-    
-    pass
   
   def updateLists(self, *args): 
     '''as read but appending to self._postcards'''
-    
-    pass
+    return len(self._postcards)
   
   def getNumberOfPostcards(self): 
     '''returns length of self._postcards'''
