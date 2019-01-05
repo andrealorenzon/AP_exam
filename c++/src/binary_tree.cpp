@@ -64,13 +64,36 @@ public:
 	}
 /////////////////////////////// ITERATORS //////////////////////////////	
 	
-	void inorder(std::shared_ptr<Node> current) { 
-    if (current == nullptr) 
-        return; 
-    if (current->left) inorder(current->left); 
-    std::cout << current->key << " "; 
-    if (current->right) inorder(current->right); 
-} 
+	class iterator : public std::iterator< std::forward_iterator_tag,std::shared_ptr<Node> >
+
+	{
+    std::shared_ptr<Node> itr = nullptr;
+
+    public :
+
+    iterator (std::shared_ptr<Node> temp) : itr(temp) {}
+    iterator (const iterator& myitr) : itr(myitr->itr) {}
+    
+
+
+    bool operator== (const iterator& rhs) 
+    {
+        return itr == rhs.itr;
+
+    };
+    bool operator!= (const iterator& rhs) 
+    {
+        return itr != rhs.itr;
+
+    };
+    T& operator*()
+    {
+        return itr;
+    };
+    // iterator begin() {return this.beg();}
+    // iterator end() {return this.en();}
+
+};	
 
 ////////////////////// end iterators ///////////////////////////////////
 	const std::shared_ptr<Node> addNode(const K key, const T value) {  /*!< creates a node provided key and value, and put it in the appropriate point of the tree*/
@@ -138,18 +161,19 @@ public:
 
 	bool destroy(){ return true;};  					/*!< tree deletion*/
 	
-	std::shared_ptr<Node> begin(){ return root;};		/*!< must return an iterator to the first element */ 
+	std::shared_ptr<Node> begin(){ return beg();};		/*!< must return an iterator to the first element */ 
 
-	std::shared_ptr<Node> end(){
+	std::shared_ptr<Node> end(){ return en();};			/*!< iterator to the last element */
 
-		// for every node, if node->right == nullptr, return a pointer to the node, else return end(node->right)
-	
-	return root;};			/*!< iterator to the last element */
+	const std::shared_ptr<Node> cbegin() const{return beg();};		/*!< must return a const iterator to the first element */ 
 
-	const std::shared_ptr<Node> cbegin(){return root;};		/*!< must return a const iterator to the first element */ 
+	const std::shared_ptr<Node> cend()const{return en();};		/*!< const iterator to the last element */
 
-	const std::shared_ptr<Node> cend(){return root;};		/*!< const iterator to the last element */
-
+	std::shared_ptr<Node> operator++() { 
+		std::shared_ptr<Node>  i = *this; 
+		if (i->left) {return i->left;}
+		else if (i->right) {return i->right;}
+		return i; }
 	
 	void balance(){};   				/*!< tree balance*/
 	
@@ -189,8 +213,9 @@ int main()
 	test.addNode(4,3);
 	test.addNode(-1,5);
 	std::cout <<  "minimo: " << test.beg() << std::endl;
-	test.inorder(root);
-
+	std::cout<< "begin: " << test.begin() << " || end: " << test.end() << std::endl;
+	auto a =test.begin();
+	std::cout << a << std::endl;
 	
 	
 	return 0;
