@@ -47,6 +47,32 @@ public:
 	
 	Tree& operator =(const Tree&) {}; 	/*!<  const operator = overload */
 	
+	std::shared_ptr<Node> beg() { 
+
+		std::shared_ptr<Node> min = root;
+		if (!min) {return nullptr;}
+		while (min->left) {min = min->left;};
+		return min;
+	}
+
+	std::shared_ptr<Node> en() { 
+
+		std::shared_ptr<Node> max = root;
+		if (!max) {return nullptr;}
+		while (max->right) {max = max->right;};
+		return max;
+	}
+/////////////////////////////// ITERATORS //////////////////////////////	
+	
+	void inorder(std::shared_ptr<Node> current) { 
+    if (current == nullptr) 
+        return; 
+    if (current->left) inorder(current->left); 
+    std::cout << current->key << " "; 
+    if (current->right) inorder(current->right); 
+} 
+
+////////////////////// end iterators ///////////////////////////////////
 	const std::shared_ptr<Node> addNode(const K key, const T value) {  /*!< creates a node provided key and value, and put it in the appropriate point of the tree*/
 
 		//make_shared : Constructs an object of type T and wraps it in a std::shared_ptr 
@@ -70,62 +96,40 @@ public:
 		if (!root) {
 			root = std::make_shared<Node>(key, value);
 			current = root;
-			std::cout << "root settato a : " << root << std::endl;
+			std::cout << "root settato con chiave "<< key << " a : " << root << std::endl;
 			return root;
 		}
 
-		
-		
-		if (current->key == key) {
-			std::cout << "current = " << current << "\nstessa chiave: setto current->value a " << value << std::endl;
-			current->value = value;
-			std::cout << "creo il returnNode : " << std::endl;
-			std::shared_ptr<Node> returnNode;
-			std::cout << "creato : returnNode =  " << returnNode << "\n ora setto il returnNode a current"<< std::endl;
-			returnNode = current;
-			std::cout << "Fatto. ora setto current a root:  " << root << std::endl;
-			current = root;
-			std::cout << "fatto. returno."<< std::endl;
-			return returnNode;
-		
+		current = root;
+        std::shared_ptr<Node> parent = nullptr;
+        while (current) {
+        	parent = current;
+        	if (key > current->key) {
+        		current = current->right;
+        	}
+        	else if (key < current->key) {
+        		current = current-> left;
+        	}
+        	else {return nullptr;}
+        }
+		current = std::make_shared<Node>(key, value);
+		current->parent = parent;
+		if (!parent) {
+			root = current;
 		}
-		else if (key <  current->key) {
-			if (current->left) {
-				
-				current = current->left;
-				addNode(key,value);
-			}
-			else {
-				std::shared_ptr<Node> newnode = std::make_shared<Node>(key, value);
-				newnode->parent = current;
-				current->left = newnode;
-				current = root;
-				return newnode;
-			}
-		}
-		else  {
-			std::cout << "chiave maggiore! \n "  << std::endl;
-			if (current->right) {
-				std::cout << "c'è già un right child "<< current->right << std::endl;
-				std::cout << "setto current a current->right " << std::endl;
-				current = current->right;
-				std::cout << "richiamo addNode " << std::endl;
-				addNode(key,value);
-			}
-			else {
-				std::cout << "non c'è ancora un right child! creo un newnode. "  << std::endl;
-				std::shared_ptr<Node> newnode = std::make_shared<Node>(key, value);
-				std::cout << "assegno a newnode->parent il valore di current : " << current << std::endl;
-				newnode->parent = current;
-				std::cout << "assegno a current->right il valore di newnode : " << newnode << std::endl;
-				current->right = newnode;
-				std::cout << "riporto current a root " << root << std::endl;
-				current = root;
-				std::cout << "provo a returnare newnode: "<< newnode <<" ed esplodo" << std::endl;
-				return nullptr;				
-			}
+		else if (current->key == parent->key) {
+			current-> value = value;
+			std::cout << "node updated with key " << key << " and set at " << current << std::endl;
 
 		}
+		else if (current->key > parent->key) {
+			parent->right = current;
+		} 
+		else if (current->key < parent->key) {
+			parent->left = current;
+		}
+		std::cout << "node created with key " << key << " and set at " << current << std::endl;
+		return current;
 	};   
 
 	void removeNode(K key) {};    /*!< remove a node*/
@@ -183,6 +187,11 @@ int main()
 	test.addNode(1,1);
 	test.addNode(3,2);
 	test.addNode(4,3);
+	test.addNode(-1,5);
+	std::cout <<  "minimo: " << test.beg() << std::endl;
+	test.inorder(root);
+
+	
 	
 	return 0;
 }
