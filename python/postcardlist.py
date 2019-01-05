@@ -62,7 +62,13 @@ class PostcardList:
     #every message is a dict with a unique hash index generated from the other fields
     return {"index" : self._index, "sender": _sender, "receiver": _receiver, "date" : datetime.datetime.strptime(_date, "%Y %m %d")}
 
-    
+  def formatted(self,message):
+    '''
+    input:  dict message
+    output: test-compliant string message
+    '''
+    return "date:{}; from:{}; to:{};\n".format(datetime.datetime.strftime(message["date"],"%Y-%m-%d"), message["sender"], message["receiver"])
+   
     
  ##################end helper functions#########
 
