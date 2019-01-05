@@ -148,6 +148,18 @@ class PostcardList:
   def updateLists(self, *args): 
     '''as read but appending to self._postcards'''
     
+#check if a str filename is provided. In that case, read file.
+    if len(args) == 0:
+        pass
+    elif len(args) == 1 and isinstance(args[0], str):
+        self._filename = args[0]
+    elif len(args) > 1:
+      raise IOError
+    
+# self._postcards=[]   #commented to allow append
+    with open(self._filename, 'r') as file:
+      for line in list(file):
+        self._postcards.append(self.parsePostcards(line))    
   
   def getNumberOfPostcards(self): 
     '''returns length of self._postcards'''
