@@ -165,25 +165,25 @@ class PostcardList:
     '''returns length of self._postcards'''
    return len(self._postcards)
   
-  def getPostcardsByDateRange(self,date_range): 
-    '''returns the postcards within a date_range, date_rage is a tuple of 2 date types
-    
-    comment: we could have used a more pythonic way, but this has been written in this way to 
-    give a vague sense of purpose to required-by-specs index attribute.
-    
-    a better alternative could have been:
-   ''' 
-   pass
-     
+def getPostcardsByDateRange(self,date_range): 
+    '''
+    returns the postcards within a date_range, date_rage is a tuple of 2 date types
+    ''' 
+    begin, end = date_range
+    return [self.formatted(m) for m in self._postcards if (m["date"] > begin and m["date"] < end)]
+  
   def getPostcardsBySender(self, sender): 
-    '''returns the messages from a sender'''
+    '''
+    returns the messages from a sender
+    '''    
+    return [self.formatted(m) for m in self._postcards if (m["sender"] == sender)]
     
-    pass
   
   def getPostcardsByReceiver(self, receiver): 
-    '''returns the postcards to a receiver '''
-    
-    pass
+    '''
+    returns the postcards to a receiver 
+    '''    
+    return [self.formatted(m) for m in self._postcards if (m["receiver"] == receiver)]
 
 ########################
 # TO COMMENT 
