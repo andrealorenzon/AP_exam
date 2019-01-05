@@ -163,7 +163,7 @@ class PostcardList:
   
   def getNumberOfPostcards(self): 
     '''returns length of self._postcards'''
-   return len(self._postcards)
+    return len(self._postcards)
   
   def getPostcardsByDateRange(self,date_range): 
     '''returns the postcards within a date_range, date_rage is a tuple of 2 date types
