@@ -65,7 +65,11 @@ class PostcardList:
     
     '''
     
-    pass
+    with open(self.outputFile, 'w') as file:  # overwrites file
+      for message in self._postcards:
+        #formats the line and write it in the file:
+        line = formatted(message)
+        file.write(line)
   
   def readFile(self, *args): 
     '''
