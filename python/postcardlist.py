@@ -161,29 +161,29 @@ class PostcardList:
       for line in list(file):
         self._postcards.append(self.parsePostcards(line))    
   
-  def getNumberOfPostcards(self): 
+    def getNumberOfPostcards(self): 
     '''returns length of self._postcards'''
-    return len(self._postcards)
+        return len(self._postcards)
   
-def getPostcardsByDateRange(self,date_range): 
+    def getPostcardsByDateRange(self,date_range): 
     '''
     returns the postcards within a date_range, date_rage is a tuple of 2 date types
     ''' 
-    begin, end = date_range
-    return [self.formatted(m) for m in self._postcards if (m["date"] > begin and m["date"] < end)]
+        begin, end = date_range
+        return [self.formatted(m) for m in self._postcards if (m["date"] > begin and m["date"] < end)]
   
-  def getPostcardsBySender(self, sender): 
+    def getPostcardsBySender(self, sender): 
     '''
     returns the messages from a sender
     '''    
-    return [self.formatted(m) for m in self._postcards if (m["sender"] == sender)]
+        return [self.formatted(m) for m in self._postcards if (m["sender"] == sender)]
     
   
-  def getPostcardsByReceiver(self, receiver): 
+    def getPostcardsByReceiver(self, receiver): 
     '''
     returns the postcards to a receiver 
     '''    
-    return [self.formatted(m) for m in self._postcards if (m["receiver"] == receiver)]
+        return [self.formatted(m) for m in self._postcards if (m["receiver"] == receiver)]
 
 ########################
 # TO COMMENT 
