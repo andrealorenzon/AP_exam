@@ -26,8 +26,9 @@ class Tree {
 
 	};
 	
-	std::shared_ptr<Node> root; 			/*!< pointer to tree root node*/
-	
+	std::shared_ptr<Node> root = nullptr; 			/*!< pointer to tree root node*/
+	std::shared_ptr<Node> current = nullptr;		/*!< initialize a pointer to find, add, etc */
+
 	std::shared_ptr<Node> _find(T val);
 
 	
@@ -48,19 +49,52 @@ public:
 	
 	const std::shared_ptr<Node> addNode(const K key, const T value) {  /*!< creates a node provided key and value, and put it in the appropriate point of the tree*/
 
-		std::shared_ptr<Node> current = root;
-		std::shared_ptr<Node> parent = nullptr;
-		
 		//make_shared : Constructs an object of type T and wraps it in a std::shared_ptr 
 		//using args as the parameter list for the constructor of T. 
-		newnode = std::make_shared<Node>(key, value);
-		//ora bisogna posizionarlo a dovere...
-		
-		//std::cout << key << " " << value << " " << current << " " << parent << std::endl;  //debug, ok
-		
+		//std::shared_ptr<Node> newnode = std::make_shared<Node>(key, value);
+		if (!root) {
+			//
+			root = std::make_shared<Node>(key, value);
+			current = root;
+			return root;
+		}
 
-		return current;
-	
+		
+		
+		if (current->key == key) {
+			current->value = value;
+			std::shared_ptr<Node> returnNode = current;
+			current = root;
+			return returnNode;
+		
+		}
+		else if (key <  current->key) {
+			if (current->left) {
+				current = current->left;
+				addNode(key,value);
+			}
+			else {
+				std::shared_ptr<Node> newnode = std::make_shared<Node>(key, value);
+				newnode->parent = current;
+				current->left = newnode;
+				current = root;
+				return newnode;
+			}
+		}
+		else  {
+			if (current->right) {
+				current = current->right;
+				addNode(key,value);
+			}
+			else {
+				std::shared_ptr<Node> newnode = std::make_shared<Node>(key, value);
+				newnode->parent = current;
+				current->right = newnode;
+				current = root;
+				return newnode;
+			}
+
+		}
 	};   
 
 	void removeNode(K key) {};    /*!< remove a node*/
