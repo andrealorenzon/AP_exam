@@ -24,11 +24,12 @@ Class PostcardList must manage the sorting of dates/senders/receivers. Note that
 '''
 import unittest  #unit test
 import datetime  #date type
-
+import re        #regex
 class PostcardList:
   
   def __init__(self):
     
+    self._index = 0
     self._file = ""       #file name, eventually with the full path.
     self._postcards = []  #list of postcards (ordereddicts) read from _file.
     self._date = {}       #a dict where the key is the string date, and the value is a list of indices. Each index refers to the corresponding record.
@@ -41,13 +42,26 @@ class PostcardList:
   def parsePostcards(self, line):
     '''
     input: string "date:$(DATE); from:$(SENDER); to:$(RECEIVER);""
-    output: dict  {"hashIndex" : int, 
+    output: dict  {"index" : int, 
                    "sender"    : str, 
                    "receiver"  : str, 
                    "date"      : datetime.date}
     '''
     
-    pass
+    #gets the first 3 numbers of the date, and whatever is after from: and to:, including $ and .'s
+    pattern = re.compile("date:(\d*)-(\d*)-(\d*).*from:([^;]+); to:([^;]+);")
+    #regex extraction of useful data:
+    regexItems = re.search(pattern,line)
+    #1,2,3 -> Y,m,d , 4-> sender , 5-> receiver
+
+    #assembling date string, aliasing sender and receiver for readability
+    _date = regexItems.group(1) + " " + regexItems.group(2) + " " + regexItems.group(3)
+    _sender = regexItems.group(4)
+    _receiver = regexItems.group(5)
+    
+    #every message is a dict with a unique hash index generated from the other fields
+    return {"index" : self._index, "sender": _sender, "receiver": _receiver, "date" : datetime.datetime.strptime(_date, "%Y %m %d")}
+
     
     
  ##################end helper functions#########
@@ -73,7 +87,43 @@ class PostcardList:
     output: from self._file read self.{_date,_from,_to}'''
     
     #check if a str filename is provided. In that case, read file. Otherwise, read the already attached file.
-    pass
+    if len(args) == 0:
+        pass
+    elif len(args) == 1 and isinstance(args[0], str):
+        self._filename = args[0]
+    elif len(args) > 1:
+      raise IOError
+    
+    #initialize attributes
+    self._index = 0
+    self._postcards=[]
+    self._from = {}
+    self._to = {}
+    self._date = {}
+    
+    with open(self._filename, 'r') as file:
+      for line in list(file):
+        message = self.parsePostcards(line)
+        self._postcards.append(message)
+        self._index +=1
+        
+  #adds message to "from" dict
+        if (message["sender"] in self._from.keys()):
+          self._from[message["sender"]].append(message["index"])
+        else:
+          self._from[message["sender"]]=[message["index"]]
+
+  #adds message to "to" dict
+        if (message["receiver"] in self._to.keys()):
+          self._to[message["receiver"]].append(message["index"])
+        else:
+          self._to[message["receiver"]]=[message["index"]]
+
+  #adds message to "date" dict
+        if (message["date"] in self._date.keys()):
+          self._date[message["date"]].append(message["index"])
+        else:
+          self._date[message["date"]]=[message["index"]]
    
   def updateFile(self): 
     '''
@@ -95,7 +145,7 @@ class PostcardList:
     '''returns the postcards within a date_range, date_rage is a tuple of 2 date types
     
     comment: we could have used a more pythonic way, but this has been written in this way to 
-    give a vague sense of purpose to required-by-specs hashIndex attribute.
+    give a vague sense of purpose to required-by-specs index attribute.
     
     a better alternative could have been:
    ''' 
