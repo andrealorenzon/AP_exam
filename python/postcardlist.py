@@ -139,6 +139,10 @@ class PostcardList:
     '''
     appends current postcards to attached file
     '''
+    with open(self._filename, 'a') as file: # appends to file
+      for message in self._postcards:
+        #"date:$(DATE); from:$(SENDER); to:$(RECEIVER);"
+        file.write(formatted(message))
     
     pass
   
