@@ -62,6 +62,11 @@ public:
 		while (max->right) {max = max->right;};
 		return max;
 	}
+
+	std::shared_ptr<Node> treeroot() { 
+
+		return root;
+	}
 /////////////////////////////// ITERATORS //////////////////////////////	
 	
 	class iterator : public std::iterator< std::forward_iterator_tag,std::shared_ptr<Node> >
@@ -199,7 +204,23 @@ public:
 
 	void traversal_iterator(){};
 
-	
+
+	void inorder () {
+		inorder(root);
+	}
+	void inorder(std::shared_ptr<Node> t) {
+		if (root == nullptr)
+        {
+            std::cout << "No elements in a tree to display" << std::endl;
+            return;
+        }
+        //std::cout << "been here : root is " << root;
+        if (t->left != nullptr)    
+            inorder(t->left);
+        std::cout << t->key << " -> ";
+        if (t->right != nullptr)    
+            inorder(t->right);
+	}
 
 };
 
@@ -207,16 +228,23 @@ int main()
 {
 	Tree<int,int> test;
 	test.addNode(1,1);
-	test.addNode(1,2);
-	test.addNode(1,1);
 	test.addNode(3,2);
-	test.addNode(4,3);
+	test.addNode(-4,2);
+	test.addNode(13,2);
+	test.addNode(-7,2);
+	test.addNode(-2,2);
+	test.addNode(4,2);
+	test.addNode(8,2);
+	test.addNode(11,2);
+	test.addNode(-8,2);
+	test.addNode(5,3);
 	test.addNode(-1,5);
-	std::cout <<  "minimo: " << test.beg() << std::endl;
-	std::cout<< "begin: " << test.begin() << " || end: " << test.end() << std::endl;
-	auto a =test.begin();
-	std::cout << a << std::endl;
 	
+	std::cout<< "begin: " << test.begin() << " || end: " << test.end() << std::endl;
+	
+	auto r = test.treeroot();
+	std::cout << r << " is root." << std::endl;
+	test.inorder();
 	
 	return 0;
 }
