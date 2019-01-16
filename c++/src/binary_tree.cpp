@@ -13,8 +13,7 @@
 template <class K, class T>
 class Tree {
 
-	struct Node
-	{
+	struct Node	{
 		K key; 						/*!< Node key, templated on K */
 		T value; 					/*!< Node value, templated on T */
 		std::shared_ptr<Node> left = nullptr; 		/*!< shared pointer to the left node */
@@ -29,7 +28,7 @@ class Tree {
 	std::shared_ptr<Node> root = nullptr; 			/*!< pointer to tree root node*/
 	std::shared_ptr<Node> current = nullptr;		/*!< initialize a pointer to find, add, etc */
 
-	std::shared_ptr<Node> _find(T val);
+	//std::shared_ptr<Node> _find(T val);
 
 	
 
@@ -39,16 +38,15 @@ public:
 	
 	~Tree(){}; 						/*!< Tree destructor. Smart pointers makes unnecessary the explicit destruction of all nodes*/
 	
-	Tree(Tree&&) = default;  	/*!< Additional semantics*/
+	Tree(Tree&&) = default;  		/*!< Additional semantics*/
 	
-	Tree& operator =(Tree&&) = default ;  			/*!< Operator = overload*/
+	Tree& operator =(Tree&&) = default ;  /*!< Operator = overload*/
 	
-	Tree(const Tree&) {}; 				/*!< move constructor*/
+	Tree(const Tree&) {}; 			/*!< move constructor*/
 	
 	Tree& operator =(const Tree&) {}; 	/*!<  const operator = overload */
 	
 	std::shared_ptr<Node> beg() { 
-
 		std::shared_ptr<Node> min = root;
 		if (!min) {return nullptr;}
 		while (min->left) {min = min->left;};
@@ -56,7 +54,6 @@ public:
 	}
 
 	std::shared_ptr<Node> en() { 
-
 		std::shared_ptr<Node> max = root;
 		if (!max) {return nullptr;}
 		while (max->right) {max = max->right;};
@@ -64,48 +61,46 @@ public:
 	}
 
 	std::shared_ptr<Node> treeroot() { 
-
 		return root;
 	}
 /////////////////////////////// ITERATORS //////////////////////////////	
 	
-	class iterator : public std::iterator< std::forward_iterator_tag,std::shared_ptr<Node> >
+	class iterator : public std::iterator< std::forward_iterator_tag,std::shared_ptr<Node> > {
+	    std::shared_ptr<Node> itr = nullptr;
 
-	{
-    std::shared_ptr<Node> itr = nullptr;
+	    public :
 
-    public :
-
-    iterator (std::shared_ptr<Node> temp) : itr(temp) {}
-    iterator (const iterator& myitr) : itr(myitr->itr) {}
-    
+	    iterator (std::shared_ptr<Node> temp) : itr(temp) {}
+	    iterator (const iterator& myitr) : itr(myitr->itr) {}
+	    
 
 
-    bool operator== (const iterator& rhs) 
-    {
-        return itr == rhs.itr;
+	    bool operator== (const iterator& rhs) {
+	        return itr == rhs.itr;
+	    };
 
-    };
-    bool operator!= (const iterator& rhs) 
-    {
-        return itr != rhs.itr;
+	    bool operator!= (const iterator& rhs) {
+	        return itr != rhs.itr;
+	    };
 
-    };
-    T& operator*()
-    {
-        return itr;
-    };
-    // iterator begin() {return this.beg();}
-    // iterator end() {return this.en();}
+	    T& operator*() {
+	        return itr;
+    	};
+	    
+    	// and this? doubt.
+	    // iterator begin() {return this.beg();}
+	    // iterator end() {return this.en();}
 
-};	
+	};	
 
 ////////////////////// end iterators ///////////////////////////////////
-	const std::shared_ptr<Node> addNode(const K key, const T value) {  /*!< creates a node provided key and value, and put it in the appropriate point of the tree*/
+	const std::shared_ptr<Node> addNode(const K key, const T value) {  
 
-		//make_shared : Constructs an object of type T and wraps it in a std::shared_ptr 
+		/*!< creates a node provided key and value, and put it in the appropriate point of the tree*/
+
+		//make_shared : Constructs an object of type T and wraps it in a std::shared_ptr<Type>
 		//using args as the parameter list for the constructor of T. 
-		//std::shared_ptr<Node> newnode = std::make_shared<Node>(key, value);
+		//ex. std::shared_ptr<Node> newnode = std::make_shared<Node>(key, value);
 		
 		/* @brief
   		 *
@@ -138,9 +133,12 @@ public:
         	else if (key < current->key) {
         		current = current-> left;
         	}
-        	else {return nullptr;}
+        	else {
+        		return nullptr;
+        	}
         }
 		current = std::make_shared<Node>(key, value);
+
 		current->parent = parent;
 		if (!parent) {
 			root = current;
@@ -148,7 +146,6 @@ public:
 		else if (current->key == parent->key) {
 			current-> value = value;
 			std::cout << "node updated with key " << key << " and set at " << current << std::endl;
-
 		}
 		else if (current->key > parent->key) {
 			parent->right = current;
@@ -164,13 +161,20 @@ public:
 
 	void listNodes() {};          /*!< shows all nodes (maybe in tree format print?) */
 
-	bool destroy(){ return true;};  					/*!< tree deletion*/
+	bool destroy(){return true;}; /*!< tree deletion: later: set root to nullptr, destroy recursively all nodes*/
 	
-	std::shared_ptr<Node> begin(){ return beg();};		/*!< must return an iterator to the first element */ 
+	//NOTE: in theory, begin, end, cbegin, cend and ++ should be inside iterator class..
 
-	std::shared_ptr<Node> end(){ return en();};			/*!< iterator to the last element */
 
-	const std::shared_ptr<Node> cbegin() const{return beg();};		/*!< must return a const iterator to the first element */ 
+	std::shared_ptr<Node> begin(){ /*!< must return an iterator to the first element */ 
+		return beg();
+	};		
+
+	std::shared_ptr<Node> end(){ /*!< iterator to the last element */
+		return en();
+	};			
+
+	const std::shared_ptr<Node> cbegin() const {return beg();};		/*!< must return a const iterator to the first element */ 
 
 	const std::shared_ptr<Node> cend()const{return en();};		/*!< const iterator to the last element */
 
@@ -178,7 +182,8 @@ public:
 		std::shared_ptr<Node>  i = *this; 
 		if (i->left) {return i->left;}
 		else if (i->right) {return i->right;}
-		return i; }
+		return i; 
+	}
 	
 	void balance(){};   				/*!< tree balance*/
 	
@@ -204,20 +209,21 @@ public:
 
 	void traversal_iterator(){};
 
-
 	void inorder () {
 		inorder(root);
 	}
+
 	void inorder(std::shared_ptr<Node> t) {
-		if (root == nullptr)
-        {
+		if (root == nullptr) {
             std::cout << "No elements in a tree to display" << std::endl;
             return;
         }
         //std::cout << "been here : root is " << root;
         if (t->left != nullptr)    
             inorder(t->left);
+
         std::cout << t->key << " -> ";
+        
         if (t->right != nullptr)    
             inorder(t->right);
 	}
