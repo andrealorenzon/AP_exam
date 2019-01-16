@@ -178,8 +178,8 @@ public:
 
 	const std::shared_ptr<Node> cend()const{return en();};		/*!< const iterator to the last element */
 
-	std::shared_ptr<Node> operator++() { 
-		std::shared_ptr<Node>  i = *this; 
+	std::shared_ptr<Node> operator++() { /*!< this function must be written, this is a placeholder */
+		std::shared_ptr<Node>  i = this; 
 		if (i->left) {return i->left;}
 		else if (i->right) {return i->right;}
 		return i; 
