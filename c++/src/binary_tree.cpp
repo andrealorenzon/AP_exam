@@ -18,7 +18,7 @@ class Tree {
 		T value; 					/*!< Node value, templated on T */
 		std::shared_ptr<Node> left = nullptr; 		/*!< shared pointer to the left node */
 		std::shared_ptr<Node> right = nullptr; 	/*!< shared pointer to the right node*/
-		std::shared_ptr<Node> parent = nullptr;    /*|< pointer to parent node, for quicker searching*/
+		//std::shared_ptr<Node> parent = nullptr;    /*|< pointer to parent node, for quicker searching*/
 
 		Node(): key(), value(), left(), right(){}; 			/*!< node constructor*/
 		Node(K k, T val): key(k), value(val), left(), right(){}; 	/*!< node constructor by declared value*/
@@ -35,14 +35,10 @@ class Tree {
 public:
 	
 	Tree():root(){};  				/*!< Tree constructor*/
-	
 	~Tree(){}; 						/*!< Tree destructor. Smart pointers makes unnecessary the explicit destruction of all nodes*/
-	
-	Tree(Tree&&) = default;  		/*!< Additional semantics*/
-	
+	Tree(Tree&&) = default;  		/*!< Move c'tor*/
 	Tree& operator =(Tree&&) = default ;  /*!< Operator = overload*/
-	
-	Tree(const Tree&) {}; 			/*!< move constructor*/
+	Tree(const Tree&) {}; 			/*!< copy c'tor*/
 	
 	Tree& operator =(const Tree&) {}; 	/*!<  const operator = overload */
 	
@@ -139,7 +135,7 @@ public:
         }
 		current = std::make_shared<Node>(key, value);
 
-		current->parent = parent;
+		//current->parent = parent;
 		if (!parent) {
 			root = current;
 		}
