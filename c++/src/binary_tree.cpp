@@ -18,29 +18,23 @@ class Tree {
 		T value; 					/*!< Node value, templated on T */
 		std::shared_ptr<Node> left = nullptr; 		/*!< shared pointer to the left node */
 		std::shared_ptr<Node> right = nullptr; 	/*!< shared pointer to the right node*/
-		//std::shared_ptr<Node> parent = nullptr;    /*|< pointer to parent node, for quicker searching*/
-
 		Node(): key(), value(), left(), right(){}; 			/*!< node constructor*/
 		Node(K k, T val): key(k), value(val), left(), right(){}; 	/*!< node constructor by declared value*/
-
+		Node * parent = nullptr;
 	};
 	
 	std::shared_ptr<Node> root = nullptr; 			/*!< pointer to tree root node*/
 	std::shared_ptr<Node> current = nullptr;		/*!< initialize a pointer to find, add, etc */
 
-	//std::shared_ptr<Node> _find(T val);
-
-	
-
 public:
 	
-	Tree():root(){};  				/*!< Tree constructor*/
-	~Tree(){}; 						/*!< Tree destructor. Smart pointers makes unnecessary the explicit destruction of all nodes*/
-	Tree(Tree&&) = default;  		/*!< Move c'tor*/
+	Tree():root(){};  					/*!< Tree constructor*/
+	~Tree(){}; 							/*!< Tree destructor. Smart pointers makes unnecessary the explicit destruction of all nodes*/
+	Tree(Tree&&) = default;  			/*!< Move c'tor*/
 	Tree& operator =(Tree&&) = default ;  /*!< Operator = overload*/
-	Tree(const Tree&) {}; 			/*!< copy c'tor*/
+	Tree(const Tree&) {}; 				/*!< copy c'tor*/
 	
-	Tree& operator =(const Tree&) {}; 	/*!<  const operator = overload */
+	//  Tree& operator =(const Tree&) {}; 	/*!<  const operator = overload */
 	
 	std::shared_ptr<Node> beg() { 
 		std::shared_ptr<Node> min = root;
@@ -56,10 +50,11 @@ public:
 		return max;
 	}
 
-	std::shared_ptr<Node> treeroot() { 
+	std::shared_ptr<Node> treeroot() { /*!< Could be useful. Remove if unnecessary. */
 		return root;
 	}
-/////////////////////////////// ITERATORS //////////////////////////////	
+/////////////////////////////// ITERATORS //////////////////////////////
+// status: DRAFT! Currently unused / untested	
 	
 	class iterator : public std::iterator< std::forward_iterator_tag,std::shared_ptr<Node> > {
 	    std::shared_ptr<Node> itr = nullptr;
@@ -83,13 +78,10 @@ public:
 	        return itr;
     	};
 	    
-    	// and this? doubt.
-	    // iterator begin() {return this.beg();}
-	    // iterator end() {return this.en();}
-
-	};	
+    };	
 
 ////////////////////// end iterators ///////////////////////////////////
+
 	const std::shared_ptr<Node> addNode(const K key, const T value) {  
 
 		/*!< creates a node provided key and value, and put it in the appropriate point of the tree*/
@@ -115,6 +107,7 @@ public:
 		if (!root) {
 			root = std::make_shared<Node>(key, value);
 			current = root;
+
 			std::cout << "root settato con chiave "<< key << " a : " << root << std::endl;
 			return root;
 		}
@@ -130,18 +123,21 @@ public:
         		current = current-> left;
         	}
         	else {
+        		current->value = value;    // BUG: does not update values!! why???
+        		std::cout << "node updated with key " << current->key << " and value " << current->value << " and kept at " << current << std::endl;
         		return nullptr;
         	}
         }
 		current = std::make_shared<Node>(key, value);
+		current->parent = parent.get();
 
-		//current->parent = parent;
 		if (!parent) {
 			root = current;
 		}
 		else if (current->key == parent->key) {
 			current-> value = value;
-			std::cout << "node updated with key " << key << " and set at " << current << std::endl;
+
+			std::cout << "node updated with key " << key << " and kept at " << current << std::endl;
 		}
 		else if (current->key > parent->key) {
 			parent->right = current;
@@ -153,42 +149,44 @@ public:
 		return current;
 	};   
 
-	void removeNode(K key) {};    /*!< remove a node*/
+	void removeNode(K key) {};   			/*!< remove a single node*/
 
-	void listNodes() {};          /*!< shows all nodes (maybe in tree format print?) */
+	void listNodes() {          			/*!< shows all nodes (maybe in tree format print?) */
+		return this->inorder();
+	};
 
-	bool destroy(){return true;}; /*!< tree deletion: later: set root to nullptr, destroy recursively all nodes*/
+	bool destroy(){ 						/*!< tree deletion: later: set root to nullptr, destroy recursively all nodes*/
+		this->root.reset();
+		return true;}; 
 	
-	//NOTE: in theory, begin, end, cbegin, cend and ++ should be inside iterator class..
-
-
-	std::shared_ptr<Node> begin(){ /*!< must return an iterator to the first element */ 
+	std::shared_ptr<Node> begin(){ 			/*!< must return an iterator to the first element */ 
 		return beg();
 	};		
 
-	std::shared_ptr<Node> end(){ /*!< iterator to the last element */
-		return en();
+	std::shared_ptr<Node> end(){ 			/*!< iterator to the element after the last, that is nullptr */
+		return nullptr;
 	};			
 
-	const std::shared_ptr<Node> cbegin() const {return beg();};		/*!< must return a const iterator to the first element */ 
+	const std::shared_ptr<Node> cbegin() const {		/*!< must return a const iterator to the first element */ 
+		return beg();
+	};
 
-	const std::shared_ptr<Node> cend()const{return en();};		/*!< const iterator to the last element */
+	const std::shared_ptr<Node> cend()const{			/*!< const iterator to the last element */
+		return nullptr;
+	};
 
-	std::shared_ptr<Node> operator++() { /*!< this function must be written, this is a placeholder */
+	std::shared_ptr<Node> operator++() { 				/*!< this function must be written, this is a placeholder */
 		std::shared_ptr<Node>  i = this; 
 		if (i->left) {return i->left;}
 		else if (i->right) {return i->right;}
 		return i; 
 	}
 	
-	void balance(){};   				/*!< tree balance*/
+	void balance(){};   								/*!< tree balance*/
 	
 	std::shared_ptr<Node> find(T x){return root;};   	/*!< find by value public method  (calls private _find)*/
 
-	//T& operator[](const K& key){};    /*!< optional: returns the value associated with a given key if present. If not present, creates a node with the given key */
-
-	//std::ostream& operator<< (std::ostream& stream, const Tree::Tree& tree){};  /*!<  << operator overload: should print the contents of every K,V pair in ostream */
-
+	
 	/**
 	* In-order (LNR) traversal
 	* In-order: A, B, C, D, E, F, G, H, I.
@@ -203,7 +201,10 @@ public:
 	*
 	*/
 
-	void traversal_iterator(){};
+	void traversal_iterator(){
+
+		return this.inorder();
+	};
 
 	void inorder () {
 		inorder(root);
@@ -214,14 +215,18 @@ public:
             std::cout << "No elements in a tree to display" << std::endl;
             return;
         }
-        //std::cout << "been here : root is " << root;
+        
         if (t->left != nullptr)    
             inorder(t->left);
 
-        std::cout << t->key << " -> ";
+        std::cout << "{" << t->key <<":"<<t->value<<"}  ";
         
         if (t->right != nullptr)    
             inorder(t->right);
+	}
+
+	void printTree() {
+
 	}
 
 };
@@ -241,12 +246,18 @@ int main()
 	test.addNode(-8,2);
 	test.addNode(5,3);
 	test.addNode(-1,5);
+	test.addNode(1,10);
+	test.addNode(1,20);
 	
-	std::cout<< "begin: " << test.begin() << " || end: " << test.end() << std::endl;
+	std::cout<< "begin: " << test.begin() << "\nend: " << test.end() << std::endl;
+	std::cout<< "max : " << test.en() << std::endl;
 	
 	auto r = test.treeroot();
 	std::cout << r << " is root." << std::endl;
-	test.inorder();
+	test.listNodes();
+	std::cout << "\nDeleting the tree..." << std::endl;
+	test.destroy();
+	test.listNodes();
 	
 	return 0;
 }
