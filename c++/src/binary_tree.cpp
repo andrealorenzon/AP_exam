@@ -56,16 +56,29 @@ public:
 /////////////////////////////// ITERATORS //////////////////////////////
 // status: DRAFT! Currently unused / untested	
 	
-	class iterator : public std::iterator< std::forward_iterator_tag,std::shared_ptr<Node> > {
-	    std::shared_ptr<Node> itr = nullptr;
+	class iterator : public std::iterator< std::forward_iterator_tag, Node> {
+	    Node * itr = nullptr;
 
 	    public :
 
-	    iterator (std::shared_ptr<Node> temp) : itr(temp) {}
-	    iterator (const iterator& myitr) : itr(myitr->itr) {}
+	    explicit iterator(Node * ptr) : itr(ptr) {} 
+
+	    iterator(const iterator&) = default;  //c'tor
+
+	    iterator() = default;     // will set to nullptr thanks to ` = nullptr` above
 	    
+	    iterator & operator++() {
+		    // code to update itr to next node
+		    return *this;
+		}
 
+// and
 
+		iterator operator++(int) {
+    			auto old = *this;
+    			++(*this);
+    		return old;
+		}
 	    bool operator== (const iterator& rhs) {
 	        return itr == rhs.itr;
 	    };
@@ -77,6 +90,10 @@ public:
 	    T& operator*() {
 	        return itr;
     	};
+
+    	T& operator->() {
+    		return itr;
+    	}
 	    
     };	
 
