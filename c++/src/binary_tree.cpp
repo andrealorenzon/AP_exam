@@ -164,6 +164,7 @@ public:
 
     iterator find(K k) {
 
+    	if(!root) {return end();}
 	    Node * node = root.get();
 	    while (true) {
 	    	if (node->key == k) {return iterator(node);}
