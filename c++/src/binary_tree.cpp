@@ -162,14 +162,31 @@ public:
     	};
     };
 
+    iterator find(K k) {
+
+	    Node * node = root.get();
+	    while (true) {
+	    	if (node->key == k) {return iterator(node);}
+	     //if there, return
+	    
+	    	else if (k < node->key) { 
+	        	if (node->left) {node=node->left.get();}
+	        	else {return end();}
+	        } 
+	        else if (k > node->key) { 
+	        	if (node->right) {node=node->right.get();}
+	        	else {return end();} 
+			}	    
+		}
+	};	
+
     void destroy(){ 						/*!< tree deletion: later: set root to nullptr, destroy recursively all nodes*/
         this->root = nullptr;
     }
 
     void balance(){};   								/*!< tree balance*/
 
-    std::shared_ptr<Node> find(T x){return root;};   	/*!< find by value public method  (calls private _find)*/
-
+   
 
     /**
     * In-order (LNR) traversal
@@ -219,15 +236,12 @@ int main()
 
     test.listNodes();
 
-    std::cout << "\nFIND IF test area: value = 3" << std::endl;
+    std::cout << "\nFIND TEST AREA: showing all nodes up to key = 3" << std::endl;
 
-    auto it = std::find_if(test.begin(), test.end(),
-                           [](auto & node) { return node.value == 3; });  // lambda function to use STL algorithm find_it
-    if (it != test.end()) {
-        std::cout <<"Found node with value 3: (" <<it->key <<", " <<it->value <<")" <<std::endl;
-    } else {
-        std::cout <<"Did not find node with value 3 :(" <<std::endl;
-    }
+    int i = 3;
+     for (auto x=test.begin(); x!=test.find(i); ++x) {
+     	std::cout << " seeing " << x->key << ":" << x->value << std::endl;
+     }
 
     //optional:
     test.destroy();
