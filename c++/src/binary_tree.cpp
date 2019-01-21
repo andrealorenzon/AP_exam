@@ -8,41 +8,42 @@
 * @date 12/22/2018
 */
 
-#include <algorithm>
+#include <algorithm> // find_if
 #include <memory>   // std::unique_ptr
-#include <iomanip>
+#include <iomanip>  // cout alignment
 #include <iostream> // std::cout, endl
 
 template <class K, class T>
 class Tree {
+	/*! Implements a binary search tree, templated on key and values */
 
     struct Node	{
-        K key; 						/*!< Node key, templated on K */
-        T value; 					/*!< Node value, templated on T */
-        std::unique_ptr<Node> left = nullptr; 		/*!< unique pointer to the left node */
-        std::unique_ptr<Node> right = nullptr; 	/*!< unique pointer to the right node*/
+        K key; 						/*! Node key, templated on K */
+        T value; 					/*! Node value, templated on T */
+        std::unique_ptr<Node> left = nullptr; 		/*! unique pointer to the left node */
+        std::unique_ptr<Node> right = nullptr; 	    /*! unique pointer to the right node*/
         Node * parent = nullptr;
 
         Node() = default;
-        Node(K k, T val) : key(k), value(val) {} 	/*!< node constructor by declared value*/
+        Node(K k, T val) : key(k), value(val) {} 	/*! node constructor by declared value*/
     };
 
-    std::unique_ptr<Node> root = nullptr; 			/*!< pointer to tree root node*/
+    std::unique_ptr<Node> root = nullptr; 			/*! pointer to tree root node*/
 
 public:
-    static Node * allLeft(Node * node) {   /*!< helper function to traverse left nodes until there is any */
+    static Node * allLeft(Node * node) {   /*! helper function to traverse left nodes until there is any, giving the min(key) */
         while (node->left) { node = node->left.get(); }
         return node;
     }
 
-    static Node * allRight(Node * node) {
+    static Node * allRight(Node * node) {  /*! helper function to traverse right nodes until there is any, giving max(key)*/
         while (node->right) { node = node->right.get(); }
         return node;
     }
 
-    static Node * successor(Node * node) {    /*!< helper function to return next node*/
+    static Node * successor(Node * node) {    /*! helper function to return next node*/
+        
         if (node->right) { return allLeft(node->right.get()); }
-
         Node * parent = node->parent;
         while (parent && node == parent->right.get()) {
             node = parent;
@@ -51,16 +52,24 @@ public:
         return parent;
     }
 
-    Node * treeroot() { return root.get(); }
+    Node * treeroot() { 
+    	/*! Helper function: exposes a public interface to the private tree root.*/
+    	return root.get(); 
+    }  
 
 /////////////////////////////// ITERATORS //////////////////////////////
-// status: DRAFT! Currently unused / untested
 
-    class iterator : public std::iterator< std::forward_iterator_tag, Node> {
+	/*! STL compliant forward_iterator class*/
+    class iterator : public std::iterator< std::forward_iterator_tag, Node> { 
+    
         Node * itr = nullptr;
+    
     public :
+        
         iterator() = default;     // will set to nullptr thanks to ` = nullptr` above
+        
         explicit iterator(Node * ptr) : itr(ptr) {}
+        
         iterator(const iterator&) = default;  //c'tor
 
         Node & operator*() { return *itr; };
@@ -80,6 +89,7 @@ public:
         friend bool operator== (const iterator & lhs, const iterator & rhs) {
             return lhs.itr == rhs.itr;
         };
+
         friend bool operator!= (const iterator & lhs, const iterator & rhs) {
             return !(lhs == rhs);
         };
@@ -88,22 +98,29 @@ public:
 ////////////////////// end iterators ///////////////////////////////////
 
 
-    iterator begin() { return iterator(allLeft(root.get())); }
-    iterator end() { return iterator(nullptr); }
+    iterator begin()        { 
+    	/*! iterator to the node with the lowest key*/
+    	return iterator(allLeft(root.get())); 
+    }
 
+    iterator end()          { 
+    	/*! iterator to the node after the one with the highest key (so nullptr)*/
+    	return iterator(nullptr); 
+    }				
 
+	iterator cbegin() const { 
+		/*! const iterator to the node with the lowest key*/
+		return iterator(allLeft(root.get())); 
+	} 	
 
+    iterator cend()   const { 
+    	/*! const iterator to the node after the one with the highest key (so nullptr)*/
+    	return iterator(nullptr); 
+    }				
 
+    Node * addNode(const K key, const T value) { /*! add a node provided key and value compatible with the tree */
 
-    Node * addNode(const K key, const T value) {
-
-        /*!< creates a node provided key and value, and put it in the appropriate point of the tree*/
-
-        //make_shared : Constructs an object of type T and wraps it in a std::shared_ptr<Type>
-        //using args as the parameter list for the constructor of T.
-        //ex. std::shared_ptr<Node> newnode = std::make_shared<Node>(key, value);
-
-        /* @brief
+       /* @brief
         *
         * input: K key, T value. Must match tree K and T types.
         * output: shared_pointer to new node
@@ -154,34 +171,23 @@ public:
         return current;
     };
 
-    void removeNode(K key) {};   			/*!< remove a single node*/
+    void removeNode(K key) {};   			/*! remove a single node*/
 
-    void listNodes() {          			/*!< shows all nodes (maybe in tree format print?) */
+    void listNodes() {          			/*! iterates the tree in order */
         for (auto i = begin(); i != end(); ++i) {
       	  std::cout << "iterated node: (" <<i->key <<", " <<i->value <<")" << std::endl;
     	};
     };
 
-    iterator find(K k) {
-
-    	if(!root) {return end();}
+    iterator find(K k) {   /*! traverse the tree looking for a key, otherwise return nullptr iterator, that is the same as end()*/
 	    Node * node = root.get();
-	    while (true) {
-	    	if (node->key == k) {return iterator(node);}
-	     //if there, return
-	    
-	    	else if (k < node->key) { 
-	        	if (node->left) {node=node->left.get();}
-	        	else {return end();}
-	        } 
-	        else if (k > node->key) { 
-	        	if (node->right) {node=node->right.get();}
-	        	else {return end();} 
-			}	    
-		}
-	};	
+	    while (node && node->key != k) {
+	        node = (k < node->key ? node->left : node->right).get();
+	    }
+	    return iterator(node);
+	}
 
-    void destroy(){ 						/*!< tree deletion: later: set root to nullptr, destroy recursively all nodes*/
+    void destroy(){ 						/*! tree deletion: later: set root to nullptr, destroy recursively all nodes*/
         this->root = nullptr;
     }
 
@@ -224,9 +230,9 @@ int main()
 
     auto r = test.treeroot();
 
-    //test allLeft
-    std::cout<< "test for allLeft: root = " << r << std::endl;
-    std::cout << " ... the next node is: " << test.allLeft(r) <<std::endl;
+    // //test allLeft
+    // std::cout<< "test for allLeft: root = " << r << std::endl;
+    // std::cout << " ... the next node is: " << test.allLeft(r) <<std::endl;
 
     r = test.successor(r);
 

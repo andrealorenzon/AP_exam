@@ -47,21 +47,21 @@ Assignments
 
 You have to solve the following tasks in C++11 (C++14 and 17 are welcomed as well).
 
-- [ ] implement a template binary search tree
-- [ ] it must be templated on the type of the key and the type of the value associated with it.
+- [X] implement a template binary search tree
+- [X] it must be templated on the type of the key and the type of the value associated with it.
 - [ ] optional you can add a third template on the operation used to compare two different keys.
-- [ ] implement proper iterators for your tree (i.e., iterator and const_iterator)
-- [ ] the tree must have at least the following public member function
-- [ ] insert, used to insert a new pair key-value.
-- [ ] clear(), clear the content of the tree.
-- [ ] begin(), return an iterator to the first node (which likely will not be the root node)
-- [ ] end(), return a proper iterator
-- [ ] cbegin(), return a const_iterator to the first node
-- [ ] cend(), return a proper const_iterator
+- [X] implement proper iterators for your tree (i.e., iterator and const_iterator)
+-     the tree must have at least the following public member function
+- [X] insert, used to insert a new pair key-value.
+- [X] clear(), clear the content of the tree.
+- [x] begin(), return an iterator to the first node (which likely will not be the root node)
+- [x] end(), return a proper iterator
+- [x] cbegin(), return a const_iterator to the first node
+- [x] cend(), return a proper const_iterator
 - [ ] balance(), balance the tree.
-- [ ] find, find a given key and return an iterator to that node. If the key is not found returns end();
+- [x] find, find a given key and return an iterator to that node. If the key is not found returns end();
 - [ ] optional implement the value_type& operator[](`const key_type& k`) function int the const and non-const versions). This functions, should return a reference to the value associated to the key k. If the key is not present, a new node with key k is allocated having the value value_type{}.
-- [ ] implement copy and move semantics for the tree.
+- [x] implement copy and move semantics for the tree.
 - [ ] override the operator put to << in order to print (in order) key: value of all the nodes in the tree.
 
 * Test the performance of the lookups (using the function find) before and after the tree is re-balanced. Use proper numbers (and types) of nodes and look-ups. Does lookup behaves as O(log N)? How your tree compares with std::map? make plots
@@ -92,24 +92,24 @@ You have to solve the following tasks in C++11 (C++14 and 17 are welcomed as wel
 
 # Design Choices
 
-Binary tree nodes are defined by three attributes: the data they contain, and two pointers to left and right child nodes.
+Binary tree nodes are defined by three attributes: a key and two pointers to left and right child nodes.
 
-The project will define a `Node` Class, with these attributes, and the required methods.
-
-A `BLT` class will be needed too, pointing to the first Node (root node), and including for all the properties that a BLT has, but a Node doesn't.
+The project will define a `Tree` Class, that will include a `Node` struct, with at least these attributes, and the required methods.
 
 Pointers can often be problematic elements: in particular, we have to take care about potential problems during node deletion: if our code is not totally safe, we will leave behind orphan nodes, rising memory leaks and dangling references.
 
 Luckily with C++11, smart pointers are available, included in the `<memory>` header.
 
-Smart pointers are special RAII modeled Classes that behave like raw pointers, but also *manage* objects created with `new` , allowing us not to worry about when or wheter we delete them, while providing a similar interface ( \*, -> ). Smart pointers contains a built-in raw pointers, and are defined as template class, whose type is the one of the object they point to. Over this, smart pointers add the concept of "owning" an object. We took into consideration two different types of smart pointers, unique and shared. Moreover, they guarantee that there will be no multiple deletions of the same pointer. Lastly, by not allowing null-pointer dereference, they will keep us safe from accidental dereferencing of missing child nodes.
+Smart pointers are special RAII modeled Classes that behave like raw pointers, but also *manage* objects created, allowing us not to worry about when or wheter we delete them, while providing a similar interface ( \*, -> ). Smart pointers contains a built-in raw pointers, and are defined as template class, whose type is the one of the object they point to. Over this, smart pointers add the concept of "owning" an object. We took into consideration two different types of smart pointers, unique and shared. Moreover, they guarantee that there will be no multiple deletions of the same pointer. Lastly, by not allowing null-pointer dereference, they will keep us safe from accidental dereferencing of missing child nodes.
 
 The `unique_ptr<>` template holds a pointer to an object and deletes this object when the unique_ptr<> object is deleted.
 
 The `shared_ptr<>` template instead can be owned by more than one owner, and will keep track internally of their number, deleting the object and freeing the memory when the number of owners will be zero. When using shared pointers we have to be sure that no circular references is created.
 
-Given the possibility of using move semantics, the decision fell on unique pointers, in a first instance. If copy semantics will be needed we should be able to quickly switch to shared pointers.
+Given the possibility of using move semantics, the decision fell on unique pointers, in a first instance. 
 
 In the requirements, both the key and the value of each node must be templated: we will be using `template <class K>` for the keys and `template <class T>` for the values.
+
+The drawback of smart pointers is that, when writing iterators class, we will have to dereference them with `.get()` method to retrieve raw pointers. Using the latter as observing, non-owning pointers, will prevent memory leaks.
 
   
