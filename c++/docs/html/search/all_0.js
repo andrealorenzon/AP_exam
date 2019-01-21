@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['balance',['balance',['../class_tree.html#a8cda13603e50c62686e1104fabfb0dcb',1,'Tree']]],
-  ['begin',['begin',['../class_tree.html#a3fbca9466ee2279fbe906e2f7c7cce7e',1,'Tree']]],
-  ['binary_5ftree_2ecpp',['binary_tree.cpp',['../binary__tree_8cpp.html',1,'']]],
-  ['binary_5ftree_2eh',['binary_tree.h',['../binary__tree_8h.html',1,'']]]
+  ['addnode',['addNode',['../class_tree.html#a00ce6aff91c5db444ea932cb9c0ef11b',1,'Tree']]],
+  ['allleft',['allLeft',['../class_tree.html#a9eec0130b28246e660afbea0cd4be893',1,'Tree']]],
+  ['allright',['allRight',['../class_tree.html#a1845493caa3a5073328346a5fca96f98',1,'Tree']]]
 ];

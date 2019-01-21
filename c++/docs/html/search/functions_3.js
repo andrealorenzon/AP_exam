@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['find',['find',['../class_tree.html#a1136c005709386b07d8a871765d59836',1,'Tree']]]
+  ['destroy',['destroy',['../class_tree.html#ab3f044718984bf6c6a37cf5be96afb72',1,'Tree']]]
 ];

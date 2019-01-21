@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['traversal_5fiterator',['traversal_iterator',['../class_tree.html#a000e25994418a4a9f9c1211bd7f11d56',1,'Tree']]],
-  ['tree',['Tree',['../class_tree.html#af74569c1958a02871bd55d47697d06f0',1,'Tree']]]
+  ['find',['find',['../class_tree.html#a0f0b13fb80c60079c68da9c52d980887',1,'Tree']]]
 ];

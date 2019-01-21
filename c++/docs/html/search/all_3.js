@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['end',['end',['../class_tree.html#a41f6b3d6dce6a975e18d9355726e7d3e',1,'Tree']]]
+  ['destroy',['destroy',['../class_tree.html#ab3f044718984bf6c6a37cf5be96afb72',1,'Tree']]],
+  ['description',['Description',['../index.html',1,'']]]
 ];

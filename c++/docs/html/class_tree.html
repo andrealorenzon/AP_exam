@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Binary Tree
-   &#160;<span id="projectnumber">0.1</span>
+   &#160;<span id="projectnumber">0.2</span>
    </div>
    <div id="projectbrief">Binary tree implementation for AP Exam</div>
   </td>
@@ -63,57 +63,172 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_tree-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Tree&lt; K, T &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree_1_1iterator.html">iterator</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_tree_1_1_node.html">Node</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a96e00b300d10c071dab6a814d986647d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a96e00b300d10c071dab6a814d986647d">~Tree</a> ()</td></tr>
-<tr class="separator:a96e00b300d10c071dab6a814d986647d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a883aec1e952a2f480fd27a7bb3c2fd7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tree.html">Tree</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a883aec1e952a2f480fd27a7bb3c2fd7d">operator=</a> (<a class="el" href="class_tree.html">Tree</a> &amp;&amp;)=default</td></tr>
-<tr class="separator:a883aec1e952a2f480fd27a7bb3c2fd7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af74569c1958a02871bd55d47697d06f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#af74569c1958a02871bd55d47697d06f0">Tree</a> (const <a class="el" href="class_tree.html">Tree</a> &amp;)</td></tr>
-<tr class="separator:af74569c1958a02871bd55d47697d06f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a470efe09c10ce75db8a9c5caac9cc3be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tree.html">Tree</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a470efe09c10ce75db8a9c5caac9cc3be">operator=</a> (const <a class="el" href="class_tree.html">Tree</a> &amp;)</td></tr>
-<tr class="separator:a470efe09c10ce75db8a9c5caac9cc3be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2cc0abdc7558e27cc0aa9e69a5d2620"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#aa2cc0abdc7558e27cc0aa9e69a5d2620">clear</a> ()</td></tr>
-<tr class="separator:aa2cc0abdc7558e27cc0aa9e69a5d2620"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fbca9466ee2279fbe906e2f7c7cce7e"><td class="memItemLeft" align="right" valign="top">shared_ptr&lt; Node &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a3fbca9466ee2279fbe906e2f7c7cce7e">begin</a> ()</td></tr>
-<tr class="separator:a3fbca9466ee2279fbe906e2f7c7cce7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41f6b3d6dce6a975e18d9355726e7d3e"><td class="memItemLeft" align="right" valign="top">shared_ptr&lt; Node &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a41f6b3d6dce6a975e18d9355726e7d3e">end</a> ()</td></tr>
-<tr class="separator:a41f6b3d6dce6a975e18d9355726e7d3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acaa296b367245151180ea2b1cf8248c3"><td class="memItemLeft" align="right" valign="top">const shared_ptr&lt; Node &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#acaa296b367245151180ea2b1cf8248c3">cbegin</a> ()</td></tr>
-<tr class="separator:acaa296b367245151180ea2b1cf8248c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8213319b16d288974d097c5870f810e2"><td class="memItemLeft" align="right" valign="top">const shared_ptr&lt; Node &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a8213319b16d288974d097c5870f810e2">cend</a> ()</td></tr>
-<tr class="separator:a8213319b16d288974d097c5870f810e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8083081921a6a4c0aeae4de9005c5c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_tree_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#ab8083081921a6a4c0aeae4de9005c5c7">treeroot</a> ()</td></tr>
+<tr class="separator:ab8083081921a6a4c0aeae4de9005c5c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b9defa3b878f153a9e593676de5032c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tree_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a4b9defa3b878f153a9e593676de5032c">begin</a> ()</td></tr>
+<tr class="separator:a4b9defa3b878f153a9e593676de5032c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f9c8bb76ec3456d8b1c2acb0d734b17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tree_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a2f9c8bb76ec3456d8b1c2acb0d734b17">end</a> ()</td></tr>
+<tr class="separator:a2f9c8bb76ec3456d8b1c2acb0d734b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1618fc4c06b6e7336a72a93da043628"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tree_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#ad1618fc4c06b6e7336a72a93da043628">cbegin</a> () const</td></tr>
+<tr class="separator:ad1618fc4c06b6e7336a72a93da043628"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1122ad095c71a08f774d0a02b81f732"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tree_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#ad1122ad095c71a08f774d0a02b81f732">cend</a> () const</td></tr>
+<tr class="separator:ad1122ad095c71a08f774d0a02b81f732"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00ce6aff91c5db444ea932cb9c0ef11b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_tree_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a00ce6aff91c5db444ea932cb9c0ef11b">addNode</a> (const K key, const T value)</td></tr>
+<tr class="separator:a00ce6aff91c5db444ea932cb9c0ef11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a124374376c953428e86c1274088f65a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a124374376c953428e86c1274088f65a6">removeNode</a> (K key)</td></tr>
+<tr class="separator:a124374376c953428e86c1274088f65a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57afda6ed89af6224a6496f9b03bd875"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a57afda6ed89af6224a6496f9b03bd875">listNodes</a> ()</td></tr>
+<tr class="separator:a57afda6ed89af6224a6496f9b03bd875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f0b13fb80c60079c68da9c52d980887"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tree_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a0f0b13fb80c60079c68da9c52d980887">find</a> (K k)</td></tr>
+<tr class="separator:a0f0b13fb80c60079c68da9c52d980887"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3f044718984bf6c6a37cf5be96afb72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#ab3f044718984bf6c6a37cf5be96afb72">destroy</a> ()</td></tr>
+<tr class="separator:ab3f044718984bf6c6a37cf5be96afb72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cda13603e50c62686e1104fabfb0dcb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a8cda13603e50c62686e1104fabfb0dcb">balance</a> ()</td></tr>
 <tr class="separator:a8cda13603e50c62686e1104fabfb0dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1136c005709386b07d8a871765d59836"><td class="memItemLeft" align="right" valign="top">shared_ptr&lt; Node &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a1136c005709386b07d8a871765d59836">find</a> (T x)</td></tr>
-<tr class="separator:a1136c005709386b07d8a871765d59836"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f67709ec67d13f4b34018956445fbf0"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a2f67709ec67d13f4b34018956445fbf0">operator[]</a> (const K &amp;key)</td></tr>
-<tr class="separator:a2f67709ec67d13f4b34018956445fbf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada474cb62da1f8fab9f46d1793df18d1"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#ada474cb62da1f8fab9f46d1793df18d1">operator&lt;&lt;</a> (std::ostream &amp;stream, const Tree::Tree &amp;tree)</td></tr>
-<tr class="separator:ada474cb62da1f8fab9f46d1793df18d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a000e25994418a4a9f9c1211bd7f11d56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a000e25994418a4a9f9c1211bd7f11d56">traversal_iterator</a> ()</td></tr>
-<tr class="separator:a000e25994418a4a9f9c1211bd7f11d56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a9eec0130b28246e660afbea0cd4be893"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_tree_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a9eec0130b28246e660afbea0cd4be893">allLeft</a> (<a class="el" href="struct_tree_1_1_node.html">Node</a> *node)</td></tr>
+<tr class="separator:a9eec0130b28246e660afbea0cd4be893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1845493caa3a5073328346a5fca96f98"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_tree_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a1845493caa3a5073328346a5fca96f98">allRight</a> (<a class="el" href="struct_tree_1_1_node.html">Node</a> *node)</td></tr>
+<tr class="separator:a1845493caa3a5073328346a5fca96f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaf6b33ff5c8dd8753b34b96293184c8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_tree_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#adaf6b33ff5c8dd8753b34b96293184c8">successor</a> (<a class="el" href="struct_tree_1_1_node.html">Node</a> *node)</td></tr>
+<tr class="separator:adaf6b33ff5c8dd8753b34b96293184c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a22698aa570d5a7e4f6aac7fb806951fa"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="struct_tree_1_1_node.html">Node</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html#a22698aa570d5a7e4f6aac7fb806951fa">root</a> = nullptr</td></tr>
+<tr class="separator:a22698aa570d5a7e4f6aac7fb806951fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a96e00b300d10c071dab6a814d986647d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96e00b300d10c071dab6a814d986647d">&#9670;&nbsp;</a></span>~Tree()</h2>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a00ce6aff91c5db444ea932cb9c0ef11b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00ce6aff91c5db444ea932cb9c0ef11b">&#9670;&nbsp;</a></span>addNode()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
+template&lt;class K , class T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::~<a class="el" href="class_tree.html">Tree</a> </td>
+          <td class="memname"><a class="el" href="struct_tree_1_1_node.html">Node</a>* <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::addNode </td>
+          <td>(</td>
+          <td class="paramtype">const K&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>add a node provided key and value compatible with the tree </p>
+
+</div>
+</div>
+<a id="a9eec0130b28246e660afbea0cd4be893"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9eec0130b28246e660afbea0cd4be893">&#9670;&nbsp;</a></span>allLeft()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_tree_1_1_node.html">Node</a>* <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::allLeft </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_tree_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>pointer to tree root node </p>
+<p>helper function to traverse left nodes until there is any, giving the min(key) </p>
+
+</div>
+</div>
+<a id="a1845493caa3a5073328346a5fca96f98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1845493caa3a5073328346a5fca96f98">&#9670;&nbsp;</a></span>allRight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_tree_1_1_node.html">Node</a>* <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::allRight </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_tree_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>helper function to traverse right nodes until there is any, giving max(key) </p>
+
+</div>
+</div>
+<a id="a8cda13603e50c62686e1104fabfb0dcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cda13603e50c62686e1104fabfb0dcb">&#9670;&nbsp;</a></span>balance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::balance </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -125,299 +240,319 @@ template&lt;Class K, Class T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p><a class="el" href="class_tree.html">Tree</a> constructor </p>
 
 </div>
 </div>
-<a id="af74569c1958a02871bd55d47697d06f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af74569c1958a02871bd55d47697d06f0">&#9670;&nbsp;</a></span>Tree()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::<a class="el" href="class_tree.html">Tree</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt; &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>move constructor </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8cda13603e50c62686e1104fabfb0dcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cda13603e50c62686e1104fabfb0dcb">&#9670;&nbsp;</a></span>balance()</h2>
+<a id="a4b9defa3b878f153a9e593676de5032c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b9defa3b878f153a9e593676de5032c">&#9670;&nbsp;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::balance </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>tree balance </p>
-
-</div>
-</div>
-<a id="a3fbca9466ee2279fbe906e2f7c7cce7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fbca9466ee2279fbe906e2f7c7cce7e">&#9670;&nbsp;</a></span>begin()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">shared_ptr&lt;Node&gt; <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::begin </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>must return an iterator to the first element </p>
-
-</div>
-</div>
-<a id="acaa296b367245151180ea2b1cf8248c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acaa296b367245151180ea2b1cf8248c3">&#9670;&nbsp;</a></span>cbegin()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">const shared_ptr&lt;Node&gt; <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::cbegin </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>must return a const iterator to the first element </p>
-
-</div>
-</div>
-<a id="a8213319b16d288974d097c5870f810e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8213319b16d288974d097c5870f810e2">&#9670;&nbsp;</a></span>cend()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">const shared_ptr&lt;Node&gt; <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::cend </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>const iterator to the last element </p>
-
-</div>
-</div>
-<a id="aa2cc0abdc7558e27cc0aa9e69a5d2620"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2cc0abdc7558e27cc0aa9e69a5d2620">&#9670;&nbsp;</a></span>clear()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::clear </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>tree deletion </p>
-
-</div>
-</div>
-<a id="a41f6b3d6dce6a975e18d9355726e7d3e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41f6b3d6dce6a975e18d9355726e7d3e">&#9670;&nbsp;</a></span>end()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">shared_ptr&lt;Node&gt; <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::end </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>iterator to the last element </p>
-
-</div>
-</div>
-<a id="a1136c005709386b07d8a871765d59836"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1136c005709386b07d8a871765d59836">&#9670;&nbsp;</a></span>find()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">shared_ptr&lt;Node&gt; <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::find </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>find by value public method (calls private _find) </p>
-
-</div>
-</div>
-<a id="ada474cb62da1f8fab9f46d1793df18d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada474cb62da1f8fab9f46d1793df18d1">&#9670;&nbsp;</a></span>operator<<()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>stream</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::<a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>tree</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&lt;&lt; operator overload: should print the contents of every K,V pair in ostream </p>
-
-</div>
-</div>
-<a id="a883aec1e952a2f480fd27a7bb3c2fd7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a883aec1e952a2f480fd27a7bb3c2fd7d">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
+template&lt;class K , class T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_tree.html">Tree</a>&amp; <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::operator= </td>
+          <td class="memname"><a class="el" href="class_tree_1_1iterator.html">iterator</a> <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::begin </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt; &amp;&amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p><a class="el" href="class_tree.html">Tree</a> destructor. Smart pointers makes unnecessary the explicit destruction of all nodes Operator = overload </p>
+<p>iterator to the node with the lowest key </p>
 
 </div>
 </div>
-<a id="a470efe09c10ce75db8a9c5caac9cc3be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a470efe09c10ce75db8a9c5caac9cc3be">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+<a id="ad1618fc4c06b6e7336a72a93da043628"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1618fc4c06b6e7336a72a93da043628">&#9670;&nbsp;</a></span>cbegin()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_tree.html">Tree</a>&amp; <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::operator= </td>
+          <td class="memname"><a class="el" href="class_tree_1_1iterator.html">iterator</a> <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::cbegin </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt; &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>const iterator to the node with the lowest key </p>
+
+</div>
+</div>
+<a id="ad1122ad095c71a08f774d0a02b81f732"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1122ad095c71a08f774d0a02b81f732">&#9670;&nbsp;</a></span>cend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_tree_1_1iterator.html">iterator</a> <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::cend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>const iterator to the node after the one with the highest key (so nullptr) </p>
+
+</div>
+</div>
+<a id="ab3f044718984bf6c6a37cf5be96afb72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3f044718984bf6c6a37cf5be96afb72">&#9670;&nbsp;</a></span>destroy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::destroy </td>
+          <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>const operator = overload </p>
+<p>tree deletion: later: set root to nullptr, destroy recursively all nodes </p>
 
 </div>
 </div>
-<a id="a2f67709ec67d13f4b34018956445fbf0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f67709ec67d13f4b34018956445fbf0">&#9670;&nbsp;</a></span>operator[]()</h2>
+<a id="a2f9c8bb76ec3456d8b1c2acb0d734b17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f9c8bb76ec3456d8b1c2acb0d734b17">&#9670;&nbsp;</a></span>end()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T&amp; <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::operator[] </td>
+          <td class="memname"><a class="el" href="class_tree_1_1iterator.html">iterator</a> <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::end </td>
           <td>(</td>
-          <td class="paramtype">const K &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>iterator to the node after the one with the highest key (so nullptr) </p>
+
+</div>
+</div>
+<a id="a0f0b13fb80c60079c68da9c52d980887"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f0b13fb80c60079c68da9c52d980887">&#9670;&nbsp;</a></span>find()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_tree_1_1iterator.html">iterator</a> <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::find </td>
+          <td>(</td>
+          <td class="paramtype">K&#160;</td>
+          <td class="paramname"><em>k</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>traverse the tree looking for a key, otherwise return nullptr iterator, that is the same as end() </p>
+
+</div>
+</div>
+<a id="a57afda6ed89af6224a6496f9b03bd875"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57afda6ed89af6224a6496f9b03bd875">&#9670;&nbsp;</a></span>listNodes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::listNodes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>remove a single node </p>
+<p>iterates the tree in order </p>
+
+</div>
+</div>
+<a id="a124374376c953428e86c1274088f65a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a124374376c953428e86c1274088f65a6">&#9670;&nbsp;</a></span>removeNode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::removeNode </td>
+          <td>(</td>
+          <td class="paramtype">K&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>optional: returns the value associated with a given key if present. If not present, creates a node with the given key </p>
 
 </div>
 </div>
-<a id="a000e25994418a4a9f9c1211bd7f11d56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a000e25994418a4a9f9c1211bd7f11d56">&#9670;&nbsp;</a></span>traversal_iterator()</h2>
+<a id="adaf6b33ff5c8dd8753b34b96293184c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaf6b33ff5c8dd8753b34b96293184c8">&#9670;&nbsp;</a></span>successor()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Class K, Class T&gt; </div>
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::traversal_iterator </td>
+          <td class="memname">static <a class="el" href="struct_tree_1_1_node.html">Node</a>* <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::successor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_tree_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>helper function to return next node </p>
+
+</div>
+</div>
+<a id="ab8083081921a6a4c0aeae4de9005c5c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8083081921a6a4c0aeae4de9005c5c7">&#9670;&nbsp;</a></span>treeroot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_tree_1_1_node.html">Node</a>* <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::treeroot </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>In-order (LNR) traversal In-order: A, B, C, D, E, F, G, H, I. Check if the current node is empty or null. Traverse the left subtree by recursively calling the in-order function. Display the data part of the root (or current node). Traverse the right subtree by recursively calling the in-order function.</p>
-<p>In a binary search tree, in-order traversal retrieves data in sorted order.</p>
-<p>Here'a void placeholder, we should write a separate iterator class to include, IMHO </p>
+<p>Helper function: exposes a public interface to the private tree root. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a22698aa570d5a7e4f6aac7fb806951fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22698aa570d5a7e4f6aac7fb806951fa">&#9670;&nbsp;</a></span>root</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="struct_tree_1_1_node.html">Node</a>&gt; <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt;::root = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/andrea/AP_exam/src/<a class="el" href="binary__tree_8h_source.html">binary_tree.h</a></li>
+<li>/home/andrea/AP_exam/c++/src/<a class="el" href="binary__tree_8cpp.html">binary_tree.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

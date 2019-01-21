@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['traversal_5fiterator',['traversal_iterator',['../class_tree.html#a000e25994418a4a9f9c1211bd7f11d56',1,'Tree']]],
-  ['tree',['Tree',['../class_tree.html',1,'Tree&lt; K, T &gt;'],['../class_tree.html#af74569c1958a02871bd55d47697d06f0',1,'Tree::Tree()']]]
+  ['iterator',['iterator',['../class_tree_1_1iterator.html',1,'Tree&lt; K, T &gt;::iterator'],['../class_tree_1_1iterator.html#ae5e13400dff45c9120eb00d731ca2003',1,'Tree::iterator::iterator()=default'],['../class_tree_1_1iterator.html#a7361515f85027117d216ccb86b10a0f0',1,'Tree::iterator::iterator(Node *ptr)'],['../class_tree_1_1iterator.html#a7d303395c219744628fc75dd861c2634',1,'Tree::iterator::iterator(const iterator &amp;)=default']]],
+  ['itr',['itr',['../class_tree_1_1iterator.html#a0aa480506a0598f4f4945b6b3594f599',1,'Tree::iterator']]]
 ];
