@@ -195,7 +195,10 @@ public:
         this->root = nullptr;
     }
 
-    std::vector <std::pair<K,T>> arrayOfNodes() {
+    std::vector <std::pair<K,T>> arrayOfNodes() 
+    /*!<  Helper function: creates an std::vector and push every pair(key,value) of the tree nodes in it.*/
+
+    {
         std::vector<std::pair<K,T>> v;
         for (auto i = begin(); i != end(); ++i) {
             auto data = std::make_pair(i->key, i->value);
@@ -205,7 +208,19 @@ public:
         return v;
     }
 
-    void balance(){};   								/*!< tree balance*/
+    void recursive_balancer() {
+        //trova il centrale, lo mette nel tree
+        // recursive_balancer(left half)
+        // recursive_balancer(right half)
+    }
+
+    void balance()
+    /*!< tree balance function. calls arrayOfNodes() to linearize the tree, then creates a balanced tree*/
+    {
+        std::vector<std::pair<K,T>> vector = this.arrayOfNodes();
+        int length = vector.size();
+
+    };   								
 
    
 
@@ -274,6 +289,8 @@ int main (int argc, char* argv[])
           myMap.listNodes();
     }
 
+
+    //test
     auto v = myMap.arrayOfNodes();
 
   return 0;
