@@ -261,6 +261,7 @@ public:
     };   								
 
    
+    
 
     /**
     * In-order (LNR) traversal
@@ -304,6 +305,18 @@ long long int llRand()   // random number between 0 and 10^18
     return dis(gen);
 }
 
+template<class K, class T>                                                       ///   DA FINIRE! 
+std::ostream& operator<<(std::ostream& ostream, const Tree<K,T>& tree) {
+
+    if (!(tree.treeroot())) {
+        ostream << "Error: printing empty tree";
+        return ostream;
+    }    
+    for (auto t=tree.begin();t!=tree.end();++t){
+        ostream << (*t).first << ": " <<(*t).second<< "\n";
+    }
+  return ostream;
+}
 
 int main (int argc, char* argv[])
 {
@@ -342,6 +355,8 @@ int main (int argc, char* argv[])
     std::cout << "height before balance: " << myMap.height << std::endl;
     myMap.balance();
     std::cout << "height after balance: " << myMap.height << std::endl;
+
+    std::cout << "My tree: \n" << myMap << std::endl;   
   return 0;
 }
 
