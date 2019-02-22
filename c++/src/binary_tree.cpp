@@ -66,6 +66,10 @@ public:
     	return root.get(); 
     }  
 
+    const Node * ctreeroot() const { 
+        /*! Helper function: exposes a public interface to the private tree root, const.*/
+        return root.get(); 
+    }  
 /////////////////////////////// ITERATORS //////////////////////////////
 
 	/*! STL compliant forward_iterator class*/
@@ -308,12 +312,12 @@ long long int llRand()   // random number between 0 and 10^18
 template<class K, class T>                                                       ///   DA FINIRE! 
 std::ostream& operator<<(std::ostream& ostream, const Tree<K,T>& tree) {
 
-    if (!(tree.treeroot())) {
+    if (!(tree.ctreeroot())) {
         ostream << "Error: printing empty tree";
         return ostream;
     }    
-    for (auto t=tree.begin();t!=tree.end();++t){
-        ostream << (*t).first << ": " <<(*t).second<< "\n";
+    for (auto t=tree.cbegin();t!=tree.cend();++t){
+        ostream << std::left << std::setw(12)<< t->key << ":" << t->value << "\n";
     }
   return ostream;
 }
@@ -327,7 +331,7 @@ int main (int argc, char* argv[])
     //read iterations and string length from argv
     const  int iterations = std::atoi(argv[1]);
     const  int str_length = std::atoi(argv[2]);
-    const int readtoo     = std::atoi(argv[3]);
+    const  int readtoo    = std::atoi(argv[3]);
     std::string dummy_value = "";
 
     //create an empty tree
@@ -346,7 +350,7 @@ int main (int argc, char* argv[])
 
     // retrieve all data in random order if readtoo = 1
     if (readtoo) {
-          myMap.listNodes();
+          std::cout << "My tree: \n ---------- \n" << myMap << std::endl;
     }
 
 
@@ -356,7 +360,7 @@ int main (int argc, char* argv[])
     myMap.balance();
     std::cout << "height after balance: " << myMap.height << std::endl;
 
-    std::cout << "My tree: \n" << myMap << std::endl;   
+       
   return 0;
 }
 
