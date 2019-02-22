@@ -12,6 +12,9 @@
 #include <memory>   // std::unique_ptr
 #include <iomanip>  // cout alignment
 #include <iostream> // std::cout, endl
+#include <math.h>   // pow()
+#include <vector>   // for tree balancing
+#include <utility>  // pair
 
 template <class K, class T>
 class Tree {
@@ -153,20 +156,20 @@ public:
             newNode->parent = parent;
             if (newNode->key > parent->key) {
                 parent->right = std::move(newNode);
-                std::cout <<"created node (" <<std::setw(3) <<key
-                          <<", " <<std::setw(3) <<value <<") [" <<current
-                          <<"] on right of " <<parent->key <<std::endl;
+                // std::cout <<"created node (" <<std::setw(3) <<key
+                //           <<", " <<std::setw(3) <<value <<") [" <<current
+                //           <<"] on right of " <<parent->key <<std::endl;
             } else {
                 parent->left = std::move(newNode);
-                std::cout <<"created node (" <<std::setw(3) <<key
-                          <<", " <<std::setw(3) <<value <<") [" <<current
-                          <<"] on left of " <<parent->key <<std::endl;
+                // std::cout <<"created node (" <<std::setw(3) <<key
+                //           <<", " <<std::setw(3) <<value <<") [" <<current
+                //           <<"] on left of " <<parent->key <<std::endl;
             }
         } else {
             root = std::move(newNode);
-            std::cout <<"created node (" <<std::setw(3) <<key
-                      <<", " <<std::setw(3) <<value <<") [" <<current
-                      <<"] at root" <<std::endl;
+            // std::cout <<"created node (" <<std::setw(3) <<key
+            //           <<", " <<std::setw(3) <<value <<") [" <<current
+            //           <<"] at root" <<std::endl;
         }
         return current;
     };
@@ -176,6 +179,7 @@ public:
     void listNodes() {          			/*! iterates the tree in order */
         for (auto i = begin(); i != end(); ++i) {
       	  std::cout << "iterated node: (" <<i->key <<", " <<i->value <<")" << std::endl;
+            
     	};
     };
 
@@ -189,6 +193,16 @@ public:
 
     void destroy(){ 						/*! tree deletion: later: set root to nullptr, destroy recursively all nodes*/
         this->root = nullptr;
+    }
+
+    std::vector <std::pair<K,T>> arrayOfNodes() {
+        std::vector<std::pair<K,T>> v;
+        for (auto i = begin(); i != end(); ++i) {
+            auto data = std::make_pair(i->key, i->value);
+            v.push_back(data);
+        }
+        std::cout << "Tree has been vectorized" << std::endl;
+        return v;
     }
 
     void balance(){};   								/*!< tree balance*/
@@ -210,49 +224,58 @@ public:
     */
 };
 
-int main()
+
+/*!< generates a random string of given length, for benchmarking purposes */
+std::string random_string( size_t length )
 {
-    Tree<int,int> test;
-    test.addNode(1,1);
-    test.addNode(3,2);
-    test.addNode(-4,2);
-    test.addNode(13,2);
-    test.addNode(-7,2);
-    test.addNode(-2,2);
-    test.addNode(4,2);
-    test.addNode(8,2);
-    test.addNode(11,2);
-    test.addNode(-8,2);
-    test.addNode(5,3);
-    test.addNode(-1,5);
-    test.addNode(1,10);
-    test.addNode(1,20);
-
-    auto r = test.treeroot();
-
-    // //test allLeft
-    // std::cout<< "test for allLeft: root = " << r << std::endl;
-    // std::cout << " ... the next node is: " << test.allLeft(r) <<std::endl;
-
-    r = test.successor(r);
-
-    std::cout<< "the next node is: " << r <<std::endl;
-
-
-    std::cout << "ITERATORS TEST AREA" << std::endl;
-
-    test.listNodes();
-
-    std::cout << "\nFIND TEST AREA: showing all nodes up to key = 3" << std::endl;
-
-    int i = 3;
-     for (auto x=test.begin(); x!=test.find(i); ++x) {
-     	std::cout << " seeing " << x->key << ":" << x->value << std::endl;
-     }
-
-    //optional:
-    test.destroy();
-
-
-    return 0;
+    auto randchar = []() -> char
+    {
+        const char charset[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+        const size_t max_index = (sizeof(charset) - 1);
+        return charset[ rand() % max_index ];
+    };
+    std::string str(length,0);
+    std::generate_n( str.begin(), length, randchar );
+    return str;
 }
+
+
+
+int main (int argc, char* argv[])
+{
+    // initialize random seed
+    srand (time(NULL));
+
+    //read iterations and string length from argv
+    const  int iterations = std::atoi(argv[1]);
+    const  int str_length = std::atoi(argv[2]);
+    const int readtoo     = std::atoi(argv[3]);
+    std::string dummy_value = "";
+
+    //create an empty map
+    Tree <int,std::string> myMap;
+    std::cout << "begin: " << std::endl;
+
+    //populate the map
+    for (int counter = 0; counter < iterations; ++counter ) 
+    {
+        long long int index = std::rand();
+        auto value = random_string(str_length);
+        myMap.addNode(index, value);
+    }
+  
+    std::cout << "Tree populated with " << iterations << " elements." << std::endl;
+
+    // retrieve all data in random order if readtoo = 1
+    if (readtoo) {
+          myMap.listNodes();
+    }
+
+    auto v = myMap.arrayOfNodes();
+
+  return 0;
+}
+
