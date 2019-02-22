@@ -15,6 +15,7 @@
 #include <math.h>   // pow()
 #include <vector>   // for tree balancing
 #include <utility>  // pair
+#include <random>   // llRand, custom long long int random generator
 
 template <class K, class T>
 class Tree {
@@ -26,14 +27,19 @@ class Tree {
         std::unique_ptr<Node> left = nullptr; 		/*! unique pointer to the left node */
         std::unique_ptr<Node> right = nullptr; 	    /*! unique pointer to the right node*/
         Node * parent = nullptr;
+        
 
         Node() = default;
         Node(K k, T val) : key(k), value(val) {} 	/*! node constructor by declared value*/
     };
 
+    
     std::unique_ptr<Node> root = nullptr; 			/*! pointer to tree root node*/
 
 public:
+
+    long long int height = 0;             /*! Tree height */
+
     static Node * allLeft(Node * node) {   /*! helper function to traverse left nodes until there is any, giving the min(key) */
         while (node->left) { node = node->left.get(); }
         return node;
@@ -137,15 +143,27 @@ public:
         Node * current = root.get();
         Node * parent = nullptr;
 
+        // while(current->parent_ptr) {
+        //     parent = current->parent_ptr;
+        //     if (parent->height <= current->height) 
+        //         parent->height = current->height + 1;
+        //         current = parent;
+        //      }
+
+        long long int temp_height = 0;
         while (current) {
             parent = current;
             if (key > current->key) {
                 current = current->right.get();
+                temp_height++;
+                if (temp_height > this->height) { this->height = temp_height;}
             } else if (key < current->key) {
                 current = current->left.get();
+                temp_height++;
+                if (temp_height > this->height) { this->height = temp_height;}
             } else {
                 current->value = value;    // BUG: does not update values!! why???
-                std::cout <<"updated node " <<current <<" with value " <<value <<std::endl;
+                //std::cout <<"updated node " <<current <<" with key " << key <<std::endl;
                 return current;
             }
         }
@@ -204,22 +222,42 @@ public:
             auto data = std::make_pair(i->key, i->value);
             v.push_back(data);
         }
-        std::cout << "Tree has been vectorized" << std::endl;
+        
+        std::cout << "Nodes have been stored into a vector. Rebuilding the tree..." << std::endl;
         return v;
     }
 
-    void recursive_balancer() {
-        //trova il centrale, lo mette nel tree
-        // recursive_balancer(left half)
-        // recursive_balancer(right half)
+    void recursive_balancer(std::vector<std::pair<K,T>>vec) {       // METTERE PRIVATA!!!
+        
+        //std::cout << "balancing.." << std::endl;
+        if (vec.size() < 3) 
+        {
+            for(long unsigned int i{0}; i < vec.size(); ++i) 
+            this->addNode(vec[i].first, vec[i].second);
+            //std::cout << "Reinserting a node in correct position." << std::endl;
+        } 
+        
+        else 
+        { 
+            this->addNode(vec[vec.size() / 2].first, vec[vec.size() / 2].second);
+            //std::cout << "Reinserting a node in correct position." << std::endl;
+
+
+            std::vector<std::pair<K,T>> firstHalf(vec.begin(), vec.begin() + vec.size()/2);
+            std::vector<std::pair<K,T>> secondHalf(vec.begin() + vec.size()/2 + 1, vec.end());
+
+            recursive_balancer(firstHalf);
+            recursive_balancer(secondHalf);
+        }
     }
 
     void balance()
     /*!< tree balance function. calls arrayOfNodes() to linearize the tree, then creates a balanced tree*/
     {
-        std::vector<std::pair<K,T>> vector = this.arrayOfNodes();
-        int length = vector.size();
-
+        this->height = 0;
+        std::vector<std::pair<K,T>> vector = this->arrayOfNodes(); //salviamo i nodi iterati in  un vector, in ordine di key
+        this->root = nullptr;  // cancelliamo tutti i nodi senza distruggere l'albero
+        this->recursive_balancer(vector); // ricreiamo l'albero dal vector
     };   								
 
    
@@ -257,12 +295,21 @@ std::string random_string( size_t length )
     return str;
 }
 
+long long int llRand()   // random number between 0 and 10^18
+{
+    std::random_device rd;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    std::uniform_int_distribution<long long int> dis(1, 1000000000000000);   // 10^18
+    
+    return dis(gen);
+}
 
 
 int main (int argc, char* argv[])
 {
-    // initialize random seed
-    srand (time(NULL));
+
+    //test llRand
+    //std::cout << "llRand test: --> " << llRand() << std::endl;
 
     //read iterations and string length from argv
     const  int iterations = std::atoi(argv[1]);
@@ -270,14 +317,14 @@ int main (int argc, char* argv[])
     const int readtoo     = std::atoi(argv[3]);
     std::string dummy_value = "";
 
-    //create an empty map
+    //create an empty tree
     Tree <int,std::string> myMap;
-    std::cout << "begin: " << std::endl;
+    
 
     //populate the map
     for (int counter = 0; counter < iterations; ++counter ) 
     {
-        long long int index = std::rand();
+        long long int index = llRand();
         auto value = random_string(str_length);
         myMap.addNode(index, value);
     }
@@ -291,8 +338,10 @@ int main (int argc, char* argv[])
 
 
     //test
-    auto v = myMap.arrayOfNodes();
-
+    //auto v = myMap.arrayOfNodes();
+    std::cout << "height before balance: " << myMap.height << std::endl;
+    myMap.balance();
+    std::cout << "height after balance: " << myMap.height << std::endl;
   return 0;
 }
 
