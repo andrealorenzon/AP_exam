@@ -50,15 +50,18 @@ public:
         return node;
     }
 
-    static Node * successor(Node * node) {    /*! helper function to return next node*/
-        
+    static const Node * successor(const Node * node) {    /*! helper function to return next node*/
+
         if (node->right) { return allLeft(node->right.get()); }
-        Node * parent = node->parent;
+        const Node * parent = node->parent;
         while (parent && node == parent->right.get()) {
             node = parent;
             parent = node->parent;
         }
         return parent;
+    }
+    static Node * successor(Node * node) {    /*! helper function to return next node, non-const*/
+        return const_cast<Node *>(successor(const_cast<const Node *>(node)));
     }
 
     Node * treeroot() { 
@@ -74,62 +77,74 @@ public:
 
 	/*! STL compliant forward_iterator class*/
     class iterator : public std::iterator< std::forward_iterator_tag, Node> { 
-    
+        /*!< Tree node iterator*/
         Node * itr = nullptr;
-    
     public :
-        
         iterator() = default;     // will set to nullptr thanks to ` = nullptr` above
-        
         explicit iterator(Node * ptr) : itr(ptr) {}
-        
         iterator(const iterator&) = default;  //c'tor
-
         Node & operator*() { return *itr; };
         Node * operator->() { return itr; }
-
         iterator & operator++() {  // deve ritornare nodo.successor()
             itr = successor(itr);
             return *this;
         }
-
         iterator operator++(int) {
             auto old = *this;
             ++(*this);
             return old;
         }
-
         friend bool operator== (const iterator & lhs, const iterator & rhs) {
             return lhs.itr == rhs.itr;
         };
-
         friend bool operator!= (const iterator & lhs, const iterator & rhs) {
+            return !(lhs == rhs);
+        };
+    };
+
+    class const_iterator : public std::iterator< std::forward_iterator_tag, Node> {
+        /*!< Tree node const iterator*/
+        const Node * itr = nullptr;
+    public :
+        const_iterator() = default;     // will set to nullptr thanks to ` = nullptr` above
+        explicit const_iterator(const Node * ptr) : itr(ptr) {}
+       
+        const_iterator(const const_iterator&) = default;  //c'tor
+ 
+        const Node & operator*() { return *itr; };
+        const Node * operator->() { return itr; }
+ 
+        const_iterator & operator++() {  // deve ritornare nodo.successor()
+            itr = successor(itr);
+            return *this;
+        }
+ 
+        const_iterator operator++(int) {
+            auto old = *this;
+            ++(*this);
+            return old;
+        }
+ 
+        friend bool operator== (const const_iterator & lhs, const const_iterator & rhs) {
+            return lhs.itr == rhs.itr;
+        };
+ 
+        friend bool operator!= (const const_iterator & lhs, const const_iterator & rhs) {
             return !(lhs == rhs);
         };
     };
 
 ////////////////////// end iterators ///////////////////////////////////
 
+    iterator       begin()        { return iterator(allLeft(root.get())); }         /*! iterator to the node with the lowest key*/
+    const_iterator begin()  const { return const_iterator(allLeft(root.get())); }   /*! iterator to the node with the lowest key, for const Trees*/
+    const_iterator cbegin() const { return const_iterator(allLeft(root.get())); }   /*! const iterator to the node with the lowest key, for const Trees*/
 
-    iterator begin()        { 
-    	/*! iterator to the node with the lowest key*/
-    	return iterator(allLeft(root.get())); 
-    }
+    iterator       end()          { return iterator(nullptr); }				        /*! iterator to the node after the one with the highest key (so nullptr)*/
+	const_iterator end()  const   { return const_iterator(nullptr);}                /*! iterator to the node after the one with the highest key (so nullptr), for const Trees*/
+    const_iterator cend() const   { return const_iterator(allLeft(root.get())); } 	/*! const iterator to the node after the one with the highest key (so nullptr), for const Trees*/
 
-    iterator end()          { 
-    	/*! iterator to the node after the one with the highest key (so nullptr)*/
-    	return iterator(nullptr); 
-    }				
-
-	iterator cbegin() const { 
-		/*! const iterator to the node with the lowest key*/
-		return iterator(allLeft(root.get())); 
-	} 	
-
-    iterator cend()   const { 
-    	/*! const iterator to the node after the one with the highest key (so nullptr)*/
-    	return iterator(nullptr); 
-    }				
+    			
 
     Node * addNode(const K key, const T value) { /*! add a node provided key and value compatible with the tree */
 
@@ -236,8 +251,8 @@ public:
         //std::cout << "balancing.." << std::endl;
         if (vec.size() < 3) 
         {
-            for(long unsigned int i{0}; i < vec.size(); ++i) 
-            this->addNode(vec[i].first, vec[i].second);
+            for(auto & item : vec) 
+                this->addNode(item.first, item.second);
             //std::cout << "Reinserting a node in correct position." << std::endl;
         } 
         
@@ -302,9 +317,9 @@ std::string random_string( size_t length )
 
 long long int llRand()   // random number between 0 and 10^18
 {
-    std::random_device rd;  //Will be used to obtain a seed for the random number engine
-    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-    std::uniform_int_distribution<long long int> dis(1, 1000000000000000);   // 10^18
+    std::random_device rd;              //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd());             //Standard mersenne_twister_engine seeded with rd()
+    std::uniform_int_distribution<long long int> dis(1, 1000000000000000);   // 1-10^15
     
     return dis(gen);
 }
