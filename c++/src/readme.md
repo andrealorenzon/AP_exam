@@ -58,25 +58,21 @@ You have to solve the following tasks in C++11 (C++14 and 17 are welcomed as wel
 - [x] end(), return a proper iterator
 - [x] cbegin(), return a const_iterator to the first node
 - [x] cend(), return a proper const_iterator
-- [ ] balance(), balance the tree.
+- [x] balance(), balance the tree.
 - [x] find, find a given key and return an iterator to that node. If the key is not found returns end();
 - [ ] optional implement the value_type& operator[](`const key_type& k`) function int the const and non-const versions). This functions, should return a reference to the value associated to the key k. If the key is not present, a new node with key k is allocated having the value value_type{}.
 - [x] implement copy and move semantics for the tree.
-- [ ] override the operator put to << in order to print (in order) key: value of all the nodes in the tree.
+- [x] override the operator put to << in order to print (in order) key: value of all the nodes in the tree.
 
-* Test the performance of the lookups (using the function find) before and after the tree is re-balanced. Use proper numbers (and types) of nodes and look-ups. Does lookup behaves as O(log N)? How your tree compares with std::map? make plots
+- [ ] Test the performance of the lookups (using the function find) before and after the tree is re-balanced. Use proper numbers (and types) of nodes and look-ups. 
+- [ ] Does lookup behaves as O(log N)? 
+- [ ] How your tree compares with std::map? make plots
 
 - [x] optional document the code with Doxygen
 
 - [ ] write a short report
 
-- [ ] test everything
-
-## Hints
-
-* you can use `std::pair<const key_type,value_type>` found in the header utility
-* use recursive functions
-* big hint start coding and using the iterators ASAP.
+- [x] test everything
 
 
 ---
@@ -100,7 +96,7 @@ Pointers can often be problematic elements: in particular, we have to take care 
 
 Luckily with C++11, smart pointers are available, included in the `<memory>` header.
 
-Smart pointers are special RAII modeled Classes that behave like raw pointers, but also *manage* objects created, allowing us not to worry about when or wheter we delete them, while providing a similar interface ( \*, -> ). Smart pointers contains a built-in raw pointers, and are defined as template class, whose type is the one of the object they point to. Over this, smart pointers add the concept of "owning" an object. We took into consideration two different types of smart pointers, unique and shared. Moreover, they guarantee that there will be no multiple deletions of the same pointer. Lastly, by not allowing null-pointer dereference, they will keep us safe from accidental dereferencing of missing child nodes.
+Smart pointers are special RAII modeled Classes that behave like raw pointers, but also *manage* objects created, allowing us not to worry about when or whether we delete them, while providing a similar interface ( \*, -> ). Smart pointers contains a built-in raw pointers, and are defined as template class, whose type is the one of the object they point to. Over this, smart pointers add the concept of "owning" an object. We took into consideration two different types of smart pointers, unique and shared. Moreover, they guarantee that there will be no multiple deletions of the same pointer. Lastly, by not allowing null-pointer dereference, they will keep us safe from accidental dereferencing of missing child nodes.
 
 The `unique_ptr<>` template holds a pointer to an object and deletes this object when the unique_ptr<> object is deleted.
 
@@ -108,8 +104,37 @@ The `shared_ptr<>` template instead can be owned by more than one owner, and wil
 
 Given the possibility of using move semantics, the decision fell on unique pointers, in a first instance. 
 
+A potential issue is known with this implementation: in case of very deep trees, the recursion of the deletion of generations of parent-child unique-ptrs could overflow. Specific deletion algorithms that can handle this issue has been investigated, but we have chosen not to implement any for this version of the software, for time constraints.
+
 In the requirements, both the key and the value of each node must be templated: we will be using `template <class K>` for the keys and `template <class T>` for the values.
 
 The drawback of smart pointers is that, when writing iterators class, we will have to dereference them with `.get()` method to retrieve raw pointers. Using the latter as observing, non-owning pointers, will prevent memory leaks.
 
-  
+We decided to nest, inside the Tree class, a Node struct, private to Tree. All (and only) public interfaces will be able to interact with it. To create Nodes, the user will have to empy addNode constructors. Most Tree methods and iterators (included begin(), cbegin(), end() and cend()) are available both for const and non-const Trees.
+
+Every Tree iteration (for addNode, iterators, etc.) has been created recursive and O(log(N)) whenever convenient.
+
+The tree has been tested only with long long int keys and string values. Additional testing should have been done with different data types, but no different result is expected.
+
+# balance() method
+
+The balance function could be have done differently. An ideal approach would have been creating a red-black or self-balancing Tree, modifying Node and Tree accordingly. For time limits, a suboptimal approach has been chosen. When calling the balance() method, the whole tree is dumped in a std::vector object by arrayOfNodes() method, preserving only keys and values. The vector is then recursively parsed to create a new, balanced Tree, overwritting the old one. When the root node is overwritten, the original unbalanced tree is recursively destroyed, thanks to the characteristics of unique pointers, and its height is recomputed.
+
+A potential upgrade could be done checking, after every call to addNode(), if the tree has suboptimal height (> log(N)+1 ), and automatically calling balance.
+
+# llRand
+
+For testing purposes we decided to have a generator of long long int numbers, to create potentially unique keys. Due to the limitations of rand() function, we used a short code that employs std::random_device, std::mt19937 and std::uniform_int_distribution to satisfy our requirements. Custom tests (not included) has been made to verify that the percentage of repeated keys on high number of calls follow a uniform distribution. (~300 repeated keys for 10^6 calls).
+
+# random_string()
+
+This functions has been written for test purposes. It generates a random string of given length.
+
+# testing
+
+To batch test the software, we implemented three inputs to be read from console:
+argv[1] = int, the number of random Nodes to be added to the tree
+argv[2] = int, the lenght in byte of the string value of each Node
+argv[3] = {0,1}, if ==1, after the creation of the tree, main() will traverse the tree, reading every Node and storing it in a dummy variable, for benchmarking purposes.
+
+ 
