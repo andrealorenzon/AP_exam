@@ -211,7 +211,70 @@ public:
         return current;
     };
 
-    void removeNode(K key) {};   			/*! remove a single node*/
+    void removeNode(K k) {/*! remove the node corresponding to the given key */
+        /* @brief
+        *
+        * input: K k, the key corresponding to the node to be removed.
+        * output: none.
+        *
+        */
+ 
+        if (&*find(k) == nullptr) return;
+
+        Node* toBeRemoved{&*find(k)};
+
+        /* CASE 0: the node is root */
+        if (toBeRemoved->parent == nullptr) {
+          std::cout << "\nCase 0\n";
+          destroy();
+        }
+
+        else {
+          /* Is it the left child or right child? */
+          int leftOrRight{0};
+          if (toBeRemoved->parent->right.get() == toBeRemoved)
+            leftOrRight = 1;
+
+          /* CASE 1: the node is a leaf */
+          if (!(toBeRemoved->left || toBeRemoved->right)) {
+            if (toBeRemoved->parent->left.get() == toBeRemoved)
+              toBeRemoved->parent->left = std::move(nullptr);
+            else
+              toBeRemoved->parent->right = std::move(nullptr);
+          }
+          /* CASE 2: the node has two children */
+          else if (toBeRemoved->left && toBeRemoved->right) {
+            Node* next{successor(toBeRemoved)};
+            toBeRemoved->key = next->key;
+            toBeRemoved->value = next->value;
+
+            if (!(next->left || next->right)) {
+              if (next->parent->left.get() == next)
+                next->parent->left = std::move(nullptr);
+              else
+                next->parent->right = std::move(nullptr);
+
+            } else {
+              if (next->right) {
+                next->right->parent = next->parent; // reassign parent to child
+
+                // reassign child to parent
+                if (leftOrRight) next->parent->right = std::move(next->right);
+                else next->parent->left = std::move(next->right);
+
+              } else {
+                next->left->parent = next->parent; // reassign parent to child
+
+                // reassign child to parent
+                if (leftOrRight) next->parent->right = std::move(next->left);
+                else next->parent->left = std::move(next->left);
+              }
+            }
+          }
+        }
+    }
+
+
 
     void listNodes() {          			/*! iterates the tree in order */
         for (auto i = begin(); i != end(); ++i) {
@@ -340,6 +403,24 @@ std::ostream& operator<<(std::ostream& ostream, const Tree<K,T>& tree) {
 int main (int argc, char* argv[])
 {
 
+    //test removeNode
+
+		std::cout << "\nTEST remove node with two children:\n";
+		Tree<int, int> tree2;
+		tree2.addNode(10, 1);
+		tree2.addNode(6, 1);
+		tree2.addNode(16,1);
+		tree2.addNode(14, 1);
+		tree2.addNode(18, 1);
+		tree2.addNode(4, 1);
+		tree2.addNode(2, 1);
+		tree2.addNode(19, 1);
+
+    std::cout << "Remove node 212 and 18.\n";
+		tree2.removeNode(212);
+		tree2.removeNode(18);
+		tree2.listNodes(); 
+    std::cout << "\nremoveNode test completed\n";
     //test llRand
     //std::cout << "llRand test: --> " << llRand() << std::endl;
 
