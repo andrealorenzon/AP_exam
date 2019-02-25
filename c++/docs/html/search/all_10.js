@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['value',['value',['../struct_tree_1_1_node.html#a248c711266d7b59c6a5700a3fcc67ed7',1,'Tree::Node']]]
+  ['tree',['Tree',['../class_tree.html',1,'']]],
+  ['treeroot',['treeroot',['../class_tree.html#ab8083081921a6a4c0aeae4de9005c5c7',1,'Tree']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Binary Tree: /home/andrea/AP_exam/c++/src/binary_tree.cpp File Reference</title>
+<title>Binary Tree: /home/andrea/AP_exam/AP_exam/c++/src/binary_tree.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Binary Tree
-   &#160;<span id="projectnumber">0.2</span>
+   &#160;<span id="projectnumber">0.9</span>
    </div>
    <div id="projectbrief">Binary tree implementation for AP Exam</div>
   </td>
@@ -78,10 +78,14 @@ $(function() {
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;iomanip&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;utility&gt;</code><br />
+<code>#include &lt;random&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for binary_tree.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="binary__tree_8cpp__incl.png" border="0" usemap="#_2home_2andrea_2_a_p__exam_2c_09_09_2src_2binary__tree_8cpp" alt=""/></div>
+<div class="center"><img src="binary__tree_8cpp__incl.png" border="0" usemap="#_2home_2andrea_2_a_p__exam_2_a_p__exam_2c_09_09_2src_2binary__tree_8cpp" alt=""/></div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -92,19 +96,46 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree_1_1iterator.html">Tree&lt; K, T &gt;::iterator</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree_1_1const__iterator.html">Tree&lt; K, T &gt;::const_iterator</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="binary__tree_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
-<tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad32900a09f1e1cbf99c25e41c8af70ca"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="binary__tree_8cpp.html#ad32900a09f1e1cbf99c25e41c8af70ca">random_string</a> (size_t length)</td></tr>
+<tr class="separator:ad32900a09f1e1cbf99c25e41c8af70ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91aa661d0e9ed84b8ae681971fbe6f52"><td class="memItemLeft" align="right" valign="top">long long int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="binary__tree_8cpp.html#a91aa661d0e9ed84b8ae681971fbe6f52">llRand</a> ()</td></tr>
+<tr class="separator:a91aa661d0e9ed84b8ae681971fbe6f52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaadd47c8fd8752acefc120fcb2c9058a"><td class="memTemplParams" colspan="2">template&lt;class K , class T &gt; </td></tr>
+<tr class="memitem:aaadd47c8fd8752acefc120fcb2c9058a"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="binary__tree_8cpp.html#aaadd47c8fd8752acefc120fcb2c9058a">operator&lt;&lt;</a> (std::ostream &amp;ostream, const <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt; &amp;tree)</td></tr>
+<tr class="memdesc:aaadd47c8fd8752acefc120fcb2c9058a"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA FINIRE!  <a href="#aaadd47c8fd8752acefc120fcb2c9058a">More...</a><br /></td></tr>
+<tr class="separator:aaadd47c8fd8752acefc120fcb2c9058a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="binary__tree_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Binary tree implementation. </p>
 <dl class="section author"><dt>Author</dt><dd>Andrea Lorenzon</dd></dl>
 <dl class="section date"><dt>Date</dt><dd>12/22/2018 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&nbsp;</a></span>main()</h2>
+<a id="a91aa661d0e9ed84b8ae681971fbe6f52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91aa661d0e9ed84b8ae681971fbe6f52">&#9670;&nbsp;</a></span>llRand()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long long int llRand </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0ddf1224851353fc92bfbff6f499fa97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&nbsp;</a></span>main()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -112,7 +143,68 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int main </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaadd47c8fd8752acefc120fcb2c9058a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaadd47c8fd8752acefc120fcb2c9058a">&#9670;&nbsp;</a></span>operator<<()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class K , class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>ostream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>tree</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>DA FINIRE! </p>
+
+</div>
+</div>
+<a id="ad32900a09f1e1cbf99c25e41c8af70ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad32900a09f1e1cbf99c25e41c8af70ca">&#9670;&nbsp;</a></span>random_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string random_string </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>length</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

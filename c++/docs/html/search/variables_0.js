@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['itr',['itr',['../class_tree_1_1iterator.html#a0aa480506a0598f4f4945b6b3594f599',1,'Tree::iterator']]]
+  ['height',['height',['../class_tree.html#a748165ce237c3ebda69a8eaf2165d88d',1,'Tree']]]
 ];

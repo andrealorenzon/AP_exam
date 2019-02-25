@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Binary Tree
-   &#160;<span id="projectnumber">0.2</span>
+   &#160;<span id="projectnumber">0.9</span>
    </div>
    <div id="projectbrief">Binary tree implementation for AP Exam</div>
   </td>
@@ -91,48 +91,57 @@ $(function() {
 <p>node 1 is the first node, and node 14 is the last one. Assignments</p>
 <p>You have to solve the following tasks in C++11 (C++14 and 17 are welcomed as well).</p>
 <ul>
-<li>[ ] implement a template binary search tree</li>
-<li>[ ] it must be templated on the type of the key and the type of the value associated with it.</li>
+<li>[X] implement a template binary search tree</li>
+<li>[X] it must be templated on the type of the key and the type of the value associated with it.</li>
 <li>[ ] optional you can add a third template on the operation used to compare two different keys.</li>
-<li>[ ] implement proper iterators for your tree (i.e., iterator and const_iterator)</li>
-<li>[ ] the tree must have at least the following public member function</li>
-<li>[ ] insert, used to insert a new pair key-value.</li>
-<li>[ ] clear(), clear the content of the tree.</li>
-<li>[ ] begin(), return an iterator to the first node (which likely will not be the root node)</li>
-<li>[ ] end(), return a proper iterator</li>
-<li>[ ] cbegin(), return a const_iterator to the first node</li>
-<li>[ ] cend(), return a proper const_iterator</li>
-<li>[ ] balance(), balance the tree.</li>
-<li>[ ] find, find a given key and return an iterator to that node. If the key is not found returns end();</li>
+<li>[X] implement proper iterators for your tree (i.e., iterator and const_iterator)</li>
+<li>the tree must have at least the following public member function</li>
+<li>[X] insert, used to insert a new pair key-value.</li>
+<li>[X] clear(), clear the content of the tree.</li>
+<li>[x] begin(), return an iterator to the first node (which likely will not be the root node)</li>
+<li>[x] end(), return a proper iterator</li>
+<li>[x] cbegin(), return a const_iterator to the first node</li>
+<li>[x] cend(), return a proper const_iterator</li>
+<li>[x] balance(), balance the tree.</li>
+<li>[x] find, find a given key and return an iterator to that node. If the key is not found returns end();</li>
 <li>[ ] optional implement the value_type&amp; operator[](<code>const key_type&amp; k</code>) function int the const and non-const versions). This functions, should return a reference to the value associated to the key k. If the key is not present, a new node with key k is allocated having the value value_type{}.</li>
-<li>[ ] implement copy and move semantics for the tree.</li>
-<li>[ ] override the operator put to &lt;&lt; in order to print (in order) key: value of all the nodes in the tree.</li>
-<li>Test the performance of the lookups (using the function find) before and after the tree is re-balanced. Use proper numbers (and types) of nodes and look-ups. Does lookup behaves as O(log N)? How your tree compares with std::map? make plots</li>
+<li>[x] implement copy and move semantics for the tree.</li>
+<li>[x] override the operator put to &lt;&lt; in order to print (in order) key: value of all the nodes in the tree.</li>
+<li>[ ] Test the performance of the lookups (using the function find) before and after the tree is re-balanced. Use proper numbers (and types) of nodes and look-ups.</li>
+<li>[ ] Does lookup behaves as O(log N)?</li>
+<li>[ ] How your tree compares with std::map? make plots</li>
 <li>[x] optional document the code with Doxygen</li>
 <li>[ ] write a short report</li>
-<li>[ ] test everything</li>
-</ul>
-<h2>Hints</h2>
-<ul>
-<li>you can use <code>std::pair&lt;const key_type,value_type&gt;</code> found in the header utility</li>
-<li>use recursive functions</li>
-<li>big hint start coding and using the iterators ASAP.</li>
+<li>[x] test everything</li>
 </ul>
 <hr/>
 <h1>Bibliography</h1>
 <p><a href="../bibliography/Implementation_of_BT_via_Smart_Pointers.pdf" target="_blank"><b>Donchev et al., "Implementation of Binary Search Trees via Smart Pointers", IJACSA, 2015,6,3</b></a></p>
 <p><a href="../bibliography/C++11_smart_ptrs.pdf" target="_blank"><b>David Kieras, University of Michigan, "Use of C++11's Smart Pointers", 2016</b></a> </p><hr/>
 <h1>Design Choices</h1>
-<p>Binary tree nodes are defined by three attributes: the data they contain, and two pointers to left and right child nodes.</p>
-<p>The project will define a <code>Node</code> Class, with these attributes, and the required methods.</p>
-<p>A <code>BLT</code> class will be needed too, pointing to the first Node (root node), and including for all the properties that a BLT has, but a Node doesn't.</p>
+<p>Binary tree nodes are defined by three attributes: a key and two pointers to left and right child nodes.</p>
+<p>The project will define a <code>Tree</code> Class, that will include a <code>Node</code> struct, with at least these attributes, and the required methods.</p>
 <p>Pointers can often be problematic elements: in particular, we have to take care about potential problems during node deletion: if our code is not totally safe, we will leave behind orphan nodes, rising memory leaks and dangling references.</p>
 <p>Luckily with C++11, smart pointers are available, included in the <code>&lt;memory&gt;</code> header.</p>
-<p>Smart pointers are special RAII modeled Classes that behave like raw pointers, but also <em>manage</em> objects created with <code>new</code> , allowing us not to worry about when or wheter we delete them, while providing a similar interface ( *, -&gt; ). Smart pointers contains a built-in raw pointers, and are defined as template class, whose type is the one of the object they point to. Over this, smart pointers add the concept of "owning" an object. We took into consideration two different types of smart pointers, unique and shared. Moreover, they guarantee that there will be no multiple deletions of the same pointer. Lastly, by not allowing null-pointer dereference, they will keep us safe from accidental dereferencing of missing child nodes.</p>
+<p>Smart pointers are special RAII modeled Classes that behave like raw pointers, but also <em>manage</em> objects created, allowing us not to worry about when or whether we delete them, while providing a similar interface ( *, -&gt; ). Smart pointers contains a built-in raw pointers, and are defined as template class, whose type is the one of the object they point to. Over this, smart pointers add the concept of "owning" an object. We took into consideration two different types of smart pointers, unique and shared. Moreover, they guarantee that there will be no multiple deletions of the same pointer. Lastly, by not allowing null-pointer dereference, they will keep us safe from accidental dereferencing of missing child nodes.</p>
 <p>The <code>unique_ptr&lt;&gt;</code> template holds a pointer to an object and deletes this object when the unique_ptr&lt;&gt; object is deleted.</p>
 <p>The <code>shared_ptr&lt;&gt;</code> template instead can be owned by more than one owner, and will keep track internally of their number, deleting the object and freeing the memory when the number of owners will be zero. When using shared pointers we have to be sure that no circular references is created.</p>
-<p>Given the possibility of using move semantics, the decision fell on unique pointers, in a first instance. If copy semantics will be needed we should be able to quickly switch to shared pointers.</p>
-<p>In the requirements, both the key and the value of each node must be templated: we will be using <code>template &lt;class K&gt;</code> for the keys and <code>template &lt;class T&gt;</code> for the values. </p>
+<p>Given the possibility of using move semantics, the decision fell on unique pointers, in a first instance.</p>
+<p>A potential issue is known with this implementation: in case of very deep trees, the recursion of the deletion of generations of parent-child unique-ptrs could overflow. Specific deletion algorithms that can handle this issue has been investigated, but we have chosen not to implement any for this version of the software, for time constraints.</p>
+<p>In the requirements, both the key and the value of each node must be templated: we will be using <code>template &lt;class K&gt;</code> for the keys and <code>template &lt;class T&gt;</code> for the values.</p>
+<p>The drawback of smart pointers is that, when writing iterators class, we will have to dereference them with <code>.get()</code> method to retrieve raw pointers. Using the latter as observing, non-owning pointers, will prevent memory leaks.</p>
+<p>We decided to nest, inside the Tree class, a Node struct, private to Tree. All (and only) public interfaces will be able to interact with it. To create Nodes, the user will have to empy addNode constructors. Most Tree methods and iterators (included begin(), cbegin(), end() and cend()) are available both for const and non-const Trees.</p>
+<p>Every Tree iteration (for addNode, iterators, etc.) has been created recursive and O(log(N)) whenever convenient.</p>
+<p>The tree has been tested only with long long int keys and string values. Additional testing should have been done with different data types, but no different result is expected.</p>
+<h1>balance() method</h1>
+<p>The balance function could be have done differently. An ideal approach would have been creating a red-black or self-balancing Tree, modifying Node and Tree accordingly. For time limits, a suboptimal approach has been chosen. When calling the balance() method, the whole tree is dumped in a std::vector object by arrayOfNodes() method, preserving only keys and values. The vector is then recursively parsed to create a new, balanced Tree, overwritting the old one. When the root node is overwritten, the original unbalanced tree is recursively destroyed, thanks to the characteristics of unique pointers, and its height is recomputed.</p>
+<p>A potential upgrade could be done checking, after every call to addNode(), if the tree has suboptimal height (&gt; log(N)+1 ), and automatically calling balance.</p>
+<h1>llRand</h1>
+<p>For testing purposes we decided to have a generator of long long int numbers, to create potentially unique keys. Due to the limitations of rand() function, we used a short code that employs std::random_device, std::mt19937 and std::uniform_int_distribution to satisfy our requirements. Custom tests (not included) has been made to verify that the percentage of repeated keys on high number of calls follow a uniform distribution. (~300 repeated keys for 10^6 calls).</p>
+<h1>random_string()</h1>
+<p>This functions has been written for test purposes. It generates a random string of given length.</p>
+<h1>testing</h1>
+<p>To batch test the software, we implemented three inputs to be read from console: argv[1] = int, the number of random Nodes to be added to the tree argv[2] = int, the lenght in byte of the string value of each Node argv[3] = {0,1}, if ==1, after the creation of the tree, main() will traverse the tree, reading every Node and storing it in a dummy variable, for benchmarking purposes. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

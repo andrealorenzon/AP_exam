@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['removenode',['removeNode',['../class_tree.html#a124374376c953428e86c1274088f65a6',1,'Tree']]]
+  ['random_5fstring',['random_string',['../binary__tree_8cpp.html#ad32900a09f1e1cbf99c25e41c8af70ca',1,'random_string(size_t length):&#160;binary_tree.cpp'],['../map__benchmark_8cpp.html#ad32900a09f1e1cbf99c25e41c8af70ca',1,'random_string(size_t length):&#160;map_benchmark.cpp']]],
+  ['recursive_5fbalancer',['recursive_balancer',['../class_tree.html#a62e48860421fc40c84b3bbaa4e22ddcf',1,'Tree']]],
+  ['removenode',['removeNode',['../class_tree.html#a6289100cb33b4ba25a8f191c9b3fea70',1,'Tree']]]
 ];
