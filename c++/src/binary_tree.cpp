@@ -9,38 +9,43 @@
 */
 
 #include <algorithm> // find_if
-#include <memory>   // std::unique_ptr
-#include <iomanip>  // cout alignment
-#include <iostream> // std::cout, endl
-#include <math.h>   // pow()
-#include <vector>   // for tree balancing
-#include <utility>  // pair
-#include <random>   // llRand, custom long long int random generator
+#include <memory>    // std::unique_ptr
+#include <iomanip>   // cout alignment
+#include <iostream>  // std::cout, endl
+#include <math.h>    // pow()
+#include <vector>    // for tree balancing
+#include <utility>   // pair
+#include <random>    // llRand, custom long long int random generator
 
 template <class K, class T>
 class Tree {
 	/*! Implements a binary search tree, templated on key and values */
 
     struct Node	{
-        K key; 						/*! Node key, templated on K */
-        T value; 					/*! Node value, templated on T */
-        std::unique_ptr<Node> left = nullptr; 		/*! unique pointer to the left node */
-        std::unique_ptr<Node> right = nullptr; 	    /*! unique pointer to the right node*/
+        /*! Node key, templated on K */
+        K key; 						
+        /*! Node value, templated on T */
+        T value; 					
+        /*! unique pointer to the left node */
+        std::unique_ptr<Node> left  = nullptr; 		
+        /*! unique pointer to the right node*/
+        std::unique_ptr<Node> right = nullptr; 	    
         Node * parent = nullptr;
         
 
         Node() = default;
-        Node(K k, T val) : key(k), value(val) {} 	/*! node constructor by declared value*/
+        /*! node constructor by declared value*/
+        Node(K k, T val) : key(k), value(val) {} 	
     };
 
-    
-    std::unique_ptr<Node> root = nullptr; 			/*! pointer to tree root node*/
+    /*! pointer to tree root node*/
+    std::unique_ptr<Node> root = nullptr; 			
 
 public:
-
-    long long int height = 0;             /*! Tree height */
-
-    static Node * allLeft(Node * node) {   /*! helper function to traverse left nodes until there is any, giving the min(key) */
+    /*! Returns tree height */
+    long long int height = 0;             
+    /*! helper function to traverse left nodes until there is any, giving the min(key) */
+    static Node * allLeft(Node * node) {   
         while (node->left) { node = node->left.get(); }
         return node;
     }
@@ -51,7 +56,6 @@ public:
     }
 
     static const Node * successor(const Node * node) {    /*! helper function to return next node*/
-
         if (node->right) { return allLeft(node->right.get()); }
         const Node * parent = node->parent;
         while (parent && node == parent->right.get()) {
@@ -75,17 +79,16 @@ public:
     }  
 /////////////////////////////// ITERATORS //////////////////////////////
 
-	/*! STL compliant forward_iterator class*/
     class iterator : public std::iterator< std::forward_iterator_tag, Node> { 
         /*!< Tree node iterator*/
         Node * itr = nullptr;
     public :
         iterator() = default;     // will set to nullptr thanks to ` = nullptr` above
         explicit iterator(Node * ptr) : itr(ptr) {}
-        iterator(const iterator&) = default;  //c'tor
+        iterator(const iterator&) = default;                    //c'tor
         Node & operator*() { return *itr; };
         Node * operator->() { return itr; }
-        iterator & operator++() {  // deve ritornare nodo.successor()
+        iterator & operator++() {  
             itr = successor(itr);
             return *this;
         }
@@ -109,12 +112,12 @@ public:
         const_iterator() = default;     // will set to nullptr thanks to ` = nullptr` above
         explicit const_iterator(const Node * ptr) : itr(ptr) {}
        
-        const_iterator(const const_iterator&) = default;  //c'tor
+        const_iterator(const const_iterator&) = default;                //c'tor
  
         const Node & operator*() { return *itr; };
         const Node * operator->() { return itr; }
  
-        const_iterator & operator++() {  // deve ritornare nodo.successor()
+        const_iterator & operator++() {  
             itr = successor(itr);
             return *this;
         }
@@ -135,16 +138,19 @@ public:
     };
 
 ////////////////////// end iterators ///////////////////////////////////
+    /*! iterator to the node with the lowest key*/
+    iterator       begin()        { return iterator(allLeft(root.get())); }         
+    /*! iterator to the node with the lowest key, for const Trees*/
+    const_iterator begin()  const { return const_iterator(allLeft(root.get())); }   
+    /*! const iterator to the node with the lowest key, for const Trees*/
+    const_iterator cbegin() const { return const_iterator(allLeft(root.get())); }   
 
-    iterator       begin()        { return iterator(allLeft(root.get())); }         /*! iterator to the node with the lowest key*/
-    const_iterator begin()  const { return const_iterator(allLeft(root.get())); }   /*! iterator to the node with the lowest key, for const Trees*/
-    const_iterator cbegin() const { return const_iterator(allLeft(root.get())); }   /*! const iterator to the node with the lowest key, for const Trees*/
-
-    iterator       end()          { return iterator(nullptr); }				        /*! iterator to the node after the one with the highest key (so nullptr)*/
-	const_iterator end()  const   { return const_iterator(nullptr);}                /*! iterator to the node after the one with the highest key (so nullptr), for const Trees*/
-    const_iterator cend() const   { return const_iterator(allLeft(root.get())); } 	/*! const iterator to the node after the one with the highest key (so nullptr), for const Trees*/
-
-    			
+    /*! iterator to the node after the one with the highest key (so nullptr)*/
+    iterator       end()          { return iterator(nullptr); }				        
+    /*! iterator to the node after the one with the highest key (so nullptr), for const Trees*/
+	const_iterator end()  const   { return const_iterator(nullptr);}                
+    /*! const iterator to the node after the one with the highest key (so nullptr), for const Trees*/
+    const_iterator cend() const   { return const_iterator(allLeft(root.get())); } 	
 
     Node * addNode(const K key, const T value) { /*! add a node provided key and value compatible with the tree */
 
@@ -162,13 +168,6 @@ public:
         Node * current = root.get();
         Node * parent = nullptr;
 
-        // while(current->parent_ptr) {
-        //     parent = current->parent_ptr;
-        //     if (parent->height <= current->height) 
-        //         parent->height = current->height + 1;
-        //         current = parent;
-        //      }
-
         long long int temp_height = 0;
         while (current) {
             parent = current;
@@ -181,8 +180,7 @@ public:
                 temp_height++;
                 if (temp_height > this->height) { this->height = temp_height;}
             } else {
-                current->value = value;    // BUG: does not update values!! why???
-                //std::cout <<"updated node " <<current <<" with key " << key <<std::endl;
+                current->value = value;
                 return current;
             }
         }
@@ -274,9 +272,7 @@ public:
         }
     }
 
-
-
-    void listNodes() {          			/*! iterates the tree in order */
+    void listNodes() {          			/*! iterates the tree in order, printing key-value entries */
         for (auto i = begin(); i != end(); ++i) {
       	  std::cout << "iterated node: (" <<i->key <<", " <<i->value <<")" << std::endl;
             
@@ -290,15 +286,13 @@ public:
 	    }
 	    return iterator(node);
 	}
-
-    void destroy(){ 						/*! tree deletion: later: set root to nullptr, destroy recursively all nodes*/
+    /*! tree deletion: sets root to nullptr, destroy recursively all nodes*/
+    void destroy(){ 						
         this->root = nullptr;
     }
 
-    std::vector <std::pair<K,T>> arrayOfNodes() 
-    /*!<  Helper function: creates an std::vector and push every pair(key,value) of the tree nodes in it.*/
-
-    {
+    std::vector <std::pair<K,T>> arrayOfNodes() {
+    /*!  Helper function: creates an std::vector and push every pair(key,value) of the tree nodes in it.*/
         std::vector<std::pair<K,T>> v;
         for (auto i = begin(); i != end(); ++i) {
             auto data = std::make_pair(i->key, i->value);
@@ -308,63 +302,37 @@ public:
         std::cout << "Nodes have been stored into a vector. Rebuilding the tree..." << std::endl;
         return v;
     }
+    /*! recursive helper function, called by balance() function*/
+    void recursive_balancer(std::vector<std::pair<K,T>>vec) {       // to do: set to private.
 
-    void recursive_balancer(std::vector<std::pair<K,T>>vec) {       // METTERE PRIVATA!!!
-        
-        //std::cout << "balancing.." << std::endl;
         if (vec.size() < 3) 
         {
             for(auto & item : vec) 
                 this->addNode(item.first, item.second);
-            //std::cout << "Reinserting a node in correct position." << std::endl;
         } 
-        
         else 
         { 
             this->addNode(vec[vec.size() / 2].first, vec[vec.size() / 2].second);
-            //std::cout << "Reinserting a node in correct position." << std::endl;
-
-
             std::vector<std::pair<K,T>> firstHalf(vec.begin(), vec.begin() + vec.size()/2);
             std::vector<std::pair<K,T>> secondHalf(vec.begin() + vec.size()/2 + 1, vec.end());
-
             recursive_balancer(firstHalf);
             recursive_balancer(secondHalf);
         }
     }
 
-    void balance()
     /*!< tree balance function. calls arrayOfNodes() to linearize the tree, then creates a balanced tree*/
+    void balance()
     {
         this->height = 0;
         std::vector<std::pair<K,T>> vector = this->arrayOfNodes(); //salviamo i nodi iterati in  un vector, in ordine di key
         this->root = nullptr;  // cancelliamo tutti i nodi senza distruggere l'albero
         this->recursive_balancer(vector); // ricreiamo l'albero dal vector
     };   								
-
-   
-    
-
-    /**
-    * In-order (LNR) traversal
-    * In-order: A, B, C, D, E, F, G, H, I.
-    * Check if the current node is empty or null.
-    * Traverse the left subtree by recursively calling the in-order function.
-    * Display the data part of the root (or current node).
-    * Traverse the right subtree by recursively calling the in-order function.
-    *
-    * In a binary search tree, in-order traversal retrieves data in sorted order.
-    *
-    * Here'a void placeholder, we should write a separate iterator class to include, IMHO
-    *
-    */
 };
 
-
-/*!< generates a random string of given length, for benchmarking purposes */
-std::string random_string( size_t length )
+std::string random_string( size_t length ) /*!< generates a random string of given length, for benchmarking purposes */
 {
-    auto randchar = []() -> char
+    auto randchar = []() -> char  //neat lambda function
     {
         const char charset[] =
         "0123456789"
