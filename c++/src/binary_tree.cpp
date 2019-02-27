@@ -162,12 +162,12 @@ public:
     /*! const iterator to the node after the one with the highest key (so nullptr), for const Trees*/
     const_iterator cend() const   { return const_iterator(allLeft(root.get())); } 	
 
-    Node * addNode(const K key, const T value) { /*! add a node provided key and value compatible with the tree */
+    void addNode(const K key, const T value) { /*! add a node provided key and value compatible with the tree */
 
        /* @brief
         *
         * input: K key, T value. Must match tree K and T types.
-        * output: shared_pointer to new node
+        * output: none
         * actions: if root is nullptr, set the new node as root.
         * otherwise, recursively compares keys.
         * if equal, overwrites value.
@@ -191,7 +191,7 @@ public:
                 if (temp_height > this->height) { this->height = temp_height;}
             } else {
                 current->value = value;
-                return current;
+                return;
             }
         }
 
@@ -216,7 +216,7 @@ public:
             //           <<", " <<std::setw(3) <<value <<") [" <<current
             //           <<"] at root" <<std::endl;
         }
-        return current;
+        return;
     };
 
     void removeNode(K k) {/*! remove the node corresponding to the given key */
