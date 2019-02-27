@@ -3,9 +3,9 @@
 *
 * @brief Binary tree implementation
 *
-* @author Andrea Lorenzon
+* @author Andrea Lorenzon, Francesco Cicala
 *
-* @date 12/22/2018
+* 
 */
 
 #include <algorithm> // find_if
@@ -75,12 +75,14 @@ class Tree {
         return node;
     }
 
-    static Node * allRight(Node * node) {  /*! helper function to traverse right nodes until there is any, giving max(key)*/
+    /*! helper function to traverse right nodes until there is any, giving max(key)*/
+    static Node * allRight(Node * node) {  
         while (node->right) { node = node->right.get(); }
         return node;
     }
 
-    static const Node * successor(const Node * node) {    /*! helper function to return next node*/
+    /*! helper function to return next node*/
+    static const Node * successor(const Node * node) {    
         if (node->right) { return allLeft(node->right.get()); }
         const Node * parent = node->parent;
         while (parent && node == parent->right.get()) {
@@ -89,10 +91,25 @@ class Tree {
         }
         return parent;
     }
-    static Node * successor(Node * node) {    /*! helper function to return next node, non-const*/
+
+    /*! helper function to return next node, non-const*/
+    static Node * successor(Node * node) {    
         return const_cast<Node *>(successor(const_cast<const Node *>(node)));
     }
 
+    std::vector <std::pair<K,T>> arrayOfNodes() {
+    /*!  Helper function: creates an std::vector and push every pair(key,value) of the tree nodes in it.*/
+        std::vector<std::pair<K,T>> v;
+        for (auto i = begin(); i != end(); ++i) {
+            auto data = std::make_pair(i->key, i->value);
+            v.push_back(data);
+        }
+        
+        std::cout << "Nodes have been stored into a vector. Rebuilding the tree..." << std::endl;
+        return v;
+    }
+    
+//////////////////////////////////////// PUBLIC /////////////////////////////
 public:
     
     /*! Helper function. True if root == nullptr*/
@@ -323,17 +340,6 @@ public:
         this->root = nullptr;
     }
 
-    std::vector <std::pair<K,T>> arrayOfNodes() {
-    /*!  Helper function: creates an std::vector and push every pair(key,value) of the tree nodes in it.*/
-        std::vector<std::pair<K,T>> v;
-        for (auto i = begin(); i != end(); ++i) {
-            auto data = std::make_pair(i->key, i->value);
-            v.push_back(data);
-        }
-        
-        std::cout << "Nodes have been stored into a vector. Rebuilding the tree..." << std::endl;
-        return v;
-    }
     
 
     /*!< tree balance function. calls arrayOfNodes() to linearize the tree, then creates a balanced tree*/
@@ -416,6 +422,7 @@ int main (int argc, char* argv[])
 
     //create an empty tree
     Tree <int,std::string> myMap;
+    myMap.insert(4242424242,"These are indeed the droids you are looking for.");
     
 
     //populate the map
@@ -439,6 +446,8 @@ int main (int argc, char* argv[])
     std::cout << "height before balance: " << myMap.height << std::endl;
     myMap.balance();
     std::cout << "height after balance: " << myMap.height << std::endl;
+
+    std::cout << "looking for my droids... " << myMap.find(4242424242)->value << std::endl;
 
        
   return 0;
