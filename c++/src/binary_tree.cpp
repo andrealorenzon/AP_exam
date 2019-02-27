@@ -422,8 +422,8 @@ int main (int argc, char* argv[])
     std::string dummy_value = "";
 
     //create an empty tree
-    Tree <int,std::string> myMap;
-    myMap.insert(4242424242,"These are indeed the droids you are looking for.");
+    Tree <long long int,std::string> myMap;
+    
     
 
     //populate the map
@@ -433,7 +433,11 @@ int main (int argc, char* argv[])
         auto value = random_string(str_length);
         myMap.insert(index, value);
     }
-  
+
+    long long int testKey = 424242424242424242;
+
+    myMap.insert(testKey,"These are indeed the droids you are looking for.");
+
     std::cout << "Tree populated with " << iterations << " elements." << std::endl;
 
     // retrieve all data in random order if readtoo = 1
@@ -441,23 +445,31 @@ int main (int argc, char* argv[])
           std::cout << "My tree: \n ---------- \n" << myMap << std::endl;
     }
 
+    // lookup time before balance:
+
+    std::cout << "looking for my droids before tree balance... " ;
+    auto start_time = std::chrono::high_resolution_clock::now();
+    std::cout << myMap.find(testKey)->value << std::endl;
+    auto end_time = std::chrono::high_resolution_clock::now();
+    std::cout << "The droids found with a lookup time of "  ;
+    std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time).count() << " nanosec" << std::endl;
+
 
     //test
     //auto v = myMap.arrayOfNodes();
-    std::cout << "height before balance: " << myMap.height << std::endl;
+    std::cout << "Tree height before balance: " << myMap.height << std::endl;
     myMap.balance();
-    std::cout << "height after balance: " << myMap.height << std::endl;
+    std::cout << "Tree height after balance: " << myMap.height << std::endl;
 
     // benchmark for lookup time
     
-    std::cout << "looking for my droids... " ;
-    std::cout << std::chrono::high_resolution_clock::period::den << std::endl;
-    auto start_time = std::chrono::high_resolution_clock::now();
-    std::cout << myMap.find(4242424242)->value << std::endl;
-    auto end_time = std::chrono::high_resolution_clock::now();
-    std::cout << "droids found in "  ;
-    std::cout << std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count() << " sec and";
-    std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count() << " microsec" << std::endl;
+    std::cout << "looking for my droids after balance... " ;
+    //std::cout << std::chrono::high_resolution_clock::period::den << std::endl;
+    auto start_time2 = std::chrono::high_resolution_clock::now();
+    std::cout << myMap.find(testKey)->value << std::endl;
+    auto end_time2 = std::chrono::high_resolution_clock::now();
+    std::cout << "The droids found with a lookup time of "  ;
+    std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end_time2 - start_time2).count() << " nanoseconds" << std::endl;
 
        
   return 0;
