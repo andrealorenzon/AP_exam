@@ -51,6 +51,25 @@ class Tree {
         return root.get(); 
     }  
 
+    /*! recursive helper function, called by balance() function*/
+    void recursive_balancer(std::vector<std::pair<K,T>>vec) {       // to do: set to private.
+
+        if (vec.size() < 3) 
+        {
+            for(auto & item : vec) 
+                this->addNode(item.first, item.second);
+        } 
+        else 
+        { 
+            this->addNode(vec[vec.size() / 2].first, vec[vec.size() / 2].second);
+            std::vector<std::pair<K,T>> firstHalf(vec.begin(), vec.begin() + vec.size()/2);
+            std::vector<std::pair<K,T>> secondHalf(vec.begin() + vec.size()/2 + 1, vec.end());
+            recursive_balancer(firstHalf);
+            recursive_balancer(secondHalf);
+        }
+    }
+
+    
 public:
     
     /*! Helper function. True if root == nullptr*/
@@ -312,23 +331,7 @@ public:
         std::cout << "Nodes have been stored into a vector. Rebuilding the tree..." << std::endl;
         return v;
     }
-    /*! recursive helper function, called by balance() function*/
-    void recursive_balancer(std::vector<std::pair<K,T>>vec) {       // to do: set to private.
-
-        if (vec.size() < 3) 
-        {
-            for(auto & item : vec) 
-                this->addNode(item.first, item.second);
-        } 
-        else 
-        { 
-            this->addNode(vec[vec.size() / 2].first, vec[vec.size() / 2].second);
-            std::vector<std::pair<K,T>> firstHalf(vec.begin(), vec.begin() + vec.size()/2);
-            std::vector<std::pair<K,T>> secondHalf(vec.begin() + vec.size()/2 + 1, vec.end());
-            recursive_balancer(firstHalf);
-            recursive_balancer(secondHalf);
-        }
-    }
+    
 
     /*!< tree balance function. calls arrayOfNodes() to linearize the tree, then creates a balanced tree*/
     void balance()
