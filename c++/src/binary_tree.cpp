@@ -15,7 +15,7 @@
 #include <math.h>    // pow()
 #include <vector>    // for tree balancing
 #include <utility>   // pair
-#include <random>    // llRand, custom long long int random generator
+#include <random>    // llRand, custom size_t random generator
 #include <chrono>    // benchmarking purposes
 
 template <class K, class T>
@@ -42,12 +42,12 @@ class Tree {
     /*! pointer to tree root node*/
     std::unique_ptr<Node> root = nullptr; 			
 
-    Node * treeroot() { 
+    Node * treeroot() noexcept { 
         /*! Helper function: exposes a public interface to the private tree root.*/
         return root.get(); 
     }  
 
-    const Node * ctreeroot() const { 
+    const Node * ctreeroot() const noexcept { 
         /*! Helper function: exposes a public interface to the private tree root, const.*/
         return root.get(); 
     }  
@@ -71,19 +71,19 @@ class Tree {
     }
 
     /*! helper function to traverse left nodes until there is any, giving the min(key) */
-    static Node * allLeft(Node * node) {   
+    static Node * allLeft(Node * node) noexcept {   
         while (node->left) { node = node->left.get(); }
         return node;
     }
 
     /*! helper function to traverse right nodes until there is any, giving max(key)*/
-    static Node * allRight(Node * node) {  
+    static Node * allRight(Node * node) noexcept {  
         while (node->right) { node = node->right.get(); }
         return node;
     }
 
     /*! helper function to return next node*/
-    static const Node * successor(const Node * node) {    
+    static const Node * successor(const Node * node) noexcept {    
         if (node->right) { return allLeft(node->right.get()); }
         const Node * parent = node->parent;
         while (parent && node == parent->right.get()) {
@@ -94,7 +94,7 @@ class Tree {
     }
 
     /*! helper function to return next node, non-const*/
-    static Node * successor(Node * node) {    
+    static Node * successor(Node * node) noexcept {    
         return const_cast<Node *>(successor(const_cast<const Node *>(node)));
     }
 
@@ -121,7 +121,7 @@ public:
     }
 
     /*! Returns tree height */
-    long long int height = 0;             
+    size_t height = 0;             
     
 
 
@@ -218,7 +218,7 @@ public:
         Node * current = root.get();
         Node * parent = nullptr;
 
-        long long int temp_height = 0;
+        size_t temp_height = 0;
         while (current) {
             parent = current;
             if (key > current->key) {
@@ -369,11 +369,11 @@ std::string random_string( size_t length ) /*!< generates a random string of giv
     return str;
 }
 
-long long int llRand()   // random number between 0 and 10^18
+size_t llRand()   // random number between 0 and 10^18
 {
     std::random_device rd;              //Will be used to obtain a seed for the random number engine
     std::mt19937 gen(rd());             //Standard mersenne_twister_engine seeded with rd()
-    std::uniform_int_distribution<long long int> dis(1, 1000000000000000);   // 1-10^15
+    std::uniform_int_distribution<size_t> dis(1, 1000000000000000);   // 1-10^15
     
     return dis(gen);
 }
@@ -422,19 +422,19 @@ int main (int argc, char* argv[])
     std::string dummy_value = "";
 
     //create an empty tree
-    Tree <long long int,std::string> myMap;
+    Tree <size_t,std::string> myMap;
     
     
 
     //populate the map
     for (int counter = 0; counter < iterations; ++counter ) 
     {
-        long long int index = llRand();
+        size_t index = llRand();
         auto value = random_string(str_length);
         myMap.insert(index, value);
     }
 
-    long long int testKey = 424242424242424242;
+    size_t testKey = 424242424242424242;
 
     myMap.insert(testKey,"These are indeed the droids you are looking for.");
 
@@ -461,7 +461,7 @@ int main (int argc, char* argv[])
     myMap.balance();
     std::cout << "Tree height after balance: " << myMap.height << std::endl;
 
-    // benchmark for lookup time
+    // benchmark for lookup time after balance
     
     std::cout << "looking for my droids after balance... " ;
     //std::cout << std::chrono::high_resolution_clock::period::den << std::endl;
