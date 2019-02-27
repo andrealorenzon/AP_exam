@@ -57,11 +57,11 @@ class Tree {
         if (vec.size() < 3) 
         {
             for(auto & item : vec) 
-                this->addNode(item.first, item.second);
+                this->insert(item.first, item.second);
         } 
         else 
         { 
-            this->addNode(vec[vec.size() / 2].first, vec[vec.size() / 2].second);
+            this->insert(vec[vec.size() / 2].first, vec[vec.size() / 2].second);
             std::vector<std::pair<K,T>> firstHalf(vec.begin(), vec.begin() + vec.size()/2);
             std::vector<std::pair<K,T>> secondHalf(vec.begin() + vec.size()/2 + 1, vec.end());
             recursive_balancer(firstHalf);
@@ -169,6 +169,7 @@ public:
     };
 
 ////////////////////// end iterators ///////////////////////////////////
+    
     /*! iterator to the node with the lowest key*/
     iterator       begin()        { return iterator(allLeft(root.get())); }         
     /*! iterator to the node with the lowest key, for const Trees*/
@@ -183,7 +184,7 @@ public:
     /*! const iterator to the node after the one with the highest key (so nullptr), for const Trees*/
     const_iterator cend() const   { return const_iterator(allLeft(root.get())); } 	
 
-    void addNode(const K key, const T value) { /*! add a node provided key and value compatible with the tree */
+    void insert(const K key, const T value) { /*! add a node provided key and value compatible with the tree */
 
        /* @brief
         *
@@ -390,14 +391,14 @@ int main (int argc, char* argv[])
 
 		std::cout << "\nTEST remove node with two children:\n";
 		Tree<int, int> tree2;
-		tree2.addNode(10, 1);
-		tree2.addNode(6, 1);
-		tree2.addNode(16,1);
-		tree2.addNode(14, 1);
-		tree2.addNode(18, 1);
-		tree2.addNode(4, 1);
-		tree2.addNode(2, 1);
-		tree2.addNode(19, 1);
+		tree2.insert(10, 1);
+		tree2.insert(6, 1);
+		tree2.insert(16,1);
+		tree2.insert(14, 1);
+		tree2.insert(18, 1);
+		tree2.insert(4, 1);
+		tree2.insert(2, 1);
+		tree2.insert(19, 1);
 
     std::cout << "Remove node 212 and 18.\n";
 		tree2.removeNode(212);
@@ -422,7 +423,7 @@ int main (int argc, char* argv[])
     {
         long long int index = llRand();
         auto value = random_string(str_length);
-        myMap.addNode(index, value);
+        myMap.insert(index, value);
     }
   
     std::cout << "Tree populated with " << iterations << " elements." << std::endl;
