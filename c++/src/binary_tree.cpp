@@ -16,6 +16,7 @@
 #include <vector>    // for tree balancing
 #include <utility>   // pair
 #include <random>    // llRand, custom long long int random generator
+#include <chrono>    // benchmarking purposes
 
 template <class K, class T>
 class Tree {
@@ -447,7 +448,16 @@ int main (int argc, char* argv[])
     myMap.balance();
     std::cout << "height after balance: " << myMap.height << std::endl;
 
-    std::cout << "looking for my droids... " << myMap.find(4242424242)->value << std::endl;
+    // benchmark for lookup time
+    
+    std::cout << "looking for my droids... " ;
+    std::cout << std::chrono::high_resolution_clock::period::den << std::endl;
+    auto start_time = std::chrono::high_resolution_clock::now();
+    std::cout << myMap.find(4242424242)->value << std::endl;
+    auto end_time = std::chrono::high_resolution_clock::now();
+    std::cout << "droids found in "  ;
+    std::cout << std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count() << " sec and";
+    std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count() << " microsec" << std::endl;
 
        
   return 0;
