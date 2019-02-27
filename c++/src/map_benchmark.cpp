@@ -14,6 +14,7 @@ example
 #include <iostream>
 #include <map>
 #include <algorithm>
+#include <chrono>
 
 /*!< generates a random string of given length */
 std::string random_string( size_t length )
@@ -48,17 +49,30 @@ int main (int argc, char* argv[])
 	std::string dummy_value = "";
 
 	//create an empty map
-  	std::map<int,std::string> myMap;
+  	std::map<size_t,std::string> myMap;
 
   	//populate the map
   	for (int counter = 0; counter < iterations; ++counter ) 
   	{
-  		long long int index = std::rand()*10^10+std::rand()*10*5+std::rand();
+  		size_t index = std::rand()*10^10+std::rand()*10*5+std::rand();
   		auto value = random_string(str_length);
   		myMap[index] = value;
   	}
   
   	std::cout << "Map populated with " << iterations << " elements." << std::endl;
+
+    // benchmark for lookup time after balance
+    
+    size_t testKey = 424242424242424242;
+
+    std::cout << "looking for my droids after balance... " ;
+    //std::cout << std::chrono::high_resolution_clock::period::den << std::endl;
+    auto start_time2 = std::chrono::high_resolution_clock::now();
+    std::cout << myMap[testKey] << std::endl;
+    auto end_time2 = std::chrono::high_resolution_clock::now();
+    std::cout << "The droids found with a lookup time of "  ;
+    std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end_time2 - start_time2).count() << " nanoseconds" << std::endl;
+
 
   	// retrieve all data in random order if readtoo = 1
   	if (readtoo) {
