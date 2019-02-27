@@ -41,7 +41,25 @@ class Tree {
     /*! pointer to tree root node*/
     std::unique_ptr<Node> root = nullptr; 			
 
+    Node * treeroot() { 
+        /*! Helper function: exposes a public interface to the private tree root.*/
+        return root.get(); 
+    }  
+
+    const Node * ctreeroot() const { 
+        /*! Helper function: exposes a public interface to the private tree root, const.*/
+        return root.get(); 
+    }  
+
 public:
+    
+    /*! Helper function. True if root == nullptr*/
+    bool isEmpty() const {
+        
+        bool emp = ((ctreeroot()==nullptr) ? (true) : (false));
+        return emp;
+    }
+
     /*! Returns tree height */
     long long int height = 0;             
     /*! helper function to traverse left nodes until there is any, giving the min(key) */
@@ -68,15 +86,7 @@ public:
         return const_cast<Node *>(successor(const_cast<const Node *>(node)));
     }
 
-    Node * treeroot() { 
-    	/*! Helper function: exposes a public interface to the private tree root.*/
-    	return root.get(); 
-    }  
-
-    const Node * ctreeroot() const { 
-        /*! Helper function: exposes a public interface to the private tree root, const.*/
-        return root.get(); 
-    }  
+    
 /////////////////////////////// ITERATORS //////////////////////////////
 
     class iterator : public std::iterator< std::forward_iterator_tag, Node> { 
@@ -358,7 +368,7 @@ long long int llRand()   // random number between 0 and 10^18
 template<class K, class T>                                                       ///   DA FINIRE! 
 std::ostream& operator<<(std::ostream& ostream, const Tree<K,T>& tree) {
 
-    if (!(tree.ctreeroot())) {
+    if (tree.isEmpty()) {
         ostream << "Error: printing empty tree";
         return ostream;
     }    
