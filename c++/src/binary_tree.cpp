@@ -69,18 +69,6 @@ class Tree {
         }
     }
 
-    
-public:
-    
-    /*! Helper function. True if root == nullptr*/
-    bool isEmpty() const {
-        
-        bool emp = ((ctreeroot()==nullptr) ? (true) : (false));
-        return emp;
-    }
-
-    /*! Returns tree height */
-    long long int height = 0;             
     /*! helper function to traverse left nodes until there is any, giving the min(key) */
     static Node * allLeft(Node * node) {   
         while (node->left) { node = node->left.get(); }
@@ -104,6 +92,20 @@ public:
     static Node * successor(Node * node) {    /*! helper function to return next node, non-const*/
         return const_cast<Node *>(successor(const_cast<const Node *>(node)));
     }
+
+public:
+    
+    /*! Helper function. True if root == nullptr*/
+    bool isEmpty() const {
+        
+        bool emp = ((ctreeroot()==nullptr) ? (true) : (false));
+        return emp;
+    }
+
+    /*! Returns tree height */
+    long long int height = 0;             
+    
+
 
     
 /////////////////////////////// ITERATORS //////////////////////////////
