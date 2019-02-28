@@ -5,7 +5,7 @@
 *
 * @author Andrea Lorenzon, Francesco Cicala
 *
-* 
+*
 */
 
 #include <algorithm> // find_if
@@ -18,84 +18,91 @@
 #include <random>    // llRand, custom size_t random generator
 #include <chrono>    // benchmarking purposes
 
-template <class K, class T>
-class Tree {
-	/*! Implements a binary search tree, templated on key and values */
+/*! namespace for things not directly able to interact with Tree */
+namespace detail {
 
-    struct Node	{
+    template <class K, class T>
+    struct Node {
         /*! Node key, templated on K */
-        K key; 						
+        K key;
         /*! Node value, templated on T */
-        T value; 					
+        T value;
         /*! unique pointer to the left node */
-        std::unique_ptr<Node> left  = nullptr; 		
+        std::unique_ptr<Node> left  = nullptr;
         /*! unique pointer to the right node*/
-        std::unique_ptr<Node> right = nullptr; 	    
+        std::unique_ptr<Node> right = nullptr;
         Node * parent = nullptr;
-        
+
 
         Node() = default;
         /*! node constructor by declared value*/
-        Node(K k, T val) : key(k), value(val) {} 	
+        Node(K k, T val) : key(k), value(val) {}
     };
 
-    /*! pointer to tree root node*/
-    std::unique_ptr<Node> root = nullptr; 			
-
-    Node * treeroot() noexcept { 
-        /*! Helper function: exposes a public interface to the private tree root.*/
-        return root.get(); 
-    }  
-
-    const Node * ctreeroot() const noexcept { 
-        /*! Helper function: exposes a public interface to the private tree root, const.*/
-        return root.get(); 
-    }  
-
-    /*! recursive helper function, called by balance() function*/
-    void recursive_balancer(std::vector<std::pair<K,T>>vec) {       // to do: set to private.
-
-        if (vec.size() < 3) 
-        {
-            for(auto & item : vec) 
-                this->insert(item.first, item.second);
-        } 
-        else 
-        { 
-            this->insert(vec[vec.size() / 2].first, vec[vec.size() / 2].second);
-            std::vector<std::pair<K,T>> firstHalf(vec.begin(), vec.begin() + vec.size()/2);
-            std::vector<std::pair<K,T>> secondHalf(vec.begin() + vec.size()/2 + 1, vec.end());
-            recursive_balancer(firstHalf);
-            recursive_balancer(secondHalf);
-        }
-    }
-
     /*! helper function to traverse left nodes until there is any, giving the min(key) */
-    static Node * allLeft(Node * node) noexcept {   
+    template <typename NodeType>
+    NodeType * allLeft(NodeType * node) noexcept {
         while (node->left) { node = node->left.get(); }
         return node;
     }
 
     /*! helper function to traverse right nodes until there is any, giving max(key)*/
-    static Node * allRight(Node * node) noexcept {  
+    template <typename NodeType>
+    NodeType * allRight(NodeType * node) noexcept {
         while (node->right) { node = node->right.get(); }
         return node;
     }
 
     /*! helper function to return next node*/
-    static const Node * successor(const Node * node) noexcept {    
+    template <typename NodeType>
+    NodeType * successor(NodeType * node) noexcept {
         if (node->right) { return allLeft(node->right.get()); }
-        const Node * parent = node->parent;
+        auto * parent = node->parent;
         while (parent && node == parent->right.get()) {
             node = parent;
             parent = node->parent;
         }
         return parent;
     }
+}
 
-    /*! helper function to return next node, non-const*/
-    static Node * successor(Node * node) noexcept {    
-        return const_cast<Node *>(successor(const_cast<const Node *>(node)));
+
+/*! Implements a binary search tree, templated on key and values */
+template <class K, class T>
+class Tree {
+    
+
+    using Node = detail::Node<K, T>;  // to use directly Node, from detail namespace
+
+    /*! pointer to tree root node*/
+    std::unique_ptr<Node> root = nullptr;
+
+    Node * treeroot() noexcept {
+        /*! Helper function: exposes a public interface to the private tree root.*/
+        return root.get();
+    }
+
+    const Node * ctreeroot() const noexcept {
+        /*! Helper function: exposes a public interface to the private tree root, const.*/
+        return root.get();
+    }
+
+    /*! recursive helper function, called by balance() function*/
+    void recursive_balancer(std::vector<std::pair<K,T>>vec) {       // to do: set to private.
+
+        if (vec.size() < 3)
+        {
+            for(auto & item : vec)
+                this->insert(item.first, item.second);
+        }
+        else
+        {
+            this->insert(vec[vec.size() / 2].first, vec[vec.size() / 2].second);
+            std::vector<std::pair<K,T>> firstHalf(vec.begin(), vec.begin() + vec.size()/2);
+            std::vector<std::pair<K,T>> secondHalf(vec.begin() + vec.size()/2 + 1, vec.end());
+            recursive_balancer(firstHalf);
+            recursive_balancer(secondHalf);
+        }
     }
 
     std::vector <std::pair<K,T>> arrayOfNodes() {
@@ -105,30 +112,30 @@ class Tree {
             auto data = std::make_pair(i->key, i->value);
             v.push_back(data);
         }
-        
+
         std::cout << "Nodes have been stored into a vector. Rebuilding the tree..." << std::endl;
         return v;
     }
-    
+
 //////////////////////////////////////// PUBLIC /////////////////////////////
 public:
-    
+
     /*! Helper function. True if root == nullptr*/
     bool isEmpty() const {
-        
+
         bool emp = ((ctreeroot()==nullptr) ? (true) : (false));
         return emp;
     }
 
     /*! Returns tree height */
-    size_t height = 0;             
-    
+    size_t height = 0;
 
 
-    
+
+
 /////////////////////////////// ITERATORS //////////////////////////////
 
-    class iterator : public std::iterator< std::forward_iterator_tag, Node> { 
+    class iterator : public std::iterator< std::forward_iterator_tag, Node> {
         /*!< Tree node iterator*/
         Node * itr = nullptr;
     public :
@@ -137,7 +144,7 @@ public:
         iterator(const iterator&) = default;                    //c'tor
         Node & operator*() { return *itr; };
         Node * operator->() { return itr; }
-        iterator & operator++() {  
+        iterator & operator++() {
             itr = successor(itr);
             return *this;
         }
@@ -160,47 +167,49 @@ public:
     public :
         const_iterator() = default;     // will set to nullptr thanks to ` = nullptr` above
         explicit const_iterator(const Node * ptr) : itr(ptr) {}
-       
+
         const_iterator(const const_iterator&) = default;                //c'tor
- 
+
         const Node & operator*() { return *itr; };
         const Node * operator->() { return itr; }
- 
-        const_iterator & operator++() {  
+
+        const_iterator & operator++() {
             itr = successor(itr);
             return *this;
         }
- 
+
         const_iterator operator++(int) {
             auto old = *this;
             ++(*this);
             return old;
         }
- 
+
         friend bool operator== (const const_iterator & lhs, const const_iterator & rhs) {
             return lhs.itr == rhs.itr;
         };
- 
+
         friend bool operator!= (const const_iterator & lhs, const const_iterator & rhs) {
             return !(lhs == rhs);
         };
     };
 
 ////////////////////// end iterators ///////////////////////////////////
+// detail:: is automatically called by ADL (see Koenig lookup)
+
     
     /*! iterator to the node with the lowest key*/
-    iterator       begin()        { return iterator(allLeft(root.get())); }         
+    iterator       begin()        { return iterator(allLeft(root.get())); }
     /*! iterator to the node with the lowest key, for const Trees*/
-    const_iterator begin()  const { return const_iterator(allLeft(root.get())); }   
+    const_iterator begin()  const { return const_iterator(allLeft(root.get())); }
     /*! const iterator to the node with the lowest key, for const Trees*/
-    const_iterator cbegin() const { return const_iterator(allLeft(root.get())); }   
+    const_iterator cbegin() const { return const_iterator(allLeft(root.get())); }
 
     /*! iterator to the node after the one with the highest key (so nullptr)*/
-    iterator       end()          { return iterator(nullptr); }				        
+    iterator       end()          { return iterator(nullptr); }
     /*! iterator to the node after the one with the highest key (so nullptr), for const Trees*/
-	const_iterator end()  const   { return const_iterator(nullptr);}                
+    const_iterator end()  const   { return const_iterator(nullptr);}
     /*! const iterator to the node after the one with the highest key (so nullptr), for const Trees*/
-    const_iterator cend() const   { return const_iterator(allLeft(root.get())); } 	
+    const_iterator cend() const   { return const_iterator(allLeft(root.get())); }
 
     void insert(const K key, const T value) { /*! add a node provided key and value compatible with the tree */
 
@@ -266,7 +275,7 @@ public:
         * output: none.
         *
         */
- 
+
         if (&*find(k) == nullptr) return;
 
         Node* toBeRemoved{&*find(k)};
@@ -322,26 +331,26 @@ public:
         }
     }
 
-    void listNodes() {          			/*! iterates the tree in order, printing key-value entries */
+    void listNodes() {                      /*! iterates the tree in order, printing key-value entries */
         for (auto i = begin(); i != end(); ++i) {
-      	  std::cout << "iterated node: (" <<i->key <<", " <<i->value <<")" << std::endl;
-            
-    	};
+          std::cout << "iterated node: (" <<i->key <<", " <<i->value <<")" << std::endl;
+
+        };
     };
 
     iterator find(K k) {   /*! traverse the tree looking for a key, otherwise return nullptr iterator, that is the same as end()*/
-	    Node * node = root.get();
-	    while (node && node->key != k) {
-	        node = (k < node->key ? node->left : node->right).get();
-	    }
-	    return iterator(node);
-	}
+        Node * node = root.get();
+        while (node && node->key != k) {
+            node = (k < node->key ? node->left : node->right).get();
+        }
+        return iterator(node);
+    }
     /*! tree deletion: sets root to nullptr, destroy recursively all nodes*/
-    void destroy(){ 						
+    void destroy(){
         this->root = nullptr;
     }
 
-    
+
 
     /*!< tree balance function. calls arrayOfNodes() to linearize the tree, then creates a balanced tree*/
     void balance()
@@ -350,7 +359,7 @@ public:
         std::vector<std::pair<K,T>> vector = this->arrayOfNodes(); //salviamo i nodi iterati in  un vector, in ordine di key
         this->root = nullptr;  // cancelliamo tutti i nodi senza distruggere l'albero
         this->recursive_balancer(vector); // ricreiamo l'albero dal vector
-    };   								
+    };
 };
 
 std::string random_string( size_t length ) /*!< generates a random string of given length, for benchmarking purposes */
@@ -374,17 +383,17 @@ size_t llRand()   // random number between 0 and 10^18
     std::random_device rd;              //Will be used to obtain a seed for the random number engine
     std::mt19937 gen(rd());             //Standard mersenne_twister_engine seeded with rd()
     std::uniform_int_distribution<size_t> dis(1, 1000000000000000);   // 1-10^15
-    
+
     return dis(gen);
 }
 
-template<class K, class T>                                                       ///   DA FINIRE! 
+template<class K, class T>                                                       ///   DA FINIRE!
 std::ostream& operator<<(std::ostream& ostream, const Tree<K,T>& tree) {
 
     if (tree.isEmpty()) {
         ostream << "Error: printing empty tree";
         return ostream;
-    }    
+    }
     for (auto t=tree.cbegin();t!=tree.cend();++t){
         ostream << std::left << std::setw(12)<< t->key << ":" << t->value << "\n";
     }
@@ -396,21 +405,21 @@ int main (int argc, char* argv[])
 
     //test removeNode
 
-		std::cout << "\nTEST remove node with two children:\n";
-		Tree<int, int> tree2;
-		tree2.insert(10, 1);
-		tree2.insert(6, 1);
-		tree2.insert(16,1);
-		tree2.insert(14, 1);
-		tree2.insert(18, 1);
-		tree2.insert(4, 1);
-		tree2.insert(2, 1);
-		tree2.insert(19, 1);
+        std::cout << "\nTEST remove node with two children:\n";
+        Tree<int, int> tree2;
+        tree2.insert(10, 1);
+        tree2.insert(6, 1);
+        tree2.insert(16,1);
+        tree2.insert(14, 1);
+        tree2.insert(18, 1);
+        tree2.insert(4, 1);
+        tree2.insert(2, 1);
+        tree2.insert(19, 1);
 
     std::cout << "Remove node 212 and 18.\n";
-		tree2.removeNode(212);
-		tree2.removeNode(18);
-		tree2.listNodes(); 
+        tree2.removeNode(212);
+        tree2.removeNode(18);
+        tree2.listNodes();
     std::cout << "\nremoveNode test completed\n";
     //test llRand
     //std::cout << "llRand test: --> " << llRand() << std::endl;
@@ -423,11 +432,11 @@ int main (int argc, char* argv[])
 
     //create an empty tree
     Tree <size_t,std::string> myMap;
-    
-    
+
+
 
     //populate the map
-    for (int counter = 0; counter < iterations; ++counter ) 
+    for (int counter = 0; counter < iterations; ++counter )
     {
         size_t index = llRand();
         auto value = random_string(str_length);
@@ -462,7 +471,7 @@ int main (int argc, char* argv[])
     std::cout << "Tree height after balance: " << myMap.height << std::endl;
 
     // benchmark for lookup time after balance
-    
+
     std::cout << "looking for my droids after balance... " ;
     //std::cout << std::chrono::high_resolution_clock::period::den << std::endl;
     auto start_time2 = std::chrono::high_resolution_clock::now();
@@ -471,7 +480,6 @@ int main (int argc, char* argv[])
     std::cout << "The droids found with a lookup time of "  ;
     std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end_time2 - start_time2).count() << " nanoseconds" << std::endl;
 
-       
+
   return 0;
 }
-
