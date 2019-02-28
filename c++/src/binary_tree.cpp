@@ -133,65 +133,48 @@ public:
 
 
 
-/////////////////////////////// ITERATORS //////////////////////////////
+/////////////////////////////// ITERATOR TEMPLATE //////////////////////////////
 
-    class iterator : public std::iterator< std::forward_iterator_tag, Node> {
-        /*!< Tree node iterator*/
-        Node * itr = nullptr;
+    template <bool Const>
+    class iterator_template {
+    public:
+        using iterator_category = std::forward_iterator_tag;
+        using value_type = Node;
+        using difference_type = std::ptrdiff_t; //  is the signed integer type of the result of subtracting two pointers. 
+        using reference = typename std::conditional_t<Const, const Node &, Node &>;  // conditional_t provides member typedef type, which is defined as T if B is true at compile time, or as F if B is false. 
+        using pointer = typename std::conditional_t<Const, const Node *, Node *>;    // conditional_t provides member typedef type, which is defined as T if B is true at compile time, or as F if B is false. 
+
     public :
-        iterator() = default;     // will set to nullptr thanks to ` = nullptr` above
-        explicit iterator(Node * ptr) : itr(ptr) {}
-        iterator(const iterator&) = default;                    //c'tor
-        Node & operator*() { return *itr; };
-        Node * operator->() { return itr; }
-        iterator & operator++() {
+        iterator_template() = default;
+        explicit iterator_template(pointer ptr) : itr(ptr) {}
+
+        reference operator*() { return *itr; };
+        pointer operator->() { return itr; }
+        iterator_template & operator++() {
             itr = successor(itr);
             return *this;
         }
-        iterator operator++(int) {
+        iterator_template operator++(int) {
             auto old = *this;
             ++(*this);
             return old;
         }
-        friend bool operator== (const iterator & lhs, const iterator & rhs) {
+        friend bool operator== (const iterator_template<Const> & lhs, const iterator_template<Const> & rhs) {
             return lhs.itr == rhs.itr;
         };
-        friend bool operator!= (const iterator & lhs, const iterator & rhs) {
+        friend bool operator!= (const iterator_template<Const> & lhs, const iterator_template<Const> & rhs) {
             return !(lhs == rhs);
         };
+    
+
+    protected:       // allows inheritance
+        pointer itr = nullptr;
     };
 
-    class const_iterator : public std::iterator< std::forward_iterator_tag, Node> {
-        /*!< Tree node const iterator*/
-        const Node * itr = nullptr;
-    public :
-        const_iterator() = default;     // will set to nullptr thanks to ` = nullptr` above
-        explicit const_iterator(const Node * ptr) : itr(ptr) {}
 
-        const_iterator(const const_iterator&) = default;                //c'tor
-
-        const Node & operator*() { return *itr; };
-        const Node * operator->() { return itr; }
-
-        const_iterator & operator++() {
-            itr = successor(itr);
-            return *this;
-        }
-
-        const_iterator operator++(int) {
-            auto old = *this;
-            ++(*this);
-            return old;
-        }
-
-        friend bool operator== (const const_iterator & lhs, const const_iterator & rhs) {
-            return lhs.itr == rhs.itr;
-        };
-
-        friend bool operator!= (const const_iterator & lhs, const const_iterator & rhs) {
-            return !(lhs == rhs);
-        };
-    };
+    
+    using iterator = iterator_template<false>;   // creates iterators
+    using const_iterator = iterator_template<true>; // creates const_iterators
 
 ////////////////////// end iterators ///////////////////////////////////
 // detail:: is automatically called by ADL (see Koenig lookup)
