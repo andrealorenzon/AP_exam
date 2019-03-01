@@ -120,6 +120,34 @@ class Tree {
 //////////////////////////////////////// PUBLIC /////////////////////////////
 public:
 
+    /*! constructor */
+    Tree (){std::cout << "tree created with custom constructor\n";};
+
+    /*! copy assignment */
+    Tree& operator=(const Tree& bt);
+
+    /*! Move constructor*/
+    Tree ( Tree <K,T>&& other) noexcept = default;
+    
+    /*! Copy assignment */
+    Tree & operator=(Tree&& bt) noexcept = default;
+
+
+    /*! Copy constructor */
+    Tree (const Tree & other)  {
+        
+        for (auto t=other.cbegin();t!=other.cend();++t){
+            
+            this->insert(t->key,t->value);
+        }
+        std::cout << "tree created with copy constructor" << std::endl;
+    }
+
+    /*! default destructor */
+    ~Tree() noexcept = default;
+
+
+
     /*! Helper function. True if root == nullptr*/
     bool isEmpty() const {
 
@@ -192,7 +220,7 @@ public:
     /*! iterator to the node after the one with the highest key (so nullptr), for const Trees*/
     const_iterator end()  const   { return const_iterator(nullptr);}
     /*! const iterator to the node after the one with the highest key (so nullptr), for const Trees*/
-    const_iterator cend() const   { return const_iterator(allLeft(root.get())); }
+    const_iterator cend() const   { return const_iterator(nullptr); }
 
     void insert(const K key, const T value) { /*! add a node provided key and value compatible with the tree */
 
@@ -463,6 +491,12 @@ int main (int argc, char* argv[])
     std::cout << "The droids found with a lookup time of "  ;
     std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end_time2 - start_time2).count() << " nanoseconds" << std::endl;
 
-
+    std::cout << " ---------- copy/move semantics test -----------" << std::endl;
+    
+    auto tree3(myMap);
+    
+    std::cout << tree3 << " --- \n" << tree3.height;
+    tree3.balance();
+    std::cout << "balanced : " << tree3.height << std::endl;
   return 0;
 }
