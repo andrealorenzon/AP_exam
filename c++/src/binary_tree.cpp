@@ -36,8 +36,26 @@ namespace detail {
 
         Node() = default;
         /*! node constructor by declared value*/
-        Node(K k, T val) : key(k), value(val) {}
+        Node(K k, T val) 
+        : key(k), 
+          value(val) 
+        {}
     };
+
+    /*!clone a node, including children pointers and parent*/
+    template <class K, class T>
+    std::unique_ptr<Node<K, T>> clone(const Node<K, T> * old) {
+        auto node = std::make_unique<Node<K, T>>(old->key, old->value);
+        if (old->left) {
+            node->left = clone(old->left.get());
+            node->left->parent = node.get();
+        };
+        if (old->right) {
+            node->right = clone(old->right.get());
+            node->right->parent = node.get();
+        };
+        return node;
+    }
 
     /*! helper function to traverse left nodes until there is any, giving the min(key) */
     template <typename NodeType>
@@ -123,8 +141,6 @@ public:
     /*! constructor */
     Tree (){std::cout << "tree created with custom constructor\n";};
 
-    
-
     /*! Move constructor*/
     Tree ( Tree <K,T>&& other) noexcept = default;
     
@@ -133,14 +149,12 @@ public:
     Tree & operator=(const Tree& bt) noexcept = default;
 
     /*! Copy constructor */
-    Tree (const Tree & other)  {
+    Tree (const Tree & other)
+    : root(clone(other.root.get())),
+      height(other.height) 
+    {};
         
-        for (auto t=other.cbegin();t!=other.cend();++t){
-            
-            this->insert(t->key,t->value);
-        }
-        std::cout << "tree created with copy constructor" << std::endl;
-    }
+    
 
     /*! default destructor */
     ~Tree() noexcept = default;
@@ -168,8 +182,8 @@ public:
         using iterator_category = std::forward_iterator_tag;
         using value_type = Node;
         using difference_type = std::ptrdiff_t; //  is the signed integer type of the result of subtracting two pointers. 
-        using reference = typename std::conditional_t<Const, const Node &, Node &>;  // conditional_t provides member typedef type, which is defined as T if B is true at compile time, or as F if B is false. 
-        using pointer = typename std::conditional_t<Const, const Node *, Node *>;    // conditional_t provides member typedef type, which is defined as T if B is true at compile time, or as F if B is false. 
+        using reference = typename std::conditional_t<Const, const Node &, Node &>;  // conditional_t provides member typedef type, which is defined as T1 if B is true at compile time, or as T2 if B is false. 
+        using pointer = typename std::conditional_t<Const, const Node *, Node *>;    // conditional_t provides member typedef type, which is defined as T1 if B is true at compile time, or as T2 if B is false. 
 
     public :
         iterator_template() = default;
@@ -456,7 +470,7 @@ int main (int argc, char* argv[])
     size_t testKey = 424242424242424242;
 
     myMap.insert(testKey,"These are indeed the droids you are looking for.");
-
+/*
     std::cout << "Tree populated with " << iterations << " elements." << std::endl;
 
     // retrieve all data in random order if readtoo = 1
@@ -489,7 +503,7 @@ int main (int argc, char* argv[])
     auto end_time2 = std::chrono::high_resolution_clock::now();
     std::cout << "The droids found with a lookup time of "  ;
     std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end_time2 - start_time2).count() << " nanoseconds" << std::endl;
-
+*/
     std::cout << " ---------- copy/move semantics test -----------" << std::endl;
     
     auto tree3(myMap);
