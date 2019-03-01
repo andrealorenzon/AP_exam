@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['iterator',['iterator',['../class_tree_1_1iterator.html#ae5e13400dff45c9120eb00d731ca2003',1,'Tree::iterator::iterator()=default'],['../class_tree_1_1iterator.html#a7361515f85027117d216ccb86b10a0f0',1,'Tree::iterator::iterator(Node *ptr)'],['../class_tree_1_1iterator.html#a7d303395c219744628fc75dd861c2634',1,'Tree::iterator::iterator(const iterator &amp;)=default']]]
+  ['insert',['insert',['../class_tree.html#ad822a30f96559d5121eea91dda445108',1,'Tree']]],
+  ['isempty',['isEmpty',['../class_tree.html#ac27239b9c409c046e6c1de2ab9fea069',1,'Tree']]],
+  ['iterator_5ftemplate',['iterator_template',['../class_tree_1_1iterator__template.html#ac8bf16f32c4c4631db11e1b3d9746667',1,'Tree::iterator_template::iterator_template()=default'],['../class_tree_1_1iterator__template.html#a6444af107fd31284e45788676fedb38a',1,'Tree::iterator_template::iterator_template(pointer ptr)']]]
 ];

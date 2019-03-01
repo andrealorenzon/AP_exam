@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['node',['Node',['../struct_tree_1_1_node.html',1,'Tree&lt; K, T &gt;::Node'],['../struct_tree_1_1_node.html#a5c6510b92ca8b13a8d6c0c2c26b8fa84',1,'Tree::Node::Node()=default'],['../struct_tree_1_1_node.html#a31f1f23e2f50bac91e0017052a39ce03',1,'Tree::Node::Node(K k, T val)']]]
+  ['node',['Node',['../structdetail_1_1_node.html',1,'detail::Node&lt; K, T &gt;'],['../class_tree.html#a82a85a11f0e0245fd6c93ebb6c7d26d3',1,'Tree::Node()'],['../structdetail_1_1_node.html#a04617b512a239dcce48ff153e6b7f67d',1,'detail::Node::Node()=default'],['../structdetail_1_1_node.html#a7d030709390984a5c871b47151a5acfe',1,'detail::Node::Node(K k, T val)']]]
 ];

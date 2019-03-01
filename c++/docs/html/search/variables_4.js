@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['parent',['parent',['../struct_tree_1_1_node.html#ad7617d10dc25739d958b54d24bb7a9a4',1,'Tree::Node']]]
+  ['parent',['parent',['../structdetail_1_1_node.html#ac51f1708a15ff19c8a25d11b6c2a7c96',1,'detail::Node']]]
 ];

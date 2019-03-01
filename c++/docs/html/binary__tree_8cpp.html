@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Binary Tree: /home/andrea/AP_exam/c++/src/binary_tree.cpp File Reference</title>
+<title>Binary Tree: /home/andrea/DSSC/AP_exam/c++/src/binary_tree.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,6 +66,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">binary_tree.cpp File Reference</div>  </div>
@@ -82,29 +83,47 @@ $(function() {
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;random&gt;</code><br />
+<code>#include &lt;chrono&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for binary_tree.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="binary__tree_8cpp__incl.png" border="0" usemap="#_2home_2andrea_2_a_p__exam_2c_09_09_2src_2binary__tree_8cpp" alt=""/></div>
+<div class="center"><img src="binary__tree_8cpp__incl.png" border="0" usemap="#_2home_2andrea_2_d_s_s_c_2_a_p__exam_2c_09_09_2src_2binary__tree_8cpp" alt=""/></div>
+<map name="_2home_2andrea_2_d_s_s_c_2_a_p__exam_2c_09_09_2src_2binary__tree_8cpp" id="_2home_2andrea_2_d_s_s_c_2_a_p__exam_2c_09_09_2src_2binary__tree_8cpp">
+</map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdetail_1_1_node.html">detail::Node&lt; K, T &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree.html">Tree&lt; K, T &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_tree_1_1_node.html">Tree&lt; K, T &gt;::Node</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree_1_1iterator__template.html">Tree&lt; K, T &gt;::iterator_template&lt; Const &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree_1_1iterator.html">Tree&lt; K, T &gt;::iterator</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tree_1_1const__iterator.html">Tree&lt; K, T &gt;::const_iterator</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacedetail"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedetail.html">detail</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a7bc8d154d9106e14e630d451cbee3e44"><td class="memTemplParams" colspan="2">template&lt;class K , class T &gt; </td></tr>
+<tr class="memitem:a7bc8d154d9106e14e630d451cbee3e44"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; Node&lt; K, T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacedetail.html#a7bc8d154d9106e14e630d451cbee3e44">detail::clone</a> (const Node&lt; K, T &gt; *old)</td></tr>
+<tr class="separator:a7bc8d154d9106e14e630d451cbee3e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae445fdba655187ab8118e55a280e7e58"><td class="memTemplParams" colspan="2">template&lt;typename NodeType &gt; </td></tr>
+<tr class="memitem:ae445fdba655187ab8118e55a280e7e58"><td class="memTemplItemLeft" align="right" valign="top">NodeType *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacedetail.html#ae445fdba655187ab8118e55a280e7e58">detail::allLeft</a> (NodeType *node) noexcept</td></tr>
+<tr class="separator:ae445fdba655187ab8118e55a280e7e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa413575b03e078463c232e3c1ea9454a"><td class="memTemplParams" colspan="2">template&lt;typename NodeType &gt; </td></tr>
+<tr class="memitem:aa413575b03e078463c232e3c1ea9454a"><td class="memTemplItemLeft" align="right" valign="top">NodeType *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacedetail.html#aa413575b03e078463c232e3c1ea9454a">detail::allRight</a> (NodeType *node) noexcept</td></tr>
+<tr class="separator:aa413575b03e078463c232e3c1ea9454a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3ee6f380132caf61b8738949fa66088"><td class="memTemplParams" colspan="2">template&lt;typename NodeType &gt; </td></tr>
+<tr class="memitem:ae3ee6f380132caf61b8738949fa66088"><td class="memTemplItemLeft" align="right" valign="top">NodeType *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacedetail.html#ae3ee6f380132caf61b8738949fa66088">detail::successor</a> (NodeType *node) noexcept</td></tr>
+<tr class="separator:ae3ee6f380132caf61b8738949fa66088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad32900a09f1e1cbf99c25e41c8af70ca"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="binary__tree_8cpp.html#ad32900a09f1e1cbf99c25e41c8af70ca">random_string</a> (size_t length)</td></tr>
 <tr class="separator:ad32900a09f1e1cbf99c25e41c8af70ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91aa661d0e9ed84b8ae681971fbe6f52"><td class="memItemLeft" align="right" valign="top">long long int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="binary__tree_8cpp.html#a91aa661d0e9ed84b8ae681971fbe6f52">llRand</a> ()</td></tr>
-<tr class="separator:a91aa661d0e9ed84b8ae681971fbe6f52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d5a02f474a2ba93ddb68cde20bd1dbf"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="binary__tree_8cpp.html#a5d5a02f474a2ba93ddb68cde20bd1dbf">llRand</a> ()</td></tr>
+<tr class="separator:a5d5a02f474a2ba93ddb68cde20bd1dbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaadd47c8fd8752acefc120fcb2c9058a"><td class="memTemplParams" colspan="2">template&lt;class K , class T &gt; </td></tr>
 <tr class="memitem:aaadd47c8fd8752acefc120fcb2c9058a"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="binary__tree_8cpp.html#aaadd47c8fd8752acefc120fcb2c9058a">operator&lt;&lt;</a> (std::ostream &amp;ostream, const <a class="el" href="class_tree.html">Tree</a>&lt; K, T &gt; &amp;tree)</td></tr>
 <tr class="memdesc:aaadd47c8fd8752acefc120fcb2c9058a"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA FINIRE!  <a href="#aaadd47c8fd8752acefc120fcb2c9058a">More...</a><br /></td></tr>
@@ -114,17 +133,16 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Binary tree implementation. </p>
-<dl class="section author"><dt>Author</dt><dd>Andrea Lorenzon</dd></dl>
-<dl class="section date"><dt>Date</dt><dd>12/22/2018 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Andrea Lorenzon, Francesco Cicala </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a91aa661d0e9ed84b8ae681971fbe6f52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91aa661d0e9ed84b8ae681971fbe6f52">&#9670;&nbsp;</a></span>llRand()</h2>
+<a id="a5d5a02f474a2ba93ddb68cde20bd1dbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d5a02f474a2ba93ddb68cde20bd1dbf">&#9670;&nbsp;</a></span>llRand()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long long int llRand </td>
+          <td class="memname">size_t llRand </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>

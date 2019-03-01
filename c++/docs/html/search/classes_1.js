@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iterator',['iterator',['../class_tree_1_1iterator.html',1,'Tree']]]
+  ['node',['Node',['../structdetail_1_1_node.html',1,'detail']]]
 ];
