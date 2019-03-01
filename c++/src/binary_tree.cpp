@@ -123,15 +123,14 @@ public:
     /*! constructor */
     Tree (){std::cout << "tree created with custom constructor\n";};
 
-    /*! copy assignment */
-    Tree& operator=(const Tree& bt);
+    
 
     /*! Move constructor*/
     Tree ( Tree <K,T>&& other) noexcept = default;
     
     /*! Copy assignment */
     Tree & operator=(Tree&& bt) noexcept = default;
-
+    Tree & operator=(const Tree& bt) noexcept = default;
 
     /*! Copy constructor */
     Tree (const Tree & other)  {
