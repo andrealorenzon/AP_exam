@@ -48,7 +48,7 @@ int main (int argc, char* argv[])
     std::cout << "Remove node 212 and 18.\n";
         tree2.removeNode(212);
         tree2.removeNode(18);
-        tree2.listNodes();
+        //tree2.listNodes();
     std::cout << "\nremoveNode test completed\n";
     //test llRand
     //std::cout << "llRand test: --> " << llRand() << std::endl;
