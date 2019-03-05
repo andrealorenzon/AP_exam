@@ -124,8 +124,8 @@ class Tree {
     /*!  Helper function: creates an std::vector and push every pair(key,value) of the tree nodes in it.*/
         std::vector<std::pair<const K,T>> v;
         for (auto i = begin(); i != end(); ++i) {
-            auto d = i.data;
-            v.push_back(d);
+            
+            v.push_back(i);
         }
 
         std::cout << "Nodes have been stored into a vector. Rebuilding the tree..." << std::endl;
@@ -265,7 +265,7 @@ public:
             }
         }
 
-        auto newNode = std::make_unique<Node>(key, value);
+        auto newNode = std::make_unique<Node>(std::make_pair(key, value));
         current = newNode.get();
         if (parent) {
             newNode->parent = parent;
