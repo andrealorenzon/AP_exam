@@ -16,8 +16,8 @@
 #include <math.h>    // pow()
 #include <vector>    // for tree balancing
 #include <utility>   // pair
-#include <random>    // llRand, custom size_t random generator
-#include <chrono>    // benchmarking purposes
+
+
 
 /*! namespace for things not directly able to interact with Tree */
 namespace detail {

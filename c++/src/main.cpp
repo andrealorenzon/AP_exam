@@ -1,5 +1,7 @@
 #include "binary_tree.h"
 #include <iostream>
+#include <chrono>    // benchmarking purposes
+#include <random>    // llRand, custom size_t random generator
 
 std::string random_string( size_t length ) /*!< generates a random string of given length, for benchmarking purposes */
 {
