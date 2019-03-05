@@ -24,10 +24,7 @@ namespace detail {
 
     template <class K, class T>
     struct Node {
-        /*! Node key, templated on K */
-        K key;
-        /*! Node value, templated on T */
-        T value;
+        std::pair<const K, T> data;
         /*! unique pointer to the left node */
         std::unique_ptr<Node> left  = nullptr;
         /*! unique pointer to the right node*/
@@ -37,16 +34,15 @@ namespace detail {
 
         Node() = default;
         /*! node constructor by declared value*/
-        Node(K k, T val) 
-        : key(k), 
-          value(val) 
-        {}
+        Node(std::pair<const K, T> d)
+        : data(d)
+        {};
     };
 
     /*!clone a node, including children pointers and parent*/
     template <class K, class T>
     std::unique_ptr<Node<K, T>> clone(const Node<K, T> * old) {
-        auto node = std::make_unique<Node<K, T>>(old->key, old->value);
+        auto node = std::make_unique<Node<K, T>>(old->data);
         if (old->left) {
             node->left = clone(old->left.get());
             node->left->parent = node.get();
@@ -124,12 +120,12 @@ class Tree {
         }
     }
 
-    std::vector <std::pair<K,T>> arrayOfNodes() {
+    std::vector <std::pair<const K,T>> arrayOfNodes() {
     /*!  Helper function: creates an std::vector and push every pair(key,value) of the tree nodes in it.*/
-        std::vector<std::pair<K,T>> v;
+        std::vector<std::pair<const K,T>> v;
         for (auto i = begin(); i != end(); ++i) {
-            auto data = std::make_pair(i->key, i->value);
-            v.push_back(data);
+            auto d = i.data;
+            v.push_back(d);
         }
 
         std::cout << "Nodes have been stored into a vector. Rebuilding the tree..." << std::endl;
@@ -140,7 +136,7 @@ class Tree {
 public:
 
     /*! constructor */
-    Tree (){std::cout << "tree created with custom constructor\n";};
+    Tree (){};
 
     /*! Move constructor*/
     Tree ( Tree <K,T>&& other) noexcept = default;
@@ -255,16 +251,16 @@ public:
         size_t temp_height = 0;
         while (current) {
             parent = current;
-            if (key > current->key) {
+            if (key > current->data.first) {
                 current = current->right.get();
                 temp_height++;
                 if (temp_height > this->height) { this->height = temp_height;}
-            } else if (key < current->key) {
+            } else if (key < current->data.first) {
                 current = current->left.get();
                 temp_height++;
                 if (temp_height > this->height) { this->height = temp_height;}
             } else {
-                current->value = value;
+                current->data.second = value;
                 return;
             }
         }
@@ -273,7 +269,7 @@ public:
         current = newNode.get();
         if (parent) {
             newNode->parent = parent;
-            if (newNode->key > parent->key) {
+            if (newNode->data.first > parent->data.second) {
                 parent->right = std::move(newNode);
                 // std::cout <<"created node (" <<std::setw(3) <<key
                 //           <<", " <<std::setw(3) <<value <<") [" <<current
@@ -326,32 +322,26 @@ public:
           }
           /* CASE 2: the node has two children */
           else if (toBeRemoved->left && toBeRemoved->right) {
-            Node* next{successor(toBeRemoved)};
-            toBeRemoved->key = next->key;
-            toBeRemoved->value = next->value;
-
-            if (!(next->left || next->right)) {
-              if (next->parent->left.get() == next)
-                next->parent->left = std::move(nullptr);
-              else
-                next->parent->right = std::move(nullptr);
-
-            } else {
-              if (next->right) {
-                next->right->parent = next->parent; // reassign parent to child
-
-                // reassign child to parent
-                if (leftOrRight) next->parent->right = std::move(next->right);
-                else next->parent->left = std::move(next->right);
-
-              } else {
-                next->left->parent = next->parent; // reassign parent to child
-
-                // reassign child to parent
-                if (leftOrRight) next->parent->right = std::move(next->left);
-                else next->parent->left = std::move(next->left);
-              }
+            auto replacement = allLeft(toBeRemoved->right.get());
+            //cut out next node and glue the hole
+            if (replacement->right) { 
+                replacement->right->parent = replacement->parent;
+                replacement->parent->left = replacement->right;
             }
+            //steal toBeRemoved left child
+            replacement->left = std::move(toBeRemoved->left);
+            if (replacement->left) replacement->left->parent = replacement;
+
+            //steal toBeRemoved right children
+            replacement->right = move(toBeRemoved->right);
+            if (replacement->right) replacement->right->parent = replacement;
+
+            //replace old node with cut out node
+            replacement->parent = toBeRemoved->parent;
+            if (toBeRemoved == toBeRemoved->parent->left)
+                replacement->parent->left =  std::move(replacement);
+            else
+                replacement->parent->right = std::move(replacement);
           }
         }
     }
@@ -365,8 +355,8 @@ public:
 
     iterator find(K k) {   /*! traverse the tree looking for a key, otherwise return nullptr iterator, that is the same as end()*/
         Node * node = root.get();
-        while (node && node->key != k) {
-            node = (k < node->key ? node->left : node->right).get();
+        while (node && node->data.first != k) {
+            node = (k < node->data.first ? node->left : node->right).get();
         }
         return iterator(node);
     }
