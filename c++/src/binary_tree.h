@@ -103,7 +103,7 @@ class Tree {
     }
 
     /*! recursive helper function, called by balance() function*/
-    void recursive_balancer(std::vector<std::pair<K,T>>vec) {       // to do: set to private.
+    void recursive_balancer(std::vector<std::pair<const K,T>>vec) {       // to do: set to private.
 
         if (vec.size() < 3)
         {
@@ -269,7 +269,7 @@ public:
         current = newNode.get();
         if (parent) {
             newNode->parent = parent;
-            if (newNode->data.first > parent->data.second) {
+            if (newNode->data.first > parent->data.first) {
                 parent->right = std::move(newNode);
                 // std::cout <<"created node (" <<std::setw(3) <<key
                 //           <<", " <<std::setw(3) <<value <<") [" <<current
@@ -303,8 +303,8 @@ public:
 
         /* CASE 0: the node is root */
         if (toBeRemoved->parent == nullptr) {
-          std::cout << "\nCase 0\n";
-          destroy();
+          //std::cout << "\nCase 0\n";
+          //destroy();  <-- sure about that?
         }
 
         else {
@@ -322,26 +322,43 @@ public:
           }
           /* CASE 2: the node has two children */
           else if (toBeRemoved->left && toBeRemoved->right) {
-            auto replacement = allLeft(toBeRemoved->right.get());
-            //cut out next node and glue the hole
-            if (replacement->right) { 
+            auto * right = toBeRemoved->right.get();
+            auto * replacementPtr = allLeft(right);
+
+            // Take replacement from its parent
+            auto replacement = replacementPtr == right
+                             ? std::move(toBeRemoved->right)
+                             : std::move(replacementPtr->parent->left);
+
+            // If replacement had right children, stick them on its former parent
+            if (replacement->right) {
                 replacement->right->parent = replacement->parent;
-                replacement->parent->left = replacement->right;
+                if (replacementPtr == right) {
+                    toBeRemoved->right = std::move(replacement->right);
+                } else {
+                    replacement->parent->left = std::move(replacement->right);
+                }
             }
+
+            // At this point, replacement is fully extracted from tree.
+            // Now insert it at its new place
+
             //steal toBeRemoved left child
             replacement->left = std::move(toBeRemoved->left);
-            if (replacement->left) replacement->left->parent = replacement;
+            if (replacement->left) replacement->left->parent = replacement.get();
 
             //steal toBeRemoved right children
             replacement->right = move(toBeRemoved->right);
-            if (replacement->right) replacement->right->parent = replacement;
+            if (replacement->right) replacement->right->parent = replacement.get();
 
             //replace old node with cut out node
             replacement->parent = toBeRemoved->parent;
-            if (toBeRemoved == toBeRemoved->parent->left)
+            if (toBeRemoved == toBeRemoved->parent->left.get()) {
                 replacement->parent->left =  std::move(replacement);
-            else
+            } else {
                 replacement->parent->right = std::move(replacement);
+            }
+
           }
         }
     }
@@ -371,7 +388,7 @@ public:
     void balance()
     {
         this->height = 0;
-        std::vector<std::pair<K,T>> vector = this->arrayOfNodes(); //salviamo i nodi iterati in  un vector, in ordine di key
+        std::vector<std::pair<const K,T>> vector = this->arrayOfNodes(); //salviamo i nodi iterati in  un vector, in ordine di key
         this->root = nullptr;  // cancelliamo tutti i nodi senza distruggere l'albero
         this->recursive_balancer(vector); // ricreiamo l'albero dal vector
     };
@@ -387,7 +404,7 @@ std::ostream& operator<<(std::ostream& ostream, const Tree<K,T>& tree) {
         return ostream;
     }
     for (auto t=tree.cbegin();t!=tree.cend();++t){
-        ostream << std::left << std::setw(12)<< t->key << ":" << t->value << "\n";
+        ostream << std::left << std::setw(12)<< t->data.first << ":" << t->data.second << "\n";
     }
   return ostream;
 }
