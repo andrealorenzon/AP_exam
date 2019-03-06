@@ -13,9 +13,9 @@ long long int llRand()   // random number between 0 and 10^18
     return dis(gen);
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
-	std::set<int>Totale;
+	std::set<long long int>Totale;
 
 	for (int i=0; i <1000000;i++ ){
 		Totale.insert(llRand());

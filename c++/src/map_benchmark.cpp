@@ -15,6 +15,7 @@ example
 #include <map>
 #include <algorithm>
 #include <chrono>
+#include <random>
 
 /*!< generates a random string of given length */
 std::string random_string( size_t length )
@@ -33,14 +34,26 @@ std::string random_string( size_t length )
     return str;
 }
 
+size_t llRand()   // random number between 0 and 10^18
+{
+    std::random_device rd;              //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd());             //Standard mersenne_twister_engine seeded with rd()
+    std::uniform_int_distribution<size_t> dis(1, 1000000000000000);   // 1-10^15
 
+    return dis(gen);
+}
 
 
 
 int main (int argc, char* argv[])
 {
+
+  if (argc==1) {
+        std::cout << "wrong number of args. expects 3" << std::endl;
+        return 0;}
+
 	// initialize random seed
-	srand (time(NULL));
+	srand (static_cast<unsigned>(time(NULL)));
 
 	//read iterations and string length from argv
 	const  int iterations = std::atoi(argv[1]);
@@ -54,9 +67,9 @@ int main (int argc, char* argv[])
   	//populate the map
   	for (int counter = 0; counter < iterations; ++counter ) 
   	{
-  		size_t index = std::rand()*10^10+std::rand()*10*5+std::rand();
-  		auto value = random_string(str_length);
-  		myMap[index] = value;
+  		size_t index = llRand();
+        auto value = random_string(str_length);
+        myMap[index] = value;
   	}
   
   	std::cout << "Map populated with " << iterations << " elements." << std::endl;

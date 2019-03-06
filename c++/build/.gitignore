@@ -1,0 +1,93 @@
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   CMakeLists.txt
+	deleted:    docs/docs/html/bc_s.png
+	deleted:    docs/docs/html/bdwn.png
+	deleted:    docs/docs/html/closed.png
+	deleted:    docs/docs/html/doc.png
+	deleted:    docs/docs/html/doxygen.png
+	deleted:    docs/docs/html/folderclosed.png
+	deleted:    docs/docs/html/folderopen.png
+	deleted:    docs/docs/html/nav_f.png
+	deleted:    docs/docs/html/nav_g.png
+	deleted:    docs/docs/html/nav_h.png
+	deleted:    docs/docs/html/open.png
+	deleted:    docs/docs/html/search/close.png
+	deleted:    docs/docs/html/search/mag_sel.png
+	deleted:    docs/docs/html/search/search_l.png
+	deleted:    docs/docs/html/search/search_m.png
+	deleted:    docs/docs/html/search/search_r.png
+	deleted:    docs/docs/html/splitbar.png
+	deleted:    docs/docs/html/sync_off.png
+	deleted:    docs/docs/html/sync_on.png
+	deleted:    docs/docs/html/tab_a.png
+	deleted:    docs/docs/html/tab_b.png
+	deleted:    docs/docs/html/tab_h.png
+	deleted:    docs/docs/html/tab_s.png
+	deleted:    docs/html/binary__tree_8cpp__incl.png
+	deleted:    docs/html/class_tree_1_1const__iterator__coll__graph.png
+	deleted:    docs/html/class_tree_1_1const__iterator__inherit__graph.png
+	deleted:    docs/html/inherit_graph_1.png
+	modified:   docs/html/map__benchmark_8cpp__incl.png
+	modified:   src/main.cpp
+	modified:   src/map_benchmark.cpp
+	deleted:    src/test
+	modified:   utilities/random_number_generator/random.cpp
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	CMakeCache.txt
+	CMakeDoxyfile.in
+	CMakeDoxygenDefaults.cmake
+	CMakeFiles/
+	Doxyfile
+	Makefile
+	cmake_install.cmake
+	docs.tgz
+	docs/html/Implementation_of_BT_via_Smart_Pointers.pdf
+	docs/html/dir_68267d1309a1af8e8297ef4c3efbcdba.html
+	docs/html/doxygen.css
+	docs/html/dynsections.js
+	docs/html/files.html
+	docs/html/globals.html
+	docs/html/globals_func.html
+	docs/html/graph_legend.html
+	docs/html/graph_legend.md5
+	docs/html/graph_legend.png
+	docs/html/index.html
+	docs/html/jquery.js
+	docs/html/main_8cpp.html
+	docs/html/main_8cpp__incl.map
+	docs/html/main_8cpp__incl.md5
+	docs/html/main_8cpp__incl.png
+	docs/html/map__benchmark_8cpp.html
+	docs/html/map__benchmark_8cpp__incl.map
+	docs/html/map__benchmark_8cpp__incl.md5
+	docs/html/menu.js
+	docs/html/menudata.js
+	docs/html/search/all_0.html
+	docs/html/search/all_0.js
+	docs/html/search/all_1.html
+	docs/html/search/all_1.js
+	docs/html/search/all_2.html
+	docs/html/search/all_2.js
+	docs/html/search/files_0.html
+	docs/html/search/files_0.js
+	docs/html/search/functions_0.html
+	docs/html/search/functions_0.js
+	docs/html/search/functions_1.html
+	docs/html/search/functions_1.js
+	docs/html/search/functions_2.html
+	docs/html/search/functions_2.js
+	docs/html/search/nomatches.html
+	docs/html/search/search.css
+	docs/html/search/search.js
+	docs/html/search/searchdata.js
+	docs/html/tabs.css
+	map_benchmark
+	random
+	tree
+*

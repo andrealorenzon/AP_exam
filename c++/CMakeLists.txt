@@ -1,3 +1,7 @@
+# cmake -DCMAKE_BUILD_TYPE=Release ..  → will build with optimization enabled
+# cmake -DCMAKE_BUILD_TYPE=Debug .. → will build with optimization disabled
+# add options manually: cmake -DCMAKE_CXX_FLAGS="-flto -O0" ..
+
 ##############################################################################
 # Configuration
 

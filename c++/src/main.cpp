@@ -32,6 +32,9 @@ size_t llRand()   // random number between 0 and 10^18
 int main (int argc, char* argv[])
 {
 
+    if (argc==1) {
+        std::cout << "wrong number of args. expects 3" << std::endl;
+        return 0;}
     //test erase
 
         std::cout << "\nTEST remove node with two children:\n";
@@ -75,7 +78,7 @@ int main (int argc, char* argv[])
     size_t testKey = 424242424242424242;
 
     myMap.insert(testKey,"These are indeed the droids you are looking for.");
-/*
+
     std::cout << "Tree populated with " << iterations << " elements." << std::endl;
 
     // retrieve all data in random order if readtoo = 1
@@ -87,7 +90,7 @@ int main (int argc, char* argv[])
 
     std::cout << "looking for my droids before tree balance... " ;
     auto start_time = std::chrono::high_resolution_clock::now();
-    std::cout << myMap.find(testKey)->value << std::endl;
+    std::cout << myMap.find(testKey)->second << std::endl;
     auto end_time = std::chrono::high_resolution_clock::now();
     std::cout << "The droids found with a lookup time of "  ;
     std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time).count() << " nanosec" << std::endl;
@@ -104,11 +107,11 @@ int main (int argc, char* argv[])
     std::cout << "looking for my droids after balance... " ;
     //std::cout << std::chrono::high_resolution_clock::period::den << std::endl;
     auto start_time2 = std::chrono::high_resolution_clock::now();
-    std::cout << myMap.find(testKey)->value << std::endl;
+    std::cout << myMap.find(testKey)->second << std::endl;
     auto end_time2 = std::chrono::high_resolution_clock::now();
     std::cout << "The droids found with a lookup time of "  ;
     std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end_time2 - start_time2).count() << " nanoseconds" << std::endl;
-*/
+
     std::cout << " ---------- copy/move semantics test -----------" << std::endl;
     
     auto tree3(myMap);
