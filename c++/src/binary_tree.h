@@ -24,7 +24,9 @@ namespace detail {
 
     template <class K, class T>
     struct Node {
-        std::pair<const K, T> data;
+        using data_type = std::pair<const K, T>;
+
+        data_type data;
         /*! unique pointer to the left node */
         std::unique_ptr<Node> left  = nullptr;
         /*! unique pointer to the right node*/
@@ -34,15 +36,15 @@ namespace detail {
 
         Node() = default;
         /*! node constructor by declared value*/
-        Node(std::pair<const K, T> d)
-        : data(d)
+        Node(K k, T val)
+        : data(k, val)
         {};
     };
 
     /*!clone a node, including children pointers and parent*/
     template <class K, class T>
     std::unique_ptr<Node<K, T>> clone(const Node<K, T> * old) {
-        auto node = std::make_unique<Node<K, T>>(old->data);
+        auto node = std::make_unique<Node<K, T>>(old->data.first, old->data.second);
         if (old->left) {
             node->left = clone(old->left.get());
             node->left->parent = node.get();
@@ -92,18 +94,8 @@ class Tree {
     /*! pointer to tree root node*/
     std::unique_ptr<Node> root = nullptr;
 
-    Node * treeroot() noexcept {
-        /*! Helper function: exposes a public interface to the private tree root.*/
-        return root.get();
-    }
-
-    const Node * ctreeroot() const noexcept {
-        /*! Helper function: exposes a public interface to the private tree root, const.*/
-        return root.get();
-    }
-
     /*! recursive helper function, called by balance() function*/
-    void recursive_balancer(std::vector<std::pair<const K,T>>vec) {       // to do: set to private.
+    void recursive_balancer(std::vector<typename Node::data_type>vec) {       // to do: set to private.
 
         if (vec.size() < 3)
         {
@@ -113,24 +105,13 @@ class Tree {
         else
         {
             this->insert(vec[vec.size() / 2].first, vec[vec.size() / 2].second);
-            std::vector<std::pair<K,T>> firstHalf(vec.begin(), vec.begin() + vec.size()/2);
-            std::vector<std::pair<K,T>> secondHalf(vec.begin() + vec.size()/2 + 1, vec.end());
+            std::vector<typename Node::data_type> firstHalf(vec.begin(), vec.begin() + vec.size()/2);
+            std::vector<typename Node::data_type> secondHalf(vec.begin() + vec.size()/2 + 1, vec.end());
             recursive_balancer(firstHalf);
             recursive_balancer(secondHalf);
         }
     }
 
-    std::vector <std::pair<const K,T>> arrayOfNodes() {
-    /*!  Helper function: creates an std::vector and push every pair(key,value) of the tree nodes in it.*/
-        std::vector<std::pair<const K,T>> v;
-        for (auto i = begin(); i != end(); ++i) {
-            auto d = i.data;
-            v.push_back(d);
-        }
-
-        std::cout << "Nodes have been stored into a vector. Rebuilding the tree..." << std::endl;
-        return v;
-    }
 
 //////////////////////////////////////// PUBLIC /////////////////////////////
 public:
@@ -159,10 +140,8 @@ public:
 
 
     /*! Helper function. True if root == nullptr*/
-    bool isEmpty() const {
-
-        bool emp = ((ctreeroot()==nullptr) ? (true) : (false));
-        return emp;
+    bool empty() const {
+        return root == nullptr;
     }
 
     /*! Returns tree height */
@@ -177,17 +156,17 @@ public:
     class iterator_template {
     public:
         using iterator_category = std::forward_iterator_tag;
-        using value_type = Node;
+        using value_type = decltype(Node::data);
         using difference_type = std::ptrdiff_t; //  is the signed integer type of the result of subtracting two pointers. 
-        using reference = typename std::conditional_t<Const, const Node &, Node &>;  // conditional_t provides member typedef type, which is defined as T1 if B is true at compile time, or as T2 if B is false. 
-        using pointer = typename std::conditional_t<Const, const Node *, Node *>;    // conditional_t provides member typedef type, which is defined as T1 if B is true at compile time, or as T2 if B is false. 
+        using reference = typename std::conditional_t<Const, const value_type &, value_type &>;  // conditional_t provides member typedef type, which is defined as T1 if B is true at compile time, or as T2 if B is false.
+        using pointer = typename std::conditional_t<Const, const value_type *, value_type *>;    // conditional_t provides member typedef type, which is defined as T1 if B is true at compile time, or as T2 if B is false.
 
     public :
         iterator_template() = default;
-        explicit iterator_template(pointer ptr) : itr(ptr) {}
+        explicit iterator_template(Node * ptr) : itr(ptr) {}
 
-        reference operator*() { return *itr; };
-        pointer operator->() { return itr; }
+        reference operator*() { return itr->data; };
+        pointer operator->() { return &itr->data; }
         iterator_template & operator++() {
             itr = successor(itr);
             return *this;
@@ -204,9 +183,9 @@ public:
             return !(lhs == rhs);
         };
     
-
+        Node * get_node() const { return itr; }
     protected:       // allows inheritance
-        pointer itr = nullptr;
+        Node * itr = nullptr;
     };
 
 
@@ -297,9 +276,11 @@ public:
         *
         */
 
-        if (&*find(k) == nullptr) return;
-
-        Node* toBeRemoved{&*find(k)};
+        auto * toBeRemoved = root.get();
+        while (toBeRemoved && toBeRemoved->data.first != k) {
+            toBeRemoved = (k < toBeRemoved->data.first ? toBeRemoved->left : toBeRemoved->right).get();
+        }
+        if (!toBeRemoved) { return; }
 
         /* CASE 0: the node is root */
         if (toBeRemoved->parent == nullptr) {
@@ -370,8 +351,8 @@ public:
         };
     };
 
-    iterator find(K k) {   /*! traverse the tree looking for a key, otherwise return nullptr iterator, that is the same as end()*/
-        Node * node = root.get();
+    iterator find(K k) const {   /*! traverse the tree looking for a key, otherwise return nullptr iterator, that is the same as end()*/
+        auto * node = root.get();
         while (node && node->data.first != k) {
             node = (k < node->data.first ? node->left : node->right).get();
         }
@@ -388,7 +369,7 @@ public:
     void balance()
     {
         this->height = 0;
-        std::vector<std::pair<const K,T>> vector = this->arrayOfNodes(); //salviamo i nodi iterati in  un vector, in ordine di key
+        std::vector<typename Node::data_type> vector(begin(), end()); //salviamo i nodi iterati in  un vector, in ordine di key
         this->root = nullptr;  // cancelliamo tutti i nodi senza distruggere l'albero
         this->recursive_balancer(vector); // ricreiamo l'albero dal vector
     };
@@ -399,12 +380,12 @@ public:
 template<class K, class T>                                                       ///   DA FINIRE!
 std::ostream& operator<<(std::ostream& ostream, const Tree<K,T>& tree) {
 
-    if (tree.isEmpty()) {
+    if (tree.empty()) {
         ostream << "Error: printing empty tree";
         return ostream;
     }
     for (auto t=tree.cbegin();t!=tree.cend();++t){
-        ostream << std::left << std::setw(12)<< t->data.first << ":" << t->data.second << "\n";
+        ostream << std::left << std::setw(12)<< t->first << ":" << t->second << "\n";
     }
   return ostream;
 }
