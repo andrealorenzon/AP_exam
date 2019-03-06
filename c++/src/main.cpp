@@ -32,7 +32,7 @@ size_t llRand()   // random number between 0 and 10^18
 int main (int argc, char* argv[])
 {
 
-    //test removeNode
+    //test erase
 
         std::cout << "\nTEST remove node with two children:\n";
         Tree<int, int> tree2;
@@ -46,8 +46,8 @@ int main (int argc, char* argv[])
         tree2.insert(19, 1);
 
     std::cout << "Remove node 212 and 18.\n";
-        tree2.removeNode(212);
-        tree2.removeNode(18);
+        tree2.erase(212);
+        tree2.erase(18);
         //tree2.listNodes();
     std::cout << "\nremoveNode test completed\n";
     //test llRand

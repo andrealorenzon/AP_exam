@@ -81,6 +81,18 @@ namespace detail {
         }
         return parent;
     }
+
+    template <typename NodeType>
+    void attachLeft(NodeType * parent, std::unique_ptr<NodeType> child) {
+        if (child) { child->parent = parent; }
+        parent->left = std::move(child);
+    }
+
+    template <typename NodeType>
+    void attachRight(NodeType * parent, std::unique_ptr<NodeType> child) {
+        if (child) { child->parent = parent; }
+        parent->right = std::move(child);
+    }
 }
 
 
@@ -268,80 +280,47 @@ public:
         return;
     };
 
-    void removeNode(K k) {/*! remove the node corresponding to the given key */
-        /* @brief
-        *
-        * input: K k, the key corresponding to the node to be removed.
-        * output: none.
-        *
-        */
+    void erase(iterator it) {
+        auto * node = it.get_node();
 
-        auto * toBeRemoved = root.get();
-        while (toBeRemoved && toBeRemoved->data.first != k) {
-            toBeRemoved = (k < toBeRemoved->data.first ? toBeRemoved->left : toBeRemoved->right).get();
-        }
-        if (!toBeRemoved) { return; }
+        std::unique_ptr<Node> replacement;
 
-        /* CASE 0: the node is root */
-        if (toBeRemoved->parent == nullptr) {
-          //std::cout << "\nCase 0\n";
-          //destroy();  <-- sure about that?
-        }
-
-        else {
-          /* Is it the left child or right child? */
-          int leftOrRight{0};
-          if (toBeRemoved->parent->right.get() == toBeRemoved)
-            leftOrRight = 1;
-
-          /* CASE 1: the node is a leaf */
-          if (!(toBeRemoved->left || toBeRemoved->right)) {
-            if (toBeRemoved->parent->left.get() == toBeRemoved)
-              toBeRemoved->parent->left = std::move(nullptr);
-            else
-              toBeRemoved->parent->right = std::move(nullptr);
-          }
-          /* CASE 2: the node has two children */
-          else if (toBeRemoved->left && toBeRemoved->right) {
-            auto * right = toBeRemoved->right.get();
+        if (node->left && node->right) {     // node has two children
+            auto * right = node->right.get();
             auto * replacementPtr = allLeft(right);
 
-            // Take replacement from its parent
-            auto replacement = replacementPtr == right
-                             ? std::move(toBeRemoved->right)
-                             : std::move(replacementPtr->parent->left);
-
-            // If replacement had right children, stick them on its former parent
-            if (replacement->right) {
-                replacement->right->parent = replacement->parent;
-                if (replacementPtr == right) {
-                    toBeRemoved->right = std::move(replacement->right);
-                } else {
-                    replacement->parent->left = std::move(replacement->right);
-                }
+            // extract replacement from tree
+            if (replacementPtr == right) {      // replacement is immediate right child
+                replacement = std::move(node->right);
+                attachRight(node, std::move(replacement->right));
+            } else {                            // replacement is deeper
+                replacement = std::move(replacementPtr->parent->left);
+                attachLeft(replacement->parent, std::move(replacement->right));
             }
 
-            // At this point, replacement is fully extracted from tree.
-            // Now insert it at its new place
+            // steal old node children
+            attachLeft(replacement.get(), std::move(node->left));
+            attachRight(replacement.get(), std::move(node->right));
 
-            //steal toBeRemoved left child
-            replacement->left = std::move(toBeRemoved->left);
-            if (replacement->left) replacement->left->parent = replacement.get();
-
-            //steal toBeRemoved right children
-            replacement->right = move(toBeRemoved->right);
-            if (replacement->right) replacement->right->parent = replacement.get();
-
-            //replace old node with cut out node
-            replacement->parent = toBeRemoved->parent;
-            if (toBeRemoved == toBeRemoved->parent->left.get()) {
-                replacement->parent->left =  std::move(replacement);
-            } else {
-                replacement->parent->right = std::move(replacement);
-            }
-
-          }
+        } else if (node->left) {            // node only has left child
+            replacement = std::move(node->left);
+        } else if (node->right) {           // node only has right child
+            replacement = std::move(node->right);
         }
+
+        // Insert replacement into the tree
+        if (!node->parent) {
+            root = std::move(replacement);
+        } else if (node->parent->left.get() == node) {
+            attachLeft(node->parent, std::move(replacement));
+        } else {
+            attachRight(node->parent, std::move(replacement));
+        }
+    }
+
+    void erase(K k) {/*! remove the node corresponding to the given key */
+        auto it = find(k);
+        if (it != end()) { erase(it); }
     }
 
     void listNodes() {                      /*! iterates the tree in order, printing key-value entries */
