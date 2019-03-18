@@ -29,17 +29,17 @@ class PostcardList:
   
   def __init__(self):
     
-    self._index = 0
-    self._file = ""       #file name, eventually with the full path.
-    self._postcards = []  #list of postcards (ordereddicts) read from _file.
-    self._date = {}       #a dict where the key is the string date, and the value is a list of indices. Each index refers to the corresponding record.
-    self._from = {}       #is a dict where the key is the string sender, and the value is a list of indices. Each index refers to the corresponding record.
-    self._to = {}         #a dict where the key is the string receiver, and the value is a list of indices. Each index refers to the corresponding record.
+    self._index 	: int  = 0
+    self._file  	: str  = ""       #file name, eventually with the full path.
+    self._postcards : list = []  #list of postcards (ordereddicts) read from _file.
+    self._date 		: dict = {}       #a dict where the key is the string date, and the value is a list of indices. Each index refers to the corresponding record.
+    self._from 		: dict = {}       #is a dict where the key is the string sender, and the value is a list of indices. Each index refers to the corresponding record.
+    self._to 		: dict = {}         #a dict where the key is the string receiver, and the value is a list of indices. Each index refers to the corresponding record.
     
   
 ########helper functions#########
 
-  def parsePostcards(self, line):
+  def parsePostcards(self, line: str) -> dict:
     '''
     input: string "date:$(DATE); from:$(SENDER); to:$(RECEIVER);""
     output: dict  {"index" : int, 
@@ -62,7 +62,7 @@ class PostcardList:
     #every message is a dict with a unique hash index generated from the other fields
     return {"index" : self._index, "sender": _sender, "receiver": _receiver, "date" : datetime.datetime.strptime(_date, "%Y %m %d")}
 
-  def formatted(self,message):
+  def formatted(self,message: str) -> str:
     '''
     input:  dict message
     output: test-compliant string message
@@ -105,11 +105,11 @@ class PostcardList:
       raise IOError
     
     #initialize attributes
-    self._index = 0
-    self._postcards=[]
-    self._from = {}
-    self._to = {}
-    self._date = {}
+    self._index 	: int  = 0
+    self._postcards : list = []
+    self._from 		: dict = {}
+    self._to 		: dict = {}
+    self._date 		: dict = {}
     
     with open(self._filename, 'r') as file:
       for line in list(file):
@@ -164,21 +164,21 @@ class PostcardList:
     '''returns length of self._postcards'''
     return len(self._postcards)
   
-  def getPostcardsByDateRange(self,date_range): 
+  def getPostcardsByDateRange(self,date_range : datetime.timedelta) -> list: 
     '''
     returns the postcards within a date_range, date_rage is a tuple of 2 date types
     ''' 
     begin, end = date_range
     return [self.formatted(m) for m in self._postcards if (m["date"] > begin and m["date"] < end)]
   
-  def getPostcardsBySender(self, sender): 
+  def getPostcardsBySender(self, sender: str) -> list: 
     '''
     returns the messages from a sender
     '''    
     return [self.formatted(m) for m in self._postcards if (m["sender"] == sender)]
     
   
-  def getPostcardsByReceiver(self, receiver): 
+  def getPostcardsByReceiver(self, receiver: str) -> list: 
     '''
     returns the postcards to a receiver 
     '''    
