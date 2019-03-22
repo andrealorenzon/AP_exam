@@ -29,12 +29,12 @@ class PostcardList:
   
   def __init__(self):
     
-    self._index 	: int  = 0
-    self._file  	: str  = ""       #file name, eventually with the full path.
+    self._index   : int  = 0
+    self._file    : str  = ""       #file name, eventually with the full path.
     self._postcards : list = []  #list of postcards (ordereddicts) read from _file.
-    self._date 		: dict = {}       #a dict where the key is the string date, and the value is a list of indices. Each index refers to the corresponding record.
-    self._from 		: dict = {}       #is a dict where the key is the string sender, and the value is a list of indices. Each index refers to the corresponding record.
-    self._to 		: dict = {}         #a dict where the key is the string receiver, and the value is a list of indices. Each index refers to the corresponding record.
+    self._date    : dict = {}       #a dict where the key is the string date, and the value is a list of indices. Each index refers to the corresponding record.
+    self._from    : dict = {}       #is a dict where the key is the string sender, and the value is a list of indices. Each index refers to the corresponding record.
+    self._to    : dict = {}         #a dict where the key is the string receiver, and the value is a list of indices. Each index refers to the corresponding record.
     
   
 ########helper functions#########
@@ -59,10 +59,9 @@ class PostcardList:
     _sender = regexItems.group(4)
     _receiver = regexItems.group(5)
     
-    #every message is a dict with a unique hash index generated from the other fields
     return {"index" : self._index, "sender": _sender, "receiver": _receiver, "date" : datetime.datetime.strptime(_date, "%Y %m %d")}
 
-  def formatted(self,message: str) -> str:
+  def formatted(self, message: dict) -> str:
     '''
     input:  dict message
     output: test-compliant string message
@@ -85,10 +84,10 @@ class PostcardList:
     
     '''
     
-    with open(self.outputFile, 'w') as file:  # overwrites file
+    with open(outputFile, 'w') as file:  # overwrites file
       for message in self._postcards:
         #formats the line and write it in the file:
-        line = formatted(message)
+        line = self.formatted(message)
         file.write(line)
   
   def readFile(self, *args): 
@@ -100,18 +99,18 @@ class PostcardList:
     if len(args) == 0:
         pass
     elif len(args) == 1 and isinstance(args[0], str):
-        self._filename = args[0]
+        self._file = args[0]
     elif len(args) > 1:
       raise IOError
     
     #initialize attributes
-    self._index 	: int  = 0
+    self._index   : int  = 0
     self._postcards : list = []
-    self._from 		: dict = {}
-    self._to 		: dict = {}
-    self._date 		: dict = {}
+    self._from    : dict = {}
+    self._to    : dict = {}
+    self._date    : dict = {}
     
-    with open(self._filename, 'r') as file:
+    with open(self._file, 'r') as file:
       for line in list(file):
         message = self.parsePostcards(line)
         self._postcards.append(message)
@@ -135,15 +134,16 @@ class PostcardList:
         else:
           self._date[message["date"]]=[message["index"]]
    
-  def updateFile(self): 
+  def updateFile(self, outputFile): 
     '''
     appends current postcards to attached file
     '''
-    with open(self._filename, 'a') as file: # appends to file
+    with open(outputFile, 'a') as file: # appends to file
       
       for message in self._postcards:
         #"date:$(DATE); from:$(SENDER); to:$(RECEIVER);"
-        file.write(formatted(message))
+        line = self.formatted(message)
+        file.write(line)
   
   def updateLists(self, *args): 
     '''as read but appending to self._postcards'''
@@ -152,12 +152,12 @@ class PostcardList:
     if len(args) == 0:
         pass
     elif len(args) == 1 and isinstance(args[0], str):
-        self._filename = args[0]
+        self._file = args[0]
     elif len(args) > 1:
       raise IOError
     
 # self._postcards=[]   #commented to allow append
-    with open(self._filename, 'r') as file:
+    with open(self._file, 'r') as file:
       for line in list(file):
         self._postcards.append(self.parsePostcards(line))    
   def getNumberOfPostcards(self): 
