@@ -43,58 +43,11 @@ class PostcardList:
         ----------
         infoDict : dict
         '''
-        return "date:{}; from:{}; to:{};".format(datetime.datetime.strftime(infoDict["date"],"%Y-%m-%d"), 
+        return "date:{}; from:{}; to:{};\n".format(datetime.datetime.strftime(infoDict["date"],"%Y-%m-%d"), 
                                                    infoDict["sender"], infoDict["receiver"])
 
     ### End Helper Functions ###
-    
 
-    def readFile(self, filename: str):
-        """
-        It reads the postcards from filename and it stores their information
-        in the self._postcards list as dictionaries.
-
-        Parameters
-        ----------
-        None  
-        """
-        self._file = filename
-
-        # reset attributes
-        self._postcards = []
-        self._from = {}
-        self._to = {}
-        self._date = {}
-        self._index = 0 # since every informations previously stored is resetted, the index is too.
-
-        with open(self._file, 'r') as file:
-            for line in list(file):
-                postcard_dict = self.gatherInfos(line)
-
-                postcard_dict['index'] = self._index # index is added to the postcard dictionary
-                self._index += 1
-
-                self._postcards.append(postcard_dict)
-             
-
-    def updateLists(self, filename: str):
-        """
-        It reads the postcards from filename and it stores their information
-        in the self._postcards list as dictionaries
-      
-        Parameters
-        ----------
-        None  
-        """
-        self._file = filename
-
-        with open(self._file, 'r') as file:
-            for line in list(file):
-                postcard_dict = self.gatherInfos(line)
-                postcard_dict['index'] = self._index
-                self._index += 1
-                self._postcards.append(postcard_dict)
-        
 
     def parsePostcards(self):
         '''
@@ -125,6 +78,57 @@ class PostcardList:
                 self._date[p_date].append(p_index)
             else:
                 self._date[p_date] = [p_index]
+
+
+    def readFile(self, filename: str):
+        """
+        It reads the postcards from filename and it stores their information
+        in the self._postcards list as dictionaries.
+
+        Parameters
+        ----------
+        None  
+        """
+        self._file = filename
+
+        # reset attributes
+        self._postcards = []
+        self._from = {}
+        self._to = {}
+        self._date = {}
+        self._index = 0 # since every informations previously stored is resetted, the index is too.
+
+        with open(self._file, 'r') as file:
+            for line in list(file):
+                postcard_dict = self.gatherInfos(line)
+
+                postcard_dict['index'] = self._index # index is added to the postcard dictionary
+                self._index += 1
+
+                self._postcards.append(postcard_dict)
+
+            self.parsePostcards()
+             
+
+    def updateLists(self, filename: str):
+        """
+        It reads the postcards from filename and it stores their information
+        in the self._postcards list as dictionaries
+      
+        Parameters
+        ----------
+        None  
+        """
+        self._file = filename
+
+        with open(self._file, 'r') as file:
+            for line in list(file):
+                postcard_dict = self.gatherInfos(line)
+                postcard_dict['index'] = self._index
+                self._index += 1
+                self._postcards.append(postcard_dict)
+
+            self.parsePostcards()
                 
                 
     def writeFile(self, filename: str):
@@ -138,7 +142,7 @@ class PostcardList:
         '''
         with open(filename, 'w') as file:
             for postcard in self._postcards:
-                file.write(self.formatDict(postcard) + "\n")
+                file.write(self.formatDict(postcard))
                 
 
     def updateFile(self, filename: str):
@@ -152,7 +156,7 @@ class PostcardList:
         '''
         with open(filename, 'a') as file:
             for postcard in self._postcards:
-                file.write(self.formatDict(postcard) + "\n")
+                file.write(self.formatDict(postcard))
                 
     
     def getNumberOfPostcards(self):
@@ -176,7 +180,7 @@ class PostcardList:
             It is a tuple of date objects.
         ''' 
         begin, end = date_range
-        return [self.formatDict(m) for m in self._postcards if (m["date"] > begin and m["date"] < end)]
+        return [self.formatDict(m) for m in self._postcards if (begin <= m["date"] <= end)]
         
 
     def getPostcardsBySender(self, sender: str) -> list: 
@@ -187,7 +191,7 @@ class PostcardList:
         ----------
         sender : str
         '''    
-        return [self.formatDict(m)for m in self._postcards if (m["sender"] == sender)]
+        return [self.formatDict(m) for m in self._postcards if (m["sender"] == sender)]
 
 
     def getPostcardsByReceiver(self, receiver: str) -> list: 
