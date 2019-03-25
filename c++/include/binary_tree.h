@@ -356,7 +356,7 @@ public:
 
 
 
-template<class K, class T>                                                       ///   DA FINIRE!
+template<class K, class T>                                                       
 std::ostream& operator<<(std::ostream& ostream, const Tree<K,T>& tree) {
 
     if (tree.empty()) {
