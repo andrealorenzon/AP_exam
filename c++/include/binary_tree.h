@@ -338,7 +338,7 @@ public:
         return iterator(node);
     }
     /*! tree deletion: sets root to nullptr, destroy recursively all nodes*/
-    void destroy(){
+    void clear(){
         this->root = nullptr;
     }
 
