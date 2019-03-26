@@ -142,3 +142,11 @@ We have tested the find() member function and we made a comparison among the per
 Firstly, we fixed the size of the value of each node and we stored the time needed to find a certain node within the given tree. We repeated this process for ten random keys for six different numbers of nodes (10^1, 10^2, ..., 10^6). The results are plotted below:
 
 ![alt text](https://github.com/andrealorenzon/AP_exam/blob/master/c%2B%2B/plot1.png "Plot 1")
+
+We also compared the performances by changing the number of bytes per node, for a fixed number of nodes, which was equal to 10^5. Each plot shows the time in nanoseconds needed for a given tree to find a randomly selected node within the tree. As before, for each number of bytes per node (128, 256, 512, 1024, 4096) we ran ten tests. The results are shown below:
+
+![alt text](https://github.com/andrealorenzon/AP_exam/blob/master/c%2B%2B/plot2.png "Plot 2")
+
+In both cases, we observe that the mean performance increases after the tree have been balanced. 
+By changing the number of nodes, we see that our implementation of the binary search tree performs better than the STL map class until the number of nodes exceeds 10^4.
+By changing the bytes per node, as shown in the second group of plots, the post-balance tree mean performances have a very low variance and very close to the STL map's ones.
