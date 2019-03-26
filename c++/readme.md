@@ -110,9 +110,9 @@ In the requirements, both the key and the value of each node must be templated: 
 
 The drawback of smart pointers is that, when writing iterators class, we will have to dereference them with `.get()` method to retrieve raw pointers. Using the latter as observing, non-owning pointers, will prevent memory leaks.
 
-We decided to nest, inside the Tree class, a Node struct, private to Tree. All (and only) public interfaces will be able to interact with it. To create Nodes, the user will have to empy addNode constructors. Most Tree methods and iterators (included begin(), cbegin(), end() and cend()) are available both for const and non-const Trees.
+We decided to nest, inside the Tree class, a Node struct, private to Tree. All (and only) public interfaces will be able to interact with it. To create Nodes, the user will have to empy insert constructors. Most Tree methods and iterators (included begin(), cbegin(), end() and cend()) are available both for const and non-const Trees.
 
-Every Tree iteration (for addNode, iterators, etc.) has been created recursive and O(log(N)) whenever convenient.
+Every Tree iteration (for insert, iterators, etc.) has been created recursive and O(log(N)) whenever convenient.
 
 The tree has been tested only with long long int keys and string values. Additional testing should have been done with different data types, but no different result is expected.
 
@@ -120,7 +120,7 @@ The tree has been tested only with long long int keys and string values. Additio
 
 The balance function could be have done differently. An ideal approach would have been creating a red-black or self-balancing Tree, modifying Node and Tree accordingly. For time limits, a suboptimal approach has been chosen. When calling the balance() method, the whole tree is dumped in a std::vector object by arrayOfNodes() method, preserving only keys and values. The vector is then recursively parsed to create a new, balanced Tree, overwritting the old one. When the root node is overwritten, the original unbalanced tree is recursively destroyed, thanks to the characteristics of unique pointers, and its height is recomputed.
 
-A potential upgrade could be done checking, after every call to addNode(), if the tree has suboptimal height (> log(N)+1 ), and automatically calling balance.
+A potential upgrade could be done checking, after every call to insert(), if the tree has suboptimal height (> log(N)+1 ), and automatically calling balance.
 
 # llRand
 
@@ -137,4 +137,16 @@ argv[1] = int, the number of random Nodes to be added to the tree
 argv[2] = int, the lenght in byte of the string value of each Node
 argv[3] = {0,1}, if ==1, after the creation of the tree, main() will traverse the tree, reading every Node and storing it in a dummy variable, for benchmarking purposes.
 
- 
+We have tested the find() member function and we made a comparison among the performances of a randomly generated binary search tree before and after the balancing, and also with a the STL map() class. 
+
+Firstly, we fixed the size of the value of each node and we stored the time needed to find a certain node within the given tree. We repeated this process for ten random keys for six different numbers of nodes (10^1, 10^2, ..., 10^6). The results are plotted below:
+
+![alt text](https://github.com/andrealorenzon/AP_exam/blob/master/c%2B%2B/plot1.png "Plot 1")
+
+We also compared the performances by changing the number of bytes per node, for a fixed number of nodes, which was equal to 10^5. Each plot shows the time in nanoseconds needed for a given tree to find a randomly selected node within the tree. As before, for each number of bytes per node (128, 256, 512, 1024, 4096) we ran ten tests. The results are shown below:
+
+![alt text](https://github.com/andrealorenzon/AP_exam/blob/master/c%2B%2B/plot2.png "Plot 2")
+
+In both cases, we observe that the mean performance increases after the tree have been balanced. 
+By changing the number of nodes, we see that our implementation of the binary search tree performs better than the STL map class until the number of nodes exceeds 10^4.
+By changing the bytes per node, as shown in the second group of plots, the post-balance tree mean performances have a very low variance and very close to the STL map's ones.
